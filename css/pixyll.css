@@ -104,13 +104,12 @@ body {
   padding-bottom: 0;
 }
 
-.post-title {
+.post-link .post-title {
   color: #f35955;
 }
 
-.post-link .post-title {
+.post-title {
   margin-top: 0;
-  font-weight: bold;
 }
 
 .pagination,
@@ -179,7 +178,6 @@ body {
 }
 
 form {
-  font-family: 'Lato', 'Helvetica Neue', Helvetica, sans-serif;
   font-weight: 300;
   font-size: 1rem;
 }
@@ -232,7 +230,6 @@ blockquote footer {
 h1,
 h2,
 h3 {
-  font-family: "Lato", 'Helvetica Neue', Helvetica, sans-serif;
   font-weight: 900;
   margin-top: 3rem;
 }
@@ -240,7 +237,6 @@ h3 {
 h4,
 h5,
 h6 {
-  font-family: "Lato", 'Helvetica Neue', Helvetica, sans-serif;
   font-weight: 900;
   margin-top: 1rem;
 }
@@ -296,7 +292,7 @@ h6 {
     font-size: 1rem;
   }
 
-  .post-link .post-title {
+  .post-title {
     margin-top: 1rem;
   }
 
@@ -326,11 +322,11 @@ h6 {
     line-height: 3.5rem;
   }
 
-  .posts .post-meta {
+  .post-meta {
     padding-bottom: .25rem;
   }
 
-  .post-link .post-title {
+  .post-title {
     margin-top: .25rem;
   }
 
@@ -355,7 +351,6 @@ footer,
 footer .wrap {
   color: #7a7a7a;
   background-color: #fafafa;
-  font-family: 'Lato', 'Helvetica Neue', Helvetica, sans-serif;
   font-weight: 300;
   clear: both;
 }
