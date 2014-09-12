@@ -3,7 +3,7 @@ title: Garciat
 author: Gabriel Garcia
 baseurl: ""
 url: "http://localhost:4000"
-google_analytics: 
+google_analytics: "UA-19283098-3"
 
 # Build settings
 markdown: kramdown
