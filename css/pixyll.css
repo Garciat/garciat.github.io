@@ -112,6 +112,12 @@ body {
   margin-top: 0;
 }
 
+.post-content {
+  margin-bottom: 2rem;
+  padding-bottom: 1rem;
+  border-bottom: thin solid #f3f3f3;
+}
+
 .pagination,
 .button {
   font-size: 16px;
@@ -328,6 +334,12 @@ h6 {
 
   .post-title {
     margin-top: .25rem;
+  }
+  
+  .post-content {
+    margin-bottom: 4rem;
+    padding-bottom: 2rem;
+    border-bottom: thin solid #f3f3f3;
   }
 
   .posts .post {
