@@ -2,7 +2,7 @@
     background: #ffffff;
 }
 
-.highlight code {
+.highlight code, code {
     color: rgb(51, 51, 51);
 }
 
