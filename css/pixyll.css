@@ -92,13 +92,17 @@ body {
   margin: 0;
 }
 
-.posts .post {
+.post {
   margin-bottom: 1rem;
   padding-bottom: .5rem;
   border-bottom: thin solid #f3f3f3;
 }
 
-.posts .post:last-child {
+.post-comments {
+  margin-bottom: 1rem;
+}
+
+.post:last-child {
   border-bottom: none;
   margin-bottom: .5rem;
   padding-bottom: 0;
@@ -110,12 +114,6 @@ body {
 
 .post-title {
   margin-top: 0;
-}
-
-.post-content {
-  margin-bottom: 2rem;
-  padding-bottom: 1rem;
-  border-bottom: thin solid #f3f3f3;
 }
 
 .pagination,
@@ -302,13 +300,17 @@ h6 {
     margin-top: 1rem;
   }
 
-  .posts .post {
+  .post {
     margin-bottom: 2rem;
     padding-bottom: 1rem;
     border-bottom: thin solid #f3f3f3;
   }
+  
+  .post-comments {
+    margin-bottom: 2rem;
+  }
 
-  .posts .post:last-child {
+  .post:last-child {
     border-bottom: none;
     margin-bottom: .5rem;
     padding-bottom: 0;
@@ -335,20 +337,18 @@ h6 {
   .post-title {
     margin-top: .25rem;
   }
+
+  .post {
+    margin-bottom: 4rem;
+    padding-bottom: 2rem;
+    border-bottom: thin solid #f3f3f3;
+  }
   
-  .post-content {
+  .post-comments {
     margin-bottom: 4rem;
-    padding-bottom: 2rem;
-    border-bottom: thin solid #f3f3f3;
   }
 
-  .posts .post {
-    margin-bottom: 4rem;
-    padding-bottom: 2rem;
-    border-bottom: thin solid #f3f3f3;
-  }
-
-  .posts .post:last-child {
+  .post:last-child {
     border-bottom: none;
     margin-bottom: 1rem;
     padding-bottom: 0;

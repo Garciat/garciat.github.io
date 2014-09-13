@@ -1,16 +1,18 @@
 ---
 layout: default
 ---
-<div class="post-header">
-  <p class="post-meta">{{ page.date | date: "%b %-d, %Y" }}</p>
-  <h2 class="post-title">{{ page.title }}</h2>
+<div class="post">
+  <div class="post-header">
+    <p class="post-meta">{{ page.date | date: "%b %-d, %Y" }}</p>
+    <h2 class="post-title">{{ page.title }}</h2>
+  </div>
+
+  <article class="post-content">
+    {{ content }}
+  </article>
 </div>
 
-<article class="post-content">
-  {{ content }}
-</article>
-
-<div id="disqus_thread"></div>
+<div id="disqus_thread" class="post-comments"></div>
 <script type="text/javascript">
 var disqus_shortname = 'garciat';
 
