@@ -93,7 +93,7 @@ let main argv =
 
 That's it! Compile and run the solution and then point your browser
 (or [Postman](https://chrome.google.com/webstore/detail/postman-rest-client-packa/fhbjgbiflinjbdggehcddcbncdddomop))
-to [127.0.0.1:8000/hello](127.0.0.1:8000/hello). You should see:
+to [http://127.0.0.1:8000/hello](http://127.0.0.1:8000/hello). You should see:
 
 
     "Hello World!"
