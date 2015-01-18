@@ -1,3 +1,6 @@
 [submodule "repos/fisica"]
 	path = repos/fisica
 	url = https://github.com/Garciat/fisica.git
+[submodule "repos/pixelated"]
+	path = repos/pixelated
+	url = https://github.com/Garciat/pixelated.git
