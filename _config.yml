@@ -6,6 +6,7 @@ url: "http://localhost:4000"
 google_analytics: "UA-19283098-3"
 
 # Build settings
+gems: [jekyll-paginate]
 markdown: kramdown
 permalink: pretty
 paginate: 3
