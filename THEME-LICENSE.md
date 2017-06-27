@@ -1,4 +1,6 @@
-# Released under MIT License
+# Hyde theme
+
+https://github.com/poole/hyde
 
 Copyright (c) 2013 Mark Otto.
 
