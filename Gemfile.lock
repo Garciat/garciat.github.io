@@ -198,6 +198,7 @@ PLATFORMS
 
 DEPENDENCIES
   github-pages
+  kramdown
   pygments.rb
   redcarpet
 
