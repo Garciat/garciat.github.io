@@ -115,6 +115,6 @@ auto it = std::partition_point(number_iter{0}, number_iter{n}, pred);
 return *it - 1;
 ```
 
-Okay, okay. I agree that this approach is suboptimal. But, hey, at least we learned a couple of things about the STL.
+Okay, okay. I agree that this approach is suboptimal in terms of implementability. You could argue that it's harder to implement than binary search. But, hey, at least we learned a couple of things about the STL.
 
 Don't forget to carefully scan through the [C++ algorithm library](http://en.cppreference.com/w/cpp/algorithm).
