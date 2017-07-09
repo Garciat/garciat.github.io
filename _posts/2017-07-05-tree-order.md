@@ -70,7 +70,7 @@ public:
                 break;
             case Action::TRAVERSE:
                 auto node = action.node;
-                if (!node) continue;               // *
+                if (!node) continue;           // *
                 tmp.push(Action{node->left});  // *
                 tmp.push(Action{node->right}); // *
                 tmp.push(Action{node->val});   // **
