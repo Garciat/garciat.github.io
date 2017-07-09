@@ -62,6 +62,8 @@ public:
             auto action = actions.top();
             actions.pop();
 
+            stack<Action> tmp;
+
             switch (action.tag) {
             case Action::SHOW:
                 ans.push_back(action.value);
@@ -69,14 +71,15 @@ public:
             case Action::TRAVERSE:
                 auto node = action.node;
                 if (!node) continue;               // *
-                actions.push(Action{node->left});  // *
-                actions.push(Action{node->right}); // *
-                actions.push(Action{node->val});   // **
+                tmp.push(Action{node->left});  // *
+                tmp.push(Action{node->right}); // *
+                tmp.push(Action{node->val});   // **
                 break;
             }
+            
+            while (!tmp.empty())
+                actions.push(tmp.top()), tmp.pop();
         }
-        
-        reverse(ans.begin(), ans.end());
         
         return ans;
     }
@@ -159,17 +162,20 @@ vector<int> iteratively(TreeNode* root) {
         auto action = actions.top();
         actions.pop();
 
+        stack<Action> tmp;
+
         switch (action.tag) {
         case Action::SHOW:
             ans.push_back(action.value);
             break;
         case Action::TRAVERSE:
-            traverse([&actions] (Action a) { actions.push(a); }, action.node);
+            traverse([&tmp] (Action a) { tmp.push(a); }, action.node);
             break;
         }
+
+        while (!tmp.empty())
+            actions.push(tmp.top()), tmp.pop();
     }
-    
-    reverse(ans.begin(), ans.end());
     
     return ans;
 }
