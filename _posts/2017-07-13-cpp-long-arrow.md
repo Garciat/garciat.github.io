@@ -1,6 +1,6 @@
 ---
 layout:     post
-title:      RE: The long arrow operator in C++
+title:      'RE: The long arrow operator in C++'
 date:       2017-07-13 19:10
 ---
 
