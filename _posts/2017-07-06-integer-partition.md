@@ -118,3 +118,16 @@ return *it - 1;
 Okay, okay. I agree that this approach is suboptimal in terms of implementability. You could argue that it's harder to implement than binary search. But, hey, at least we learned a couple of things about the STL.
 
 Don't forget to carefully scan through the [C++ algorithm library](http://en.cppreference.com/w/cpp/algorithm).
+
+### Edit (2017-07-16):
+
+Yet another problem: [Single Element in a Sorted Array](https://leetcode.com/problems/single-element-in-a-sorted-array/).
+
+```cpp
+int singleNonDuplicate(vector<int>& nums) {
+    int n = nums.size();
+    auto pred = [&nums] (int i) { return nums[2*i] == nums[2*i+1]; };
+    auto it = partition_point(number_iter{0}, number_iter{n/2}, pred);
+    return nums[2 * (*it)];
+}
+```
