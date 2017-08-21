@@ -88,7 +88,7 @@ void rotateLayer(vector<vector<int>> &m, int layer, int size, int step) {
   Pos p2 { k + s,         k + n - 1 };
   // bottom-right corner, moving left (j -= s)
   Pos p3 { k + n - 1,     k + n - 1 - s };
-  // bototm-left corner,  moving up   (i -= s)
+  // bottom-left corner,  moving up   (i -= s)
   Pos p4 { k + n - 1 - s, k };
   
   // swap clockwise
