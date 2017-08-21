@@ -72,13 +72,14 @@ void rotate(vector<vector<int>>& m) {
     int n = m.size() - k * 2;
     // apply our 'spiral' rotating procedure n-1 times:
     for (int s = 0; s < n - 1; ++s) {
-      rotateLayer(m, k, s);
+      rotateLayer(m, k, n, s);
     }
   }
 }
 
-void rotateLayer(vector<vector<int>> &m, int layer, int step) {
+void rotateLayer(vector<vector<int>> &m, int layer, int size, int step) {
   int k = layer;
+  int n = size;
   int s = step;
 
   // top-left corner,  moving right   (j += s)
