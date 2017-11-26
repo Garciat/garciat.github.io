@@ -102,4 +102,4 @@ date:       2017-11-25 21:53
 
     1.  [(Returns int to free list)](https://github.com/Garciat/cpython/blob/994f04dbf576f4ebafb9de2bc6821e15cb0de0ea/Objects/intobject.c#L132)
 
-10.  1 (hot) indirect write: [set top of evaluation stack](https://github.com/Garciat/cpython/blob/05469fa1c05acf55bdca05db21822ecdd7f6487a/Python/ceval.c#L1493). ([SET_TOP macro](https://github.com/Garciat/cpython/blob/05469fa1c05acf55bdca05db21822ecdd7f6487a/Python/ceval.c#L925))</span>
+10.  1 (hot) indirect write: [set top of evaluation stack](https://github.com/Garciat/cpython/blob/05469fa1c05acf55bdca05db21822ecdd7f6487a/Python/ceval.c#L1493). ([SET_TOP macro](https://github.com/Garciat/cpython/blob/05469fa1c05acf55bdca05db21822ecdd7f6487a/Python/ceval.c#L925))
