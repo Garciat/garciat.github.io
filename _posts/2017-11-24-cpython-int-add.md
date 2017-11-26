@@ -1,8 +1,10 @@
 ---
 layout:     post
-title:      Adding two integers in CPyhon
+title:      Adding two integers in CPython
 date:       2017-11-25 21:53
 ---
+
+Ignoring cheap operations (arithmetic, logical, bits) and some not-so-cheap operations (branching), this is the operational cost of adding two integers in CPython.
 
 1.  1 (hot) indirect read: [read bytecode buffer](https://github.com/Garciat/cpython/blob/05469fa1c05acf55bdca05db21822ecdd7f6487a/Python/ceval.c#L1167). ([NEXTOP macro](https://github.com/Garciat/cpython/blob/05469fa1c05acf55bdca05db21822ecdd7f6487a/Python/ceval.c#L874))
 
