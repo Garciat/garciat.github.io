@@ -1,7 +1,7 @@
 ---
 layout:     post
-title:      Web Workers + Mandelbrot
-date:       2015-01-18 10:57
+title:      "Parallel Mandelbrot rendering with Web Workers"
+date:       2015-01-18
 ---
 
 Click to zoom!

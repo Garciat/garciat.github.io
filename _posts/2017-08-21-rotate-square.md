@@ -1,7 +1,8 @@
 ---
-layout:     post
-title:      Rotate a Square Matrix
-date:       2017-08-21 01:19
+layout:       post
+title:        "Rotate a Square Matrix"
+date:         2017-08-21
+description:  "A roundabout implementation of square matrix rotation"
 ---
 
 (Referring to [this leetcode problem](https://leetcode.com/problems/rotate-image/).)
@@ -47,7 +48,7 @@ Repeat the previous steps N-1 times (in total):
     # . . 3 # #        # . 3 # # #
                     //
                   //
-                 LL 
+                 LL
     # # # # 1 #        # # # # # #
     4 . . . . #        # . . . . #
     # . . . . #  --->  # . . . . #
@@ -90,7 +91,7 @@ void rotateLayer(vector<vector<int>> &m, int layer, int size, int step) {
   Pos p3 { k + n - 1,     k + n - 1 - s };
   // bottom-left corner,  moving up   (i -= s)
   Pos p4 { k + n - 1 - s, k };
-  
+
   // swap clockwise
   tie(at(m, p1), at(m, p2), at(m, p3), at(m, p4))
     = make_tuple(at(m, p4), at(m, p1), at(m, p2), at(m, p3));

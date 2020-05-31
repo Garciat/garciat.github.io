@@ -1,7 +1,7 @@
 ---
 layout:     post
-title:      Tree traversal order
-date:       2017-07-05 20:30
+title:      "Tree traversal order"
+date:       2017-07-05
 ---
 
 (Referring to [this leetcode problem](https://leetcode.com/problems/binary-tree-postorder-traversal/))
@@ -34,17 +34,17 @@ While doing that, I tried to keep the essential parts (marked with `*`) of the a
 // Pattern: discriminated union
 struct Action {
     enum Tag { TRAVERSE, SHOW };
-    
+
     Tag tag;
     union {
         TreeNode *node;
         int value;
     };
-    
+
     Action(TreeNode *node)
         : tag{TRAVERSE}, node{node}
     {}
-    
+
     Action(int value)
         : tag{SHOW}, value{value}
     {}
@@ -54,10 +54,10 @@ class Solution {
 public:
     vector<int> postorderTraversal(TreeNode* root) {
         vector<int> ans;
-        
+
         stack<Action> actions;
         actions.push(Action{root});
-        
+
         while (!actions.empty()) {
             auto action = actions.top();
             actions.pop();
@@ -76,11 +76,11 @@ public:
                 tmp.push(Action{node->val});   // **
                 break;
             }
-            
+
             while (!tmp.empty())
                 actions.push(tmp.top()), tmp.pop();
         }
-        
+
         return ans;
     }
 };
@@ -154,10 +154,10 @@ or an iterative driver:
 ```cpp
 vector<int> iteratively(TreeNode* root) {
     vector<int> ans;
-    
+
     stack<Action> actions;
     actions.push(Action{root});
-    
+
     while (!actions.empty()) {
         auto action = actions.top();
         actions.pop();
@@ -176,7 +176,7 @@ vector<int> iteratively(TreeNode* root) {
         while (!tmp.empty())
             actions.push(tmp.top()), tmp.pop();
     }
-    
+
     return ans;
 }
 ```

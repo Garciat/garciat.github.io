@@ -18,7 +18,7 @@ author:
   name:           'Gabriel Garcia'
   url:            https://github.com/Garciat
 
-paginate:         5
+paginate:         15
 
 # Custom vars
 version:          2.0.0

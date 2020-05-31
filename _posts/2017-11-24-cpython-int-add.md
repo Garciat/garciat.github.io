@@ -1,7 +1,8 @@
 ---
-layout:     post
-title:      Adding two integers in CPython
-date:       2017-11-25 21:53
+layout:       post
+title:        "Adding two integers in CPython"
+date:         2017-11-25
+description:  "Analyzing the cost of adding to integers in CPython"
 ---
 
 Ignoring cheap operations (arithmetic, logical, bits) and some not-so-cheap operations (branching), this is the operational cost of adding two integers in CPython.
@@ -78,7 +79,7 @@ Ignoring cheap operations (arithmetic, logical, bits) and some not-so-cheap oper
 
         12.  [Convert ints to longs](https://github.com/Garciat/cpython/blob/445844993b68f102241a600636b0d69394db1c7b/Objects/longobject.c#L2522): ([CONVERT_BINOP macro](https://github.com/Garciat/cpython/blob/445844993b68f102241a600636b0d69394db1c7b/Objects/longobject.c#L1174))
 
-                1.  2 indirect reads: [RTTI check for int type](https://github.com/Garciat/cpython/blob/445844993b68f102241a600636b0d69394db1c7b/Objects/longobject.c#L1154). 
+                1.  2 indirect reads: [RTTI check for int type](https://github.com/Garciat/cpython/blob/445844993b68f102241a600636b0d69394db1c7b/Objects/longobject.c#L1154).
 
                 2.  2 indirect reads: [extract int value](https://github.com/Garciat/cpython/blob/445844993b68f102241a600636b0d69394db1c7b/Objects/longobject.c#L1155) (third time). ([PyInt_AS_LONG](https://github.com/Garciat/cpython/blob/74f49ab28b91d3c23524356230feb2724ee9b23f/Include/intobject.h#L52))
 

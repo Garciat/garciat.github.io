@@ -1,7 +1,7 @@
 ---
-layout:     post
-title:      Pascal's triangle in Haskell
-date:       2017-07-09 14:34
+layout:       post
+title:        "Pascal's triangle in Haskell"
+date:         2017-07-09
 ---
 
 (My answer to [this Stack Overflow question](https://stackoverflow.com/a/44999165/612169).)
@@ -30,14 +30,14 @@ Operationally, that looks like this:
 
     For row 0:
     [1]  (it's a given; i.e. base case)
-    
+
     For row 1:
     [0, 1]   <- row 0 with a zero prepended ([0] ++ row 0)
      +  +
     [1, 0]   <- row 0 with a zero appended  (row 0 ++ [0])
      =  =
     [1, 1]   <- element-wise addition
-    
+
     For row 2:
     [0, 1, 1]
      +  +  +
@@ -46,7 +46,7 @@ Operationally, that looks like this:
     [1, 2, 1]
 
     Generally, for row N:
-    
+
     element-wise addition of:
       [0] ++ row(N-1)
       row(N-1) ++ [0]
