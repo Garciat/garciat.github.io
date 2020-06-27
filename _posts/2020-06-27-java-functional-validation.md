@@ -25,6 +25,8 @@ The **Alternatives** section explores existing solutions to this problem.
 
 Finally, the **Implementation** section describes the full `Parser` API and some of its implementation details.
 
+All source code is available at [github.com/garciat/java-functional](https://github.com/Garciat/java-functional).
+
 ## Problem
 
 In an MVC-style application that implements a Thrift server, a Controller's responsibility is to implement Thrift endpoints by accepting Thrift requests and delegate to domain services that implement the expected business logic.
