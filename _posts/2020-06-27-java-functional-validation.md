@@ -728,7 +728,11 @@ And yes, that’s the full parser code.
 
 ## Implementation
 
-**Note:** This may be slightly out of date. Please refer to the [full code](https://github.com/Garciat/java-functional/tree/master/validation/src/main/java/com/garciat/functional).
+A couple of notes:
+
+  * This may be slightly out of date. Please refer to the [full code](https://github.com/Garciat/java-functional/tree/master/validation/src/main/java/com/garciat/functional).
+  * The implementation differs slightly from the code described above:
+    * Field-based methods in `ParserComposition` were extracted into a utility class `Fields`.
 
 ### Either
 
