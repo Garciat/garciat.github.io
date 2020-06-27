@@ -217,7 +217,7 @@ class Promise(Generic[_T]):
   @property
   def value(self) -> _T:
     if isinstance(self._result, _PromiseSentinel):
-      raise Exception
+      raise Exception('Promise not yet set')
     else:
       return self._result
 
