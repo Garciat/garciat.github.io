@@ -123,6 +123,8 @@ else:
   impossible()  # necessary to type-check
 ```
 
+`Answer[T]` is the type of 'answers' to effects. Calling `Effect[T].answer(T value)` produces an `Answer[T]`. This helps the handler implementations remain relatively type-safe. Otherwise, doing `return value` would not be type checked in the context of a `Generator[None, None, Any]`. Particularly because there is no (static) relationship between this `value` and the `Effect` that it is fulfilling.
+
 It is also possible to define a passthrough handler that performs logging on all effects:
 
 ```python
