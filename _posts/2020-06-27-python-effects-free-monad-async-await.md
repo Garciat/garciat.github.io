@@ -303,18 +303,14 @@ def run_effects(handler: EffectHandler, awaitable: Awaitable[_T]) -> _T:
   try:
     while True:
       effect, promise = gen.send(None)
-      try:
-        answer = handler.do_handle(effect)
-        if isinstance(answer, _AnswerImpl):
-          promise.complete(answer.value)
-        else:
-          raise Exception('Unexpected answer {!r}'.format(answer))
-      except Effect as effect_inner:
-        if effect_inner is effect:
-          raise Exception('Unhandled effect: {!r}'.format(effect))
-        else:
-          raise
-
+      answer = handler.do_handle(effect)
+      if isinstance(answer, _AnswerImpl):
+        promise.complete(answer.value)
+      else:
+        raise Exception('Unexpected answer {!r}'.format(answer))
+          
+  except Effect as effect_inner:
+    raise Exception('Unhandled effect: {!r}'.format(effect))
   except StopIteration as stop:
     return cast(_T, stop.value)
 ```
