@@ -194,7 +194,7 @@ Either.failure(
 The ParseFailure data structure can the be formatted into a human-readable format:
 
 ```
-Parsing type com.uber.playground.ThriftThing
+Parsing type com.example.ThriftThing
   Parsing field getNested
     value is null
   Parsing field getCurrencyCode
