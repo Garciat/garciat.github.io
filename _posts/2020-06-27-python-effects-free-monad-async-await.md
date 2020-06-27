@@ -64,6 +64,8 @@ async def get_friends(user_id: str) -> List[FacebookUser]:
   return await EffectFuture(GetFriends(user_id=user_id))
 ```
 
+`EffectFuture` is a support function from my effects system implementation. It lifts an `Effect[T]` into `Awaitable[T]`. `Awaitable[T]` is the generic abstract base class for objects that can be used in `await` expressions.
+
 ### Usage program
 
 Then, we write a small program that makes use of those `async` functions. The program's code & types are not even aware that there is an effect system.
