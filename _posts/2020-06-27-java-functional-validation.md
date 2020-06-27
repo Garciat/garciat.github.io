@@ -871,7 +871,7 @@ static <T, A, B, C> Parser<T, C> merge(
   * `Functor` via `Parser::map`
   * `Category` via `Parser::id` and `Parser::andThen`
   * `Applicative Functor` via `Parser::merge`
-  * `Alternative Functor` via `Parser::recoverWIth`
+  * `Alternative Functor` via `Parser::recoverWith`
   * `Monad` via `Parser::flatMap`
 
 ### Parsers
