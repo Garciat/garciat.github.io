@@ -2,7 +2,7 @@
 layout:       post
 title:        "Python: Effect Handlers and Free Monads via async/await"
 date:         2020-06-27
-description:  "I implement a restricted flavor of Effect Handlers and Free Monads via async/await."
+description:  "I implement some kind of restricted effects system in Python via async/await."
 ---
 
 ## Background
