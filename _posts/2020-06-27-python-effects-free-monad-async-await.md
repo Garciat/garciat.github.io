@@ -288,9 +288,9 @@ class HandlerStack(EffectHandler):
         try:
           return handler.do_handle(effect)
         except Effect as effect_inner:
-          # Either the effect was not handled, or it was mapped; either way, continue trying
+          # Either the effect was not handled, or it was mapped; continue trying
           effect = effect_inner
-      raise  # re-raise uhandled effect; none of the handlers returned a value
+      raise  # re-raise unhandled effect; none of the handlers returned a value
     else:
       impossible()
 
