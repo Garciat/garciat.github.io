@@ -290,7 +290,7 @@ class HandlerStack(EffectHandler):
         except Effect as effect_inner:
           # Either the effect was not handled, or it was mapped; continue trying
           effect = effect_inner
-      raise  # re-raise unhandled effect; none of the handlers returned a value
+      raise effect  # re-raise unhandled effect; none of the handlers returned a value
     else:
       impossible()
 
