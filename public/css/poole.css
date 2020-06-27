@@ -427,3 +427,9 @@ a.pagination-item:hover {
     border-bottom-right-radius: 4px;
   }
 }
+
+@media print {
+  .noprint {
+    display: none;
+  }
+}
