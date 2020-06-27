@@ -30,10 +30,10 @@ Finally, the **Implementation** section describes the full `Parser` API and some
 In an MVC-style application that implements a Thrift server, a Controller's responsibility is to implement Thrift endpoints by accepting Thrift requests and delegate to domain services that implement the expected business logic.
 
 Thrift requests are generally well-structured and well-typed. Despite this, Thrift types have two main issues:
-  1. All Thrift Struct fields are Nullable, even if they are marked ‘required’ in the IDL.
-  2. Thrift primitive types require parsing/transformation into proper Java types. E.g. java.util.UUID
+  1. All Thrift Struct fields are `Nullable`, even if they are marked ‘required’ in the IDL.
+  2. Thrift primitive types require parsing/transformation into proper Java types. E.g. `java.util.UUID`
 
-Issue #1 leads to null-checking code (or overuse of Optionals). For example:
+Issue #1 leads to null-checking code (or overuse of `Optional`s). For example:
 
 ```java
 String transactionId = request.getTransactionId();
@@ -42,7 +42,7 @@ if (transactionId == null) {
 }
 ```
 
-Issue #2 leads to error handling code (usually try-catch blocks) when calling parsing routines like java.util.UUID.fromString(String) or java.date.Instant.parse(String). For example:
+Issue #2 leads to error handling code (usually try-catch blocks) when calling parsing routines like `java.util.UUID.fromString(String)` or `java.date.Instant.parse(String)`. For example:
 
 ```java
 UUID paymentProfileUUID;
