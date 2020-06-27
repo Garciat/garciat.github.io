@@ -138,8 +138,27 @@ a.sidebar-nav-item:focus {
 
 @media (min-width: 64em) {
   .content {
+    max-width: 42rem;
     margin-left: 22rem;
     margin-right: 4rem;
+  }
+}
+
+
+/* Blog Post
+ */
+
+.blogpost {
+  padding-top:    2rem;
+  padding-bottom: 2rem;
+}
+  .blogpost .navigation {
+    margin-bottom: 2rem;
+  }
+
+@media (min-width: 64em) {
+  .blogpost {
+    max-width: 48rem;
   }
 }
 
