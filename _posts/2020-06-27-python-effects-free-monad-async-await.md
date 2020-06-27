@@ -307,7 +307,7 @@ def run_effects(handler: EffectHandler, awaitable: Awaitable[_T]) -> _T:
       if isinstance(answer, _AnswerImpl):
         promise.complete(answer.value)
       else:
-        raise Exception('Unexpected answer {!r}'.format(answer))
+        raise Exception('Unexpected answer: {!r}'.format(answer))
           
   except Effect as effect_inner:
     raise Exception('Unhandled effect: {!r}'.format(effect))
