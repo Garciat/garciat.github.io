@@ -306,7 +306,7 @@ def run_effects(handler: EffectHandler, awaitable: Awaitable[_T]) -> _T:
       else:
         raise Exception('Unexpected answer: {!r}'.format(answer))
           
-  except Effect as effect_inner:
+  except Effect as effect:
     raise Exception('Unhandled effect: {!r}'.format(effect))
   except StopIteration as stop:
     return cast(_T, stop.value)
