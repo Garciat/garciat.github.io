@@ -85,7 +85,6 @@ Let's define trivial handlers that provide stub data for each API operation:
 class StubTwitterHandler(EffectHandler):
   async def handle(self, effect: Effect[Any]) -> Optional[Answer[Any]]:
     if isinstance(effect, GetTweets):
-      print(await send_http(HttpRequest(path='/tweets/{}'.format(effect.user_id))))
       return effect.answer([Tweet(), Tweet()])
     elif isinstance(effect, GetFollowers):
       return effect.answer(['follow1', 'follow2'])
