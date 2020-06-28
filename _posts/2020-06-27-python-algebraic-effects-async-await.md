@@ -141,4 +141,4 @@ final output: 2
 
 ## Implementation
 
-<script src="https://gist.github.com/Garciat/1484d16ae455ca791147a1eab0836f9a.js"></script>
+Full code in [this gist](https://gist.github.com/Garciat/1484d16ae455ca791147a1eab0836f9a)
