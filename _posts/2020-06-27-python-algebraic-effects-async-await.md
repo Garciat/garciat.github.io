@@ -3,6 +3,8 @@ layout:       post
 title:        "Python: Algebraic Effects via async/await"
 date:         2020-06-27
 description:  "I implement some kind of restricted effects system in Python via async/await."
+redirect_from:
+  - /2020/06/27/python-algebraic-effects-async-await/
 ---
 
 ## TL;DR

@@ -3,6 +3,8 @@ layout:       post
 title:        "RE: The long arrow operator in C++"
 date:         2017-07-13 19:10
 description:  "Overloading C++ syntax via constexpr"
+redirect_from:
+  - /2017/07/13/cpp-long-arrow/
 ---
 
 I came accross Ivan Čukić's [post on the long arrow operator](http://cukic.co/2017/07/12/the-long-arrow-operator-in-cxx/) for C++, where he *jokingly* proposes the use of `--->`, `----->`, etc. for dereferencing nested pointer-like structures.

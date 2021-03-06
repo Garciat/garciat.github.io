@@ -2,6 +2,8 @@
 layout:     post
 title:      "Tree traversal order"
 date:       2017-07-05
+redirect_from:
+  - /2017/07/05/tree-order/
 ---
 
 (Referring to [this leetcode problem](https://leetcode.com/problems/binary-tree-postorder-traversal/))

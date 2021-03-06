@@ -3,6 +3,8 @@ layout:       post
 title:        "Rotate a Square Matrix"
 date:         2017-08-21
 description:  "A roundabout implementation of square matrix rotation"
+redirect_from:
+  - /2017/08/21/rotate-square/
 ---
 
 (Referring to [this leetcode problem](https://leetcode.com/problems/rotate-image/).)

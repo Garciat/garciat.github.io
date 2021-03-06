@@ -3,6 +3,8 @@ layout:       post
 title:        "Declarative and composable input validation with rich errors in Java"
 date:         2020-06-27
 description:  "I tackled the problem of data validation in Java with declarative & functional programming inspired by Haskell."
+redirect_from:
+  - /2020/06/27/java-functional-validation/
 ---
 
 ## Contents

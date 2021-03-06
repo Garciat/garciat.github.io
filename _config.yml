@@ -1,11 +1,16 @@
 # Dependencies
-gems: [jekyll-paginate]
+gems:
+  - jekyll-paginate
+  - jekyll-redirect-from
 
 markdown:         kramdown
 highlighter:      rouge
 
 # Permalinks
-permalink:        pretty
+collections:
+  posts:
+    output: true
+    permalink: /:collection/:title
 
 # Setup
 title:            gg

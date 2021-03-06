@@ -2,6 +2,8 @@
 layout:       post
 title:        "Pascal's triangle in Haskell"
 date:         2017-07-09
+redirect_from:
+  - /2017/07/09/haskell-pascal/
 ---
 
 (My answer to [this Stack Overflow question](https://stackoverflow.com/a/44999165/612169).)

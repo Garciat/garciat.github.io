@@ -3,6 +3,8 @@ layout:       post
 title:        "Adding two integers in CPython"
 date:         2017-11-25
 description:  "Analyzing the cost of adding to integers in CPython"
+redirect_from:
+  - /2017/11/25/cpython-int-add/
 ---
 
 Ignoring cheap operations (arithmetic, logical, bits) and some not-so-cheap operations (branching), this is the operational cost of adding two integers in CPython.

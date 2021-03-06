@@ -3,6 +3,8 @@ layout:       post
 title:        "Binary search on the integer number line"
 date:         2017-07-06
 description:  "Exploring the usefulness of C++'s std::partition_point"
+redirect_from:
+  - /2017/07/06/integer-partition/
 ---
 
 Consider a predicate `p(x)` such that:
