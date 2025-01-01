@@ -2,6 +2,7 @@
 title:        "Adding two integers in CPython"
 date:         2017-11-25
 description:  "Analyzing the cost of adding to integers in CPython"
+archived: true
 ---
 
 Ignoring cheap operations (arithmetic, logical, bits) and some not-so-cheap
