@@ -68,10 +68,6 @@ body > footer {
   text-align: center;
 }
 
-body > footer img {
-  display: inline-block;
-}
-
 /* No `:visited` state is required by default (browsers will use `a`) */
 a {
   color: #268bd2;
@@ -87,7 +83,7 @@ a:focus {
 }
 
 a[target="_blank"]::after {
-  content: " 🔗" / "opens in new tab/window";
+  content: "\00A0🔗" / "opens in new tab/window";
 }
 
 /* Headings */
@@ -228,13 +224,6 @@ blockquote p:last-child {
   }
 }
 
-img {
-  display: block;
-  max-width: 100%;
-  margin: 0 0 1rem;
-  border-radius: 5px;
-}
-
 /* Tables */
 table {
   margin-bottom: 1rem;
@@ -345,7 +334,7 @@ tbody tr:nth-child(odd) th {
 }
 
 .page > .page-title {
-  margin-bottom: 3rem;
+  margin-bottom: 2rem;
 }
 
 /* Meta data line below post title */

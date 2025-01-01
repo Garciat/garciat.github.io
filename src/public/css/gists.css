@@ -1,0 +1,45 @@
+.gists {
+  display: flex;
+  flex-wrap: wrap;
+
+  margin: -0.5rem;
+  padding: 0;
+}
+
+.gists .gist {
+  list-style: none;
+  flex: calc(50% - 1rem);
+  margin: 0.5rem;
+  padding: 0.5rem;
+  border: 1px solid #ccc;
+}
+
+.gist header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.gist header a {
+  display: inline-block;
+  vertical-align: middle;
+  white-space: nowrap;
+}
+
+.gist header .gist-id {
+  font-weight: bold;
+}
+
+.gists .gist header .gist-id {
+  max-width: 10rem;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.gist header .source {
+  color: inherit;
+}
+
+.gist ul {
+  margin: 0;
+}

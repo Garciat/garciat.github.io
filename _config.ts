@@ -1,7 +1,7 @@
 import lume from "lume/mod.ts";
 import date from "lume/plugins/date.ts";
 import jsx from "lume/plugins/jsx_preact.ts";
-import esbuild from "lume/plugins/esbuild.ts";
+// import esbuild from "lume/plugins/esbuild.ts";
 import code_highlight from "lume/plugins/code_highlight.ts";
 
 import beautify from "npm:js-beautify@1.15.1";
@@ -19,22 +19,22 @@ site.use(jsx({
   extensions: [".tsx"],
 }));
 
-site.use(esbuild({
-  extensions: [".ts", ".js"],
-  options: {
-    plugins: [],
-    bundle: false,
-    format: "esm",
-    minify: false,
-    keepNames: true,
-    platform: "browser",
-    target: "esnext",
-    treeShaking: false,
-    outdir: "./",
-    outbase: ".",
-    jsxImportSource: "npm:preact@10.25.3", // avoid cache import
-  },
-}));
+// site.use(esbuild({
+//   extensions: [".ts", ".js"],
+//   options: {
+//     plugins: [],
+//     bundle: false,
+//     format: "esm",
+//     minify: false,
+//     keepNames: true,
+//     platform: "browser",
+//     target: "esnext",
+//     treeShaking: false,
+//     outdir: "./",
+//     outbase: ".",
+//     jsxImportSource: "npm:preact@10.25.3", // avoid cache import
+//   },
+// }));
 
 site.use(date());
 

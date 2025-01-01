@@ -13,8 +13,8 @@ export default ({ config, title }: Lume.Data, { url }: Lume.Helpers) => {
       <title>{`${title} · ${config.title}`}</title>
 
       <link rel="stylesheet" href={url("/public/css/poole.css")} />
-      <link rel="stylesheet" href={url("/public/css/syntax.css")} />
       <link rel="stylesheet" href={url("/public/css/hyde.css")} />
+      <link rel="stylesheet" href={url("/public/css/gists.css")} />
       <link
         rel="stylesheet"
         href="https://fonts.googleapis.com/css?family=PT+Sans:400,400italic,700|Abril+Fatface"
