@@ -3,11 +3,15 @@ interface NavItemProps {
   title: string;
   currentUrl?: string;
   normalizedUrl?: string;
+  target?: string;
 }
 
-const NavItem = ({ url, title, currentUrl, normalizedUrl }: NavItemProps) => (
+const NavItem = (
+  { url, title, currentUrl, normalizedUrl, target }: NavItemProps,
+) => (
   <a
     class={`sidebar-nav-item ${currentUrl === url ? "active" : ""}`}
+    target={target}
     href={normalizedUrl || url}
   >
     {title}
@@ -38,6 +42,7 @@ export default ({ search, config, url }: Lume.Data, h: Lume.Helpers) => {
           <NavItem
             url="https://github.com/garciat"
             title="GitHub"
+            target="_blank"
           />
 
           {search.pages("type=page", "title=asc").map((page) => (
