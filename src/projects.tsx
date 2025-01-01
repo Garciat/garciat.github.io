@@ -18,7 +18,7 @@ function isGitHubProject(repo: { has_pages: boolean; topics: string[] }) {
 }
 
 async function* getGitHubProjects() {
-  const responses = await octokit.paginate.iterator(
+  const responses = octokit.paginate.iterator(
     "GET /users/{username}/repos",
     {
       username: "Garciat",

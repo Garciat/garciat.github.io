@@ -1,7 +1,10 @@
-export default ({ comp, url, children }: Lume.Data, _helpers: Lume.Helpers) => {
+export default (
+  { comp, url, title, children }: Lume.Data,
+  _helpers: Lume.Helpers,
+) => {
   return (
     <html>
-      <comp.Head />
+      <comp.Head title={title} />
 
       <body>
         <comp.Sidebar url={url} />

@@ -4,7 +4,7 @@ export default (
 ) => {
   return (
     <html lang="en-us">
-      <comp.Head />
+      <comp.Head title={title} />
 
       <body>
         <div class="blogpost container">
