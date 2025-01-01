@@ -1,5 +1,6 @@
 ---
-layout: page
+layout: layouts/page.tsx
+type: page
 title: About
 ---
 

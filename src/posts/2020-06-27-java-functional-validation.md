@@ -1,41 +1,50 @@
 ---
-layout:       post
 title:        "Declarative and composable input validation with rich errors in Java"
 date:         2020-06-27
 description:  "I tackled the problem of data validation in Java with declarative & functional programming inspired by Haskell."
-redirect_from:
-  - /2020/06/27/java-functional-validation/
 ---
 
 ## Contents
+
 {:.no_toc}
 
-1. TOC
-{:toc}
+1. TOC {:toc}
 
 ## Abstract
 
-This proposal tackles input validation in Java with a functional Parser abstraction.
+This proposal tackles input validation in Java with a functional Parser
+abstraction.
 
-The **Problem** section describes input validation logic in MVC Controllers, and why manual validation logic is sub-optimal.
+The **Problem** section describes input validation logic in MVC Controllers, and
+why manual validation logic is sub-optimal.
 
 The **Alternatives** section explores existing solutions to this problem.
 
-**Solution - an example** shows an example of the Parser abstraction in a simulated scenario.
+**Solution - an example** shows an example of the Parser abstraction in a
+simulated scenario.
 
-**Solution - a tutorial** explains how the Parser abstraction can be derived, step by step.
+**Solution - a tutorial** explains how the Parser abstraction can be derived,
+step by step.
 
-Finally, the **Implementation** section describes the full `Parser` API and some of its implementation details.
+Finally, the **Implementation** section describes the full `Parser` API and some
+of its implementation details.
 
-All source code is available at [github.com/garciat/java-functional](https://github.com/Garciat/java-functional).
+All source code is available at
+[github.com/garciat/java-functional](https://github.com/Garciat/java-functional).
 
 ## Problem
 
-In an MVC-style application that implements a Thrift server, a Controller's responsibility is to implement Thrift endpoints by accepting Thrift requests and delegate to domain services that implement the expected business logic.
+In an MVC-style application that implements a Thrift server, a Controller's
+responsibility is to implement Thrift endpoints by accepting Thrift requests and
+delegate to domain services that implement the expected business logic.
 
-Thrift requests are generally well-structured and well-typed. Despite this, Thrift types have two main issues:
-  1. All Thrift Struct fields are `Nullable`, even if they are marked ‘required’ in the IDL.
-  2. Thrift primitive types require parsing/transformation into proper Java types. E.g. `java.util.UUID`
+Thrift requests are generally well-structured and well-typed. Despite this,
+Thrift types have two main issues:
+
+1. All Thrift Struct fields are `Nullable`, even if they are marked ‘required’
+   in the IDL.
+2. Thrift primitive types require parsing/transformation into proper Java types.
+   E.g. `java.util.UUID`
 
 Issue #1 leads to null-checking code (or overuse of `Optional`s). For example:
 
@@ -46,7 +55,9 @@ if (transactionId == null) {
 }
 ```
 
-Issue #2 leads to error handling code (usually try-catch blocks) when calling parsing routines like `java.util.UUID.fromString(String)` or `java.date.Instant.parse(String)`. For example:
+Issue #2 leads to error handling code (usually try-catch blocks) when calling
+parsing routines like `java.util.UUID.fromString(String)` or
+`java.date.Instant.parse(String)`. For example:
 
 ```java
 UUID paymentProfileUUID;
@@ -57,13 +68,19 @@ try {
 }
 ```
 
-A (minor) issue that arises from this type of code is that, because we fail fast on each validation, calling APIs with many arguments can be a painful trial and error process. This is a reasonable trade off, however, because trying to accumulate errors in an ad-hoc manner in the controller would further exacerbate the above code issues.
+A (minor) issue that arises from this type of code is that, because we fail fast
+on each validation, calling APIs with many arguments can be a painful trial and
+error process. This is a reasonable trade off, however, because trying to
+accumulate errors in an ad-hoc manner in the controller would further exacerbate
+the above code issues.
 
 ## Alternatives
 
 ### javax.validation
 
-**javax.validation** is a standard Java validation framework. It relies on `@Annotations` to declaratively specify the requirements on each field of a class. For example:
+**javax.validation** is a standard Java validation framework. It relies on
+`@Annotations` to declaratively specify the requirements on each field of a
+class. For example:
 
 ```java
 public class User {
@@ -89,11 +106,17 @@ public class User {
 }
 ```
 
-The problem with javax.validation is that _it doesn’t produce any evidence that validation actually happened_. For example, the above “email” field will be validated against the standard email format, but *its type remains as String*, so downstream code must simply trust that the value has been validated at some earlier point.
+The problem with javax.validation is that _it doesn’t produce any evidence that
+validation actually happened_. For example, the above “email” field will be
+validated against the standard email format, but _its type remains as String_,
+so downstream code must simply trust that the value has been validated at some
+earlier point.
 
-This approach is error-prone and can shift part of the burden downstream in the code.
+This approach is error-prone and can shift part of the burden downstream in the
+code.
 
-Any approach with an interface similar to the one below will have similar shortcomings:
+Any approach with an interface similar to the one below will have similar
+shortcomings:
 
 ```java
 interface Validator<T> {
@@ -105,7 +128,8 @@ interface Validator<T> {
 
 Imagine parsing these hypothetical Thrift types:
 
-(Note: here I use [lombok](https://projectlombok.org/) to define immutable POJOs.)
+(Note: here I use [lombok](https://projectlombok.org/) to define immutable
+POJOs.)
 
 ```java
 @Value
@@ -147,7 +171,8 @@ Parser<String, Instant> instantParser = Parser.lift(Instant::parse);
 Parser<String, Currency> currencyParser = Parser.lift(Currency::getInstance);
 ```
 
-Then, this is how we define the parsers from the Thrift types to our target types:
+Then, this is how we define the parsers from the Thrift types to our target
+types:
 
 ```java
 Parser<ThriftNested, ProperNested> nestedParser =
@@ -178,7 +203,8 @@ For example when parsing a bad object where **all the fields are invalid**:
 ThriftThing bad1 = new ThriftThing("123", null, "111", null);
 ```
 
-The Parser **will continue parsing** if one of the fields fails. This allows the Parser to accumulate all the errors into a tree-like structure:
+The Parser **will continue parsing** if one of the fields fails. This allows the
+Parser to accumulate all the errors into a tree-like structure:
 
 ```
 Either.failure(
@@ -195,7 +221,8 @@ Either.failure(
                 message="Invalid UUID string: 123")))))))
 ```
 
-The ParseFailure data structure can the be formatted into a human-readable format:
+The ParseFailure data structure can the be formatted into a human-readable
+format:
 
 ```
 Parsing type com.example.ThriftThing
@@ -217,7 +244,8 @@ ThriftThing good =
     "1-1-1-1-1", "2020-05-20T10:23:31Z", null, new ThriftNested("hello"));
 ```
 
-The successful result looks like this (that’s just the `toString()` implementation of `ProperThing`):
+The successful result looks like this (that’s just the `toString()`
+implementation of `ProperThing`):
 
 ```java
 Either.success(
@@ -240,7 +268,8 @@ interface Validator<T> {
 }
 ```
 
-In contrast to the `Validator` interface above, consider this `Parser` interface:
+In contrast to the `Validator` interface above, consider this `Parser`
+interface:
 
 ```java
 interface Parser<T, R> {
@@ -248,21 +277,28 @@ interface Parser<T, R> {
 }
 ```
 
-This interface will not only check that the input is valid and fail if it isn’t, but also it will produce A Valid Object as output.
+This interface will not only check that the input is valid and fail if it isn’t,
+but also it will produce A Valid Object as output.
 
 For example:
 
-A `Parser<String, UUID>` is a function that takes a `String` as an input, validates its format and produces a `UUID` object that contains (and maintains, through immutability!) the valid uuid information. If the String format is not correct, the function will throw a `ParseException`.
+A `Parser<String, UUID>` is a function that takes a `String` as an input,
+validates its format and produces a `UUID` object that contains (and maintains,
+through immutability!) the valid uuid information. If the String format is not
+correct, the function will throw a `ParseException`.
 
-A `Parser<Optional<String>, String>` is a function that takes a `Optional<String>` and produces a `String` if the input is not empty.
+A `Parser<Optional<String>, String>` is a function that takes a
+`Optional<String>` and produces a `String` if the input is not empty.
 
 You can imagine what these do:
-  * `Parser<String, Instant>`
-  * `Parser<ThriftRequest, DomainRequest>`
+
+- `Parser<String, Instant>`
+- `Parser<ThriftRequest, DomainRequest>`
 
 ### Composition is key
 
-The reality is that more than one validation may apply to a single input. For example:
+The reality is that more than one validation may apply to a single input. For
+example:
 
 ```java
 String accountId = request.getAccountId();
@@ -277,9 +313,11 @@ try {
 }
 ```
 
-The code first validates that `accountId` is not null, then it validates that a `UUID` can be parsed from it.
+The code first validates that `accountId` is not null, then it validates that a
+`UUID` can be parsed from it.
 
-The `Parser` abstraction must account for validation sequencing. In a way, it already does:
+The `Parser` abstraction must account for validation sequencing. In a way, it
+already does:
 
 ```java
 Parser<Optional<String>, String> requiredStringParser = ...;
@@ -291,9 +329,11 @@ UUID paymentProfileUuid =
       Optional.ofNullable(request.getAccountId()));
 ```
 
-It is possible to manually thread the input & outputs of each parser to get the desired result.
+It is possible to manually thread the input & outputs of each parser to get the
+desired result.
 
-If either parser throws a `ParseException`, because of how exceptions work, the apparent effect is the same.
+If either parser throws a `ParseException`, because of how exceptions work, the
+apparent effect is the same.
 
 However, consider what would happen if the code used 4 parsers in succession:
 
@@ -301,7 +341,8 @@ However, consider what would happen if the code used 4 parsers in succession:
 xParser.parse(yParser.parse(zParser.parse(wParser.parse(input))))
 ```
 
-Because of the order of evaluation of expressions, the sequence code reads inside-out:
+Because of the order of evaluation of expressions, the sequence code reads
+inside-out:
 
 <dl><dd>
 
@@ -309,7 +350,8 @@ wParser runs first, then zParser, then yParser, and finally xParser
 
 </dd></dl>
 
-Adding a composition operation can make the code more readable by reading left to right:
+Adding a composition operation can make the code more readable by reading left
+to right:
 
 ```java
 interface Parser<T, R> {
@@ -319,10 +361,13 @@ interface Parser<T, R> {
 }
 ```
 
-The `andThen` method of a `Parser<T, R>` takes a `Parser<R, S>` and returns a `Parser<T, S>`. This means that the output of `Parser<T, R>` is automatically threaded to `Parser<T, S>`. The result is a new parser that can take `T` objects as input and produce `S` objects as output.
+The `andThen` method of a `Parser<T, R>` takes a `Parser<R, S>` and returns a
+`Parser<T, S>`. This means that the output of `Parser<T, R>` is automatically
+threaded to `Parser<T, S>`. The result is a new parser that can take `T` objects
+as input and produce `S` objects as output.
 
 <p style="text-align: center;">
-<img src="{{ site.baseurl }}/public/resources/java-functional-validation/fun1.png" style="display:inline-block" />
+<img src="/public/resources/java-functional-validation/fun1.png" style="display:inline-block" />
 </p>
 
 Making use of the composition method:
@@ -337,8 +382,9 @@ Parser<Optional<String>, UUID> requiredUuidParser =
 UUID paymentProfileUuid = requiredUuidParser.parse(Optional.of(request.getAccountId()));
 ```
 
-Through Parser composition, a new reusable Parser was created without writing any implementation code.
-Also, the hypothetical 4 parser case now reads left to right:
+Through Parser composition, a new reusable Parser was created without writing
+any implementation code. Also, the hypothetical 4 parser case now reads left to
+right:
 
 ```java
 wParser.andThen(zParser).andThen(yParser).andThen(xParser).parse(input)
@@ -346,15 +392,22 @@ wParser.andThen(zParser).andThen(yParser).andThen(xParser).parse(input)
 
 ### Parsers out of thin air
 
-Because all Thrift getters return `@Nullable` objects, we are forced to deal with null in every case. So this one bit of code is likely to repeat many times when parsing Thrift:
+Because all Thrift getters return `@Nullable` objects, we are forced to deal
+with null in every case. So this one bit of code is likely to repeat many times
+when parsing Thrift:
 
 ```java
 Optional.of(request.getAccountId())
 ```
 
-So far, Parser implementations have done “actual parsing work”. However, it can be useful to admit simpler parsers into the vocabulary.
+So far, Parser implementations have done “actual parsing work”. However, it can
+be useful to admit simpler parsers into the vocabulary.
 
-For example, the getter `ThriftRequest::getAccountId` is a `Function<ThriftRequest, @Nullable String>`. In a way, this can be seen as “parsing” a `@Nullable String` out of the `ThriftRequest`. And this can be represented with a `Parser<ThriftRequest, Optional<String>>` (while also accounting for nulls with `Optional`).
+For example, the getter `ThriftRequest::getAccountId` is a
+`Function<ThriftRequest, @Nullable String>`. In a way, this can be seen as
+“parsing” a `@Nullable String` out of the `ThriftRequest`. And this can be
+represented with a `Parser<ThriftRequest, Optional<String>>` (while also
+accounting for nulls with `Optional`).
 
 Let’s introduce a “constructor” to the interface to represent the above fact:
 
@@ -368,7 +421,10 @@ interface Parser<T, R> {
 }
 ```
 
-The method `liftOptional` takes a `Function<T, R>` and returns a `Parser<T, Optional<R>>`. Remember that a `Parser<T, Optional<R>>` is just a function from `T` (input) to `Optional<R>` (output). So `liftOptional` is simply “changing the type” of the function into a `Parser`.
+The method `liftOptional` takes a `Function<T, R>` and returns a
+`Parser<T, Optional<R>>`. Remember that a `Parser<T, Optional<R>>` is just a
+function from `T` (input) to `Optional<R>` (output). So `liftOptional` is simply
+“changing the type” of the function into a `Parser`.
 
 It is now possible to write:
 
@@ -390,12 +446,13 @@ UUID paymentProfileUuid = accountIdParser.parse(request);
 Notice how the **types match** between inputs and outputs:
 
 <p style="text-align: center;">
-<img src="{{ site.baseurl }}/public/resources/java-functional-validation/fun2.png" style="display:inline-block" />
+<img src="/public/resources/java-functional-validation/fun2.png" style="display:inline-block" />
 </p>
 
 ### Parsers for free
 
-Let's introduce some more methods and constructors to supercharge `Parser` creation an composition:
+Let's introduce some more methods and constructors to supercharge `Parser`
+creation an composition:
 
 ```java
 interface Parser<T, R> {
@@ -411,11 +468,15 @@ interface Parser<T, R> {
 }
 ```
 
-The `lift` method is similar to `liftOptional`, except it does not expect a `null` output. It will also convert all exceptions thrown by the passed `Function` and wrap them with a `ParseException`.
+The `lift` method is similar to `liftOptional`, except it does not expect a
+`null` output. It will also convert all exceptions thrown by the passed
+`Function` and wrap them with a `ParseException`.
 
-The `nonEmpty` method creates a new mapper that works for any type and ensures that the input `Optional` is not empty.
+The `nonEmpty` method creates a new mapper that works for any type and ensures
+that the input `Optional` is not empty.
 
-So far we had omitted the definition of `requiredStringParser` and `uuidParser`. It is now possible to tackle them with minimal code:
+So far we had omitted the definition of `requiredStringParser` and `uuidParser`.
+It is now possible to tackle them with minimal code:
 
 ```java
 Parser<Optional<String>, String> requiredStringParser = Parser.nonEmpty();
@@ -449,7 +510,8 @@ The compiler makes sure along the way that all types match.
 
 ### Exceptions get in the way
 
-Hold on. The code above is not actually returning a `BadRequest` like the original code. Let’s address that:
+Hold on. The code above is not actually returning a `BadRequest` like the
+original code. Let’s address that:
 
 ```java
 Parser<ThriftRequest, UUID> accountIdParser =
@@ -465,13 +527,16 @@ try {
 }
 ```
 
-Eek. That broke the compositional style and brought us back into imperative code.
+Eek. That broke the compositional style and brought us back into imperative
+code.
 
 Exceptions always get in the way.
 
 ### An Optional detour
 
-The `Optional` type in Java is not just a glorified `null` value. Its real value comes from turning a non-compositional construct (`null`) into a compositional one (a normal object).
+The `Optional` type in Java is not just a glorified `null` value. Its real value
+comes from turning a non-compositional construct (`null`) into a compositional
+one (a normal object).
 
 Consider the functions:
 
@@ -505,12 +570,13 @@ if (referrerPort == -1) {
 }
 ```
 
-Notice that the code doing actual work is obfuscated by the error handling code. Not only that, each function fails in a different way, so the code is not even uniform.
+Notice that the code doing actual work is obfuscated by the error handling code.
+Not only that, each function fails in a different way, so the code is not even
+uniform.
 
 Optional to the rescue:
 
 ```java
-
 Optional<String> getHeader(Request request, String name);
 
 Optional<URI> parseURI(String input);
@@ -528,7 +594,11 @@ int referrerPort =
     .orElseThrow(/* jump out */);
 ```
 
-The `flatMap` method of an `Optional<T>` takes a “continuation callback” of type `Function<T, Optional<U>>`. Then it performs the logic: if the `Optional<T>` is empty, then return an empty `Optional<U>`. If the `Optional<T>` contains a `T`, pass that `T` to `Function<T, Optional<U>>` to get an `Optional<U>` and return that.
+The `flatMap` method of an `Optional<T>` takes a “continuation callback” of type
+`Function<T, Optional<U>>`. Then it performs the logic: if the `Optional<T>` is
+empty, then return an empty `Optional<U>`. If the `Optional<T>` contains a `T`,
+pass that `T` to `Function<T, Optional<U>>` to get an `Optional<U>` and return
+that.
 
 We can leverage `Optional` to handle failure in our `Parser`:
 
@@ -555,7 +625,9 @@ This is much neater.
 
 ### It’s Either way
 
-The `Parser` returning `Optional` is neater, but now it is not possible to know why the parse failed. An `Optional`’s empty case does not contain any context for _why it is empty_:
+The `Parser` returning `Optional` is neater, but now it is not possible to know
+why the parse failed. An `Optional`’s empty case does not contain any context
+for _why it is empty_:
 
 ```java
 interface Optional<T> {
@@ -566,7 +638,9 @@ interface Optional<T> {
 }
 ```
 
-Notice `Optional::empty` takes no arguments. We would like to provide a context object when there is a failure parsing, and `Optional::empty` does not allow this.
+Notice `Optional::empty` takes no arguments. We would like to provide a context
+object when there is a failure parsing, and `Optional::empty` does not allow
+this.
 
 Enter the `Either` type:
 
@@ -579,7 +653,10 @@ interface Either<T, F> {
 }
 ```
 
-`Either<T, F>` is just like an `Optional<T>`: when constructed in a “successful state,” the `Either` contains an object of type `T`. The main difference is that it also carries an object of type `F` when it is constructed in a “failure state”.
+`Either<T, F>` is just like an `Optional<T>`: when constructed in a “successful
+state,” the `Either` contains an object of type `T`. The main difference is that
+it also carries an object of type `F` when it is constructed in a “failure
+state”.
 
 Let’s adjust the `Parser` interface:
 
@@ -634,7 +711,8 @@ InputCursor cursor =
     .orElseThrow(failure -> new BadRequest().setMessage(failure.getMessage()));
 ```
 
-Because each `Parser` separately parses a single value and fails individually, the code still ends up repeating the failure handling code:
+Because each `Parser` separately parses a single value and fails individually,
+the code still ends up repeating the failure handling code:
 
 ```java
 .orElseThrow(failure -> new BadRequest().setMessage(failure.getMessage()));
@@ -672,9 +750,12 @@ z = y.with((Parser<ThriftThing, ZoneId>) contextTimezoneParser)
       Function<ZoneId, Function<UUID, DomainThing>>>
 ```
 
-Notice how the type parameter `F` starts with the initial result type `DomainThing` and ends up accumulating the output types of all the parsers added, using the `with` method, as nested `Function`s.
+Notice how the type parameter `F` starts with the initial result type
+`DomainThing` and ends up accumulating the output types of all the parsers
+added, using the `with` method, as nested `Function`s.
 
-When `build` is eventually called, its input parameter `handler` will require of the caller this accumulated function:
+When `build` is eventually called, its input parameter `handler` will require of
+the caller this accumulated function:
 
 ```java
 Function<ZoneId, Function<UUID, DomainThing>> handler
@@ -732,9 +813,11 @@ And yes, that’s the full parser code.
 
 A couple of notes:
 
-  * This may be slightly out of date. Please refer to the [full code](https://github.com/Garciat/java-functional/tree/master/validation/src/main/java/com/garciat/functional).
-  * The implementation differs slightly from the code described above:
-    * Field-based methods in `ParserComposition` were extracted into a utility class `Fields`.
+- This may be slightly out of date. Please refer to the
+  [full code](https://github.com/Garciat/java-functional/tree/master/validation/src/main/java/com/garciat/functional).
+- The implementation differs slightly from the code described above:
+  - Field-based methods in `ParserComposition` were extracted into a utility
+    class `Fields`.
 
 ### Either
 
@@ -780,13 +863,14 @@ public abstract class Either<T, F> {
 
 #### Functional concepts
 
-  * `Functor` via `Either::map`
-  * `Applicative Functor` via `Either::merge` (with a merge operation for `F`)
-  * `Monad` via `Either::flatMap`
+- `Functor` via `Either::map`
+- `Applicative Functor` via `Either::merge` (with a merge operation for `F`)
+- `Monad` via `Either::flatMap`
 
 ### ParseFailure
 
-This class forms a recursive tree-like structure that describes failure. `format()` returns a human-readable form.
+This class forms a recursive tree-like structure that describes failure.
+`format()` returns a human-readable form.
 
 ```java
 public abstract class ParseFailure {
@@ -856,7 +940,9 @@ public interface Parser<T, R> {
 
 #### Parser::merge
 
-Runs two `Parser`s “in parallel” and merges their output with the provided `merger` function. When both parsers fail, their failure objects are concatenated with `ParserFailure::merge`.
+Runs two `Parser`s “in parallel” and merges their output with the provided
+`merger` function. When both parsers fail, their failure objects are
+concatenated with `ParserFailure::merge`.
 
 ```java
 static <T, A, B, C> Parser<T, C> merge(
@@ -874,11 +960,11 @@ static <T, A, B, C> Parser<T, C> merge(
 
 #### Functional concepts
 
-  * `Functor` via `Parser::map`
-  * `Category` via `Parser::id` and `Parser::andThen`
-  * `Applicative Functor` via `Parser::merge`
-  * `Alternative Functor` via `Parser::recoverWith`
-  * `Monad` via `Parser::flatMap`
+- `Functor` via `Parser::map`
+- `Category` via `Parser::id` and `Parser::andThen`
+- `Applicative Functor` via `Parser::merge`
+- `Alternative Functor` via `Parser::recoverWith`
+- `Monad` via `Parser::flatMap`
 
 ### Parsers
 
@@ -911,7 +997,8 @@ public final class Parsers {
 
 ### Getter
 
-Makes use of **reflection** to provide information on the method reference used to construct the `Getter`.
+Makes use of **reflection** to provide information on the method reference used
+to construct the `Getter`.
 
 ```java
 @FunctionalInterface
@@ -931,7 +1018,8 @@ public interface Getter<T, R> extends NullableFunction<T, R>, Serializable {
 
 ### Fields
 
-Constructs `Parser` instances from `Getter` instances, which are used to provide failure diagnostics through `Getter`'s refelection-based information.
+Constructs `Parser` instances from `Getter` instances, which are used to provide
+failure diagnostics through `Getter`'s refelection-based information.
 
 ```java
 public final class Fields {
@@ -983,7 +1071,8 @@ public abstract class ParserComposition<T, R, F> {
 
 This one’s hard to explain (:
 
-The point is that it uses `Parser::merge` to compose parsers. Then all failure is accumulated.
+The point is that it uses `Parser::merge` to compose parsers. Then all failure
+is accumulated.
 
 ```java
 public abstract class ParserComposition<T, R, F> {

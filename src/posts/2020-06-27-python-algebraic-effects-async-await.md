@@ -1,21 +1,21 @@
 ---
-layout:       post
 title:        "Python: Algebraic Effects via async/await"
 date:         2020-06-27
 description:  "I implement some kind of restricted effects system in Python via async/await."
-redirect_from:
-  - /2020/06/27/python-algebraic-effects-async-await/
 ---
 
 ## TL;DR
 
-The full source code can be found in [this gist](https://gist.github.com/Garciat/1484d16ae455ca791147a1eab0836f9a).
+The full source code can be found in
+[this gist](https://gist.github.com/Garciat/1484d16ae455ca791147a1eab0836f9a).
 
 ## The Challenge
 
-We are looking to implement a library through which side-effect "requests" can be separated from their implementation.
+We are looking to implement a library through which side-effect "requests" can
+be separated from their implementation.
 
-A requirement of this implementation is that it is as type-safe as possible and that it type-checks under `mypy --strict`.
+A requirement of this implementation is that it is as type-safe as possible and
+that it type-checks under `mypy --strict`.
 
 Let's go.
 
@@ -30,7 +30,8 @@ T = TypeVar('T')
 class Effect(Generic[T], ABC): ...
 ```
 
-An `Effect[T]` is an _abstract generic type_ that describes an effect that produces a value of type `T`.
+An `Effect[T]` is an _abstract generic type_ that describes an effect that
+produces a value of type `T`.
 
 For example, we may describe an API to fetch tweets like so:
 
@@ -47,9 +48,12 @@ class GetTweets(Effect[List[Tweet]]):
   user_id: str
 ```
 
-This type definition means: `GetTweets` is an `Effect` that produces a `List` of `Tweet`s.
+This type definition means: `GetTweets` is an `Effect` that produces a `List` of
+`Tweet`s.
 
-We have a simple type by which we can describe effects that produce values: `Effect[T]`. Now, we need something that can handle (or run) these effects in order to produce actual values.
+We have a simple type by which we can describe effects that produce values:
+`Effect[T]`. Now, we need something that can handle (or run) these effects in
+order to produce actual values.
 
 ```python
 from abc import abstractmethod
@@ -60,9 +64,12 @@ class EffectHandler(ABC):
   def handle(self, effect: Effect[Any]) -> Any: ...
 ```
 
-`EffectHandler` is an _abstract type_ with an operation `handle` that takes an `Effect[Any]` (any type of effect) and returns a value that is produced from handling the effect.
+`EffectHandler` is an _abstract type_ with an operation `handle` that takes an
+`Effect[Any]` (any type of effect) and returns a value that is produced from
+handling the effect.
 
-For example, we may implement a class that is able to handle effects related to the Twitter API:
+For example, we may implement a class that is able to handle effects related to
+the Twitter API:
 
 ```python
 class StubTwitterHandler(EffectHandler):
@@ -79,7 +86,8 @@ StubTwitterHandler().handle(GetTweets('garciat_com'))
 # returns: [Tweet(), Tweet(), Tweet()]
 ```
 
-However, if we defined a new effect for logging, this `StubTwitterHandler` would not handle the effect:
+However, if we defined a new effect for logging, this `StubTwitterHandler` would
+not handle the effect:
 
 ```python
 @dataclass(frozen = True)
@@ -91,18 +99,23 @@ StubTwitterHandler().handle(Log('this is a message'))
 ```
 
 Great. We now have two fundamental definitions at hand:
-  * An `Effect[T]` describes an effect that produces values of type `T`.
-  * An `EffectHandler` is able to handle/execute/run a _subset_ of effects.
+
+- An `Effect[T]` describes an effect that produces values of type `T`.
+- An `EffectHandler` is able to handle/execute/run a _subset_ of effects.
 
 ## Using Generators to Emit Effects
 
-Python Generators allow two functions to communicate with 'message passing'. This is a good fit for our goal of separating side-effect requests from side-effects implementation.
+Python Generators allow two functions to communicate with 'message passing'.
+This is a good fit for our goal of separating side-effect requests from
+side-effects implementation.
 
 For example:
-  1. A generator produces an instance of `Effect[T]` and then pauses execution.
-  2. The underlying 'effect system' invokes the relevant `EffectHandler` to obtain a value of type `T`.
-  3. The value `T` is passed to the generator to resume its execution.
-  4. Repeat until generator terminates.
+
+1. A generator produces an instance of `Effect[T]` and then pauses execution.
+2. The underlying 'effect system' invokes the relevant `EffectHandler` to obtain
+   a value of type `T`.
+3. The value `T` is passed to the generator to resume its execution.
+4. Repeat until generator terminates.
 
 In code:
 
@@ -124,11 +137,16 @@ Notice that some type declarations are missing and have `???` instead. Why?
 
 ## The Typing Problem With Generators
 
-The `typing` module describes the type of generators as `Generator[YieldType, SendType, ReturnType]`.
+The `typing` module describes the type of generators as
+`Generator[YieldType, SendType, ReturnType]`.
 
-The problem with this definition is that there is no static relationship between `YieldType` and `SendType`. That is, given `x = yield e` where `e: Effect[T]`, we would like `x` to _statically_ have type `T`.
+The problem with this definition is that there is no static relationship between
+`YieldType` and `SendType`. That is, given `x = yield e` where `e: Effect[T]`,
+we would like `x` to _statically_ have type `T`.
 
-Saying `Generator[Effect[T], T, ...]` would not work, because the type `T` is determined at the call time of the generator function, and not by the body of the function.
+Saying `Generator[Effect[T], T, ...]` would not work, because the type `T` is
+determined at the call time of the generator function, and not by the body of
+the function.
 
 For example:
 
@@ -148,21 +166,27 @@ error: Incompatible types in assignment (expression has type "T", variable has t
 
 ## `await` is like `yield` with ∀
 
-We observed that `yield`'s type is determined by its `Generator` type. `await`'s type, however, is _universally quantified_:
+We observed that `yield`'s type is determined by its `Generator` type. `await`'s
+type, however, is _universally quantified_:
 
 `∀T. y : T = await (x : Awaitable[T])`.
 
 In English:
-  * for all type `T`
-    * given `y = await x`
-      * `x` has type `Awaitable[T]`
-      * and `y` has type `T`
+
+- for all type `T`
+  - given `y = await x`
+    - `x` has type `Awaitable[T]`
+    - and `y` has type `T`
 
 Now, what is an `Awaitable[T]` and how do we turn our `Effect[T]` into one?
 
-`Awaitable[T]` stands for a type that has a method `__await__(self) -> Generator[Any, None, T]`. In other words, given an `aw : Awaitable[T]`, `aw.__await__()` must return a generator that eventually terminates by returning a value of type `T`.
+`Awaitable[T]` stands for a type that has a method
+`__await__(self) -> Generator[Any, None, T]`. In other words, given an
+`aw : Awaitable[T]`, `aw.__await__()` must return a generator that eventually
+terminates by returning a value of type `T`.
 
-At the moment, it is not clear how we would implement the `__await__` method. However, we may start defining a type that wraps `Effect`s into `Awaitable`s:
+At the moment, it is not clear how we would implement the `__await__` method.
+However, we may start defining a type that wraps `Effect`s into `Awaitable`s:
 
 ```python
 from typing import Awaitable, Generator
@@ -184,7 +208,8 @@ async def get_tweets(user_id: str) -> List[Tweet]:
 
 This successfully type-checks with `mypy --strict`.
 
-We may now revisit our untypable definitions (those with the `???`) and give them proper types:
+We may now revisit our untypable definitions (those with the `???`) and give
+them proper types:
 
 ```python
 async def print_user_tweets(user_id: str) -> int:
@@ -197,7 +222,9 @@ def run_effects(handler: EffectHandler, awaitable: Awaitable[T]) -> T:
   # 'effect system' implementation
 ```
 
-Great. It's interesting how the `print_user_tweets` function is not aware of the existence of the effects mechanism. As far as it is concerned, it is calling a 'regular async function' `get_tweets` to get the list of tweets.
+Great. It's interesting how the `print_user_tweets` function is not aware of the
+existence of the effects mechanism. As far as it is concerned, it is calling a
+'regular async function' `get_tweets` to get the list of tweets.
 
 ## Understanding `__await__`
 
@@ -227,7 +254,8 @@ Traceback (most recent call last):
 
 The call graph eventually reaches the `__await__` method we defined.
 
-In order for the flow to continue, `__await__` in `EffectFuture[T]` must return a value of type `T`. Where can we get one?
+In order for the flow to continue, `__await__` in `EffectFuture[T]` must return
+a value of type `T`. Where can we get one?
 
 Let's take a closer look at `__await__`'s signature:
 
@@ -240,15 +268,19 @@ Remember the definition of the `Generator` type:
 `Generator[YieldType, SendType, ReturnType]`
 
 In `__await__`'s case, the type variables are set to:
-  * `YieldType = Any`
-  * `SendType = None`
-  * `ReturnType = T`
 
-This means that `__await__` may yield any value, but _it may not receive a value_.
+- `YieldType = Any`
+- `SendType = None`
+- `ReturnType = T`
 
-That's interesting. If it may not receive a value, where will it get the `T` instance that it needs?
+This means that `__await__` may yield any value, but _it may not receive a
+value_.
 
-One option is using `Promise`s. In our context, a `Promise` is a "box" that starts out empty and is filled in once.
+That's interesting. If it may not receive a value, where will it get the `T`
+instance that it needs?
+
+One option is using `Promise`s. In our context, a `Promise` is a "box" that
+starts out empty and is filled in once.
 
 ```python
 from typing import Union
@@ -292,7 +324,10 @@ class EffectFuture(Generic[T], Awaitable[T]):
     return self.promise.value
 ```
 
-We implement `__await__` by yielding the `Future` itself, which contains the `Effect` and the `Promise`. We assume that the effect loop will complete the promise before `__await__` is resumed. Finally, we read the `T` value out of the `Promise` and return it.
+We implement `__await__` by yielding the `Future` itself, which contains the
+`Effect` and the `Promise`. We assume that the effect loop will complete the
+promise before `__await__` is resumed. Finally, we read the `T` value out of the
+`Promise` and return it.
 
 If we run this again:
 
@@ -326,9 +361,12 @@ Traceback (most recent call last):
 StopIteration: 2
 ```
 
-This means that `print_user_tweets` received the list of tweets, performed its loop, and terminated by returning `2` (the length of the list of tweets).
+This means that `print_user_tweets` received the list of tweets, performed its
+loop, and terminated by returning `2` (the length of the list of tweets).
 
-However, a generator's way of signaling termination is by raising `StopIteration`, with a property `value` populated with the return value of the generator. Here, it's `2`.
+However, a generator's way of signaling termination is by raising
+`StopIteration`, with a property `value` populated with the return value of the
+generator. Here, it's `2`.
 
 Here's the full interaction:
 
