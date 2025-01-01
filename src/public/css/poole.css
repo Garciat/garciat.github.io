@@ -185,28 +185,6 @@ pre code {
   background-color: transparent;
 }
 
-/* Gist via GitHub Pages */
-.gist .gist-file {
-  font-family: Menlo, Monaco, "Courier New", monospace !important;
-}
-.gist .markdown-body {
-  padding: 15px;
-}
-.gist pre {
-  padding: 0;
-  background-color: transparent;
-}
-.gist .gist-file .gist-data {
-  font-size: 0.8rem !important;
-  line-height: 1.4;
-}
-.gist code {
-  padding: 0;
-  color: inherit;
-  background-color: transparent;
-  border-radius: 0;
-}
-
 /* Quotes */
 blockquote {
   padding: 0.5rem 1rem;
@@ -239,6 +217,10 @@ th {
 tbody tr:nth-child(odd) td,
 tbody tr:nth-child(odd) th {
   background-color: #f9f9f9;
+}
+
+img {
+  vertical-align: middle;
 }
 
 /*

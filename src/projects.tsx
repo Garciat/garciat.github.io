@@ -1,3 +1,5 @@
+import moment from "npm:moment";
+
 import { Octokit } from "npm:@octokit/core";
 import { paginateRest } from "npm:@octokit/plugin-paginate-rest";
 
@@ -34,6 +36,7 @@ async function* getGitHubProjects() {
       if (isGitHubProject(project)) {
         yield {
           name: project.name,
+          github_url: project.html_url,
           homepage: project.homepage || `https://garciat.com/${project.name}`,
           description: project.description,
           updated_at: new Date(project.updated_at),
@@ -59,7 +62,7 @@ async function consume<T>(iterable: AsyncIterable<T>): Promise<T[]> {
 
 const projects = sortProjects(await consume(getGitHubProjects()));
 
-export default (_data: Lume.Data, { date }: Lume.Helpers) => {
+export default (_data: Lume.Data, _helpers: Lume.Helpers) => {
   return (
     <>
       <ul>
@@ -67,12 +70,19 @@ export default (_data: Lume.Data, { date }: Lume.Helpers) => {
           <li>
             <p>
               <a href={project.homepage}>{project.name}</a>
+              {" — "}
+              <a href={project.github_url}>
+                <img
+                  alt="GitHub Repository"
+                  src="https://img.shields.io/badge/GitHub-source-blue?logo=GitHub
+                  "
+                />
+              </a>
+              <br />
+              Updated {moment(project.updated_at).fromNow()}
             </p>
-            <p>
+            <p class="message">
               {project.description}
-            </p>
-            <p>
-              Last update: {date(project.updated_at, "HUMAN_DATETIME")}
             </p>
           </li>
         ))}
