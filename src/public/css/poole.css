@@ -322,7 +322,11 @@ tbody tr:nth-child(odd) th {
 
 .page,
 .post {
-  margin-bottom: 4em;
+  margin-bottom: 0em;
+}
+
+.posts > .post {
+  margin-bottom: 4rem;
 }
 
 /* Blog post or page title */
@@ -334,6 +338,10 @@ tbody tr:nth-child(odd) th {
 .page-title,
 .post-title {
   margin-top: 0;
+}
+
+.page > .page-title {
+  margin-bottom: 3rem;
 }
 
 /* Meta data line below post title */
