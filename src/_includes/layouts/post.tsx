@@ -11,7 +11,7 @@ export default (
           <div class="navigation noprint">
             <h4>
               <a
-                href={`https://github.com/Garciat/garciat.github.io/tree/master/${config.sourceDir}${page.sourcePath}`}
+                href={`https://github.com/${config.github.repo}/tree/${config.github.branch}/${config.sourceDir}${page.sourcePath}`}
                 style="float:right;color:#999"
               >
                 View post on GitHub
@@ -30,6 +30,8 @@ export default (
             {children}
           </div>
         </div>
+
+        <comp.Footer />
 
         <comp.Analytics />
       </body>

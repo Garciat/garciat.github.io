@@ -10,6 +10,8 @@ export default ({ comp, url, children }: Lume.Data, _helpers: Lume.Helpers) => {
           {children}
         </div>
 
+        <comp.Footer />
+
         <comp.Analytics />
       </body>
     </html>
