@@ -43,6 +43,12 @@ async function* getGitHubProjects() {
   }
 }
 
+function sortProjects<T extends { updated_at: Date }>(projects: T[]): T[] {
+  return projects.toSorted((a, b) =>
+    b.updated_at.getTime() - a.updated_at.getTime()
+  );
+}
+
 async function consume<T>(iterable: AsyncIterable<T>): Promise<T[]> {
   const items = [];
   for await (const item of iterable) {
@@ -51,7 +57,7 @@ async function consume<T>(iterable: AsyncIterable<T>): Promise<T[]> {
   return items;
 }
 
-const projects = await consume(getGitHubProjects());
+const projects = sortProjects(await consume(getGitHubProjects()));
 
 export default (_data: Lume.Data, { date }: Lume.Helpers) => {
   return (
