@@ -16,8 +16,14 @@ export const config = {
   },
   // Content Security Policy
   csp: {
+    "base-uri": [
+      "'none'",
+    ],
     "default-src": [
       "'none'",
+    ],
+    "form-action": [
+      "'self'",
     ],
     "style-src-elem": [
       "'self'",
