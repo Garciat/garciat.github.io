@@ -6,6 +6,7 @@ import code_highlight from "lume/plugins/code_highlight.ts";
 import toc, {
   linkInsideHeader,
 } from "https://deno.land/x/lume_markdown_plugins@v0.8.0/toc.ts";
+import { Node as NodeTOC } from "https://deno.land/x/lume_markdown_plugins@v0.8.0/toc/mod.ts";
 
 import beautify from "npm:js-beautify@1.15.1";
 
@@ -22,28 +23,19 @@ site.use(jsx({
   extensions: [".tsx"],
 }));
 
-// site.use(esbuild({
-//   extensions: [".ts", ".js"],
-//   options: {
-//     plugins: [],
-//     bundle: false,
-//     format: "esm",
-//     minify: false,
-//     keepNames: true,
-//     platform: "browser",
-//     target: "esnext",
-//     treeShaking: false,
-//     outdir: "./",
-//     outbase: ".",
-//     jsxImportSource: "npm:preact@10.25.3", // avoid cache import
-//   },
-// }));
-
 site.use(date());
 
 site.use(toc({
   anchor: linkInsideHeader(),
 }));
+
+declare global {
+  namespace Lume {
+    interface Data {
+      toc: NodeTOC[];
+    }
+  }
+}
 
 site.copy([".wgsl", ".css", ".jpg", ".png", ".html"]);
 

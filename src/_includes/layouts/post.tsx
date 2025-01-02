@@ -31,13 +31,13 @@ export default (
             <nav class="toc">
               <h2>{i18n.nav.toc}</h2>
               <ol>
-                {toc.map((item: any) => (
+                {toc.map((item) => (
                   <>
                     <li>
                       <a href={`#${item.slug}`}>{item.text}</a>
                     </li>
                     <ul hidden={!item.children.length}>
-                      {item.children.map((child: any) => (
+                      {item.children.map((child) => (
                         <li>
                           <a href={`#${child.slug}`}>{child.text}</a>
                         </li>
