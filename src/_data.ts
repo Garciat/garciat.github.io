@@ -1,3 +1,5 @@
+const isDev = Deno.env.get("DEV") === "true";
+
 export const config = {
   title: "garciat",
   titleSeparator: " · ",
@@ -16,7 +18,7 @@ export const config = {
   },
   // Content Security Policy
   csp: {
-    "upgrade-insecure-requests": [],
+    ...(isDev ? {} : { "upgrade-insecure-requests": [] }),
     "base-uri": [
       "'none'",
     ],
@@ -26,7 +28,7 @@ export const config = {
     "form-action": [
       "'self'",
     ],
-    "style-src-elem": [
+    "style-src": [
       "'self'",
       "https://fonts.googleapis.com",
       "https://cdnjs.cloudflare.com",
@@ -41,7 +43,7 @@ export const config = {
     ],
     "script-src-elem": [
       "'self'",
-      Deno.env.get("DEV") === "true" ? "'unsafe-inline'" : "",
+      isDev ? "'unsafe-inline'" : "",
       "https://esm.sh",
     ],
     "connect-src": [
