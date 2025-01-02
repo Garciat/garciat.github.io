@@ -1,7 +1,7 @@
 import moment from "npm:moment";
 
-import { Octokit } from "npm:@octokit/core";
-import { paginateRest } from "npm:@octokit/plugin-paginate-rest";
+import { getPaginatedUserRepos, GitHubRepository } from "./_includes/github.ts";
+import { consume, sortByUpdatedAt } from "./_includes/utils.ts";
 
 export const layout = "layouts/page.tsx";
 
@@ -9,58 +9,35 @@ export const type = "page";
 
 export const title = "Projects";
 
-const GITHUB_TOKEN = Deno.env.get("GITHUB_TOKEN");
-
-const MyOctokit = Octokit.plugin(paginateRest);
-
-const octokit = new MyOctokit({ auth: GITHUB_TOKEN });
-
-function isGitHubProject(repo: { has_pages: boolean; topics: string[] }) {
-  return repo.has_pages && repo.topics.includes("showcase-project");
+interface Project {
+  name: string;
+  github_url: string;
+  homepage: string;
+  description?: string;
+  updated_at: Date;
 }
 
-async function* getGitHubProjects() {
-  const responses = octokit.paginate.iterator(
-    "GET /users/{username}/repos",
-    {
-      username: "Garciat",
-      per_page: 100,
-      headers: {
-        "X-GitHub-Api-Version": "2022-11-28",
-      },
-    },
-  );
+function isGitHubProject(repo: GitHubRepository) {
+  return repo.has_pages && repo.topics?.includes("showcase-project");
+}
 
-  for await (const response of responses) {
+async function* getGitHubProjects(): AsyncGenerator<Project> {
+  for await (const response of getPaginatedUserRepos("Garciat")) {
     for (const project of response.data) {
       if (isGitHubProject(project)) {
         yield {
           name: project.name,
           github_url: project.html_url,
           homepage: project.homepage || `https://garciat.com/${project.name}`,
-          description: project.description,
-          updated_at: new Date(project.updated_at),
+          description: project.description ?? undefined,
+          updated_at: new Date(project.updated_at ?? project.created_at ?? 0),
         };
       }
     }
   }
 }
 
-function sortProjects<T extends { updated_at: Date }>(projects: T[]): T[] {
-  return projects.toSorted((a, b) =>
-    b.updated_at.getTime() - a.updated_at.getTime()
-  );
-}
-
-async function consume<T>(iterable: AsyncIterable<T>): Promise<T[]> {
-  const items = [];
-  for await (const item of iterable) {
-    items.push(item);
-  }
-  return items;
-}
-
-const projects = sortProjects(await consume(getGitHubProjects()));
+const projects = sortByUpdatedAt(await consume(getGitHubProjects()));
 
 export default (_data: Lume.Data, _helpers: Lume.Helpers) => {
   return (
