@@ -37,7 +37,7 @@ declare global {
   }
 }
 
-site.copy([".wgsl", ".css", ".jpg", ".png", ".html"]);
+site.copy([".wgsl", ".css", ".jpg", ".png", ".html", ".js"]);
 
 site.process([".html"], (files) => {
   for (const file of files) {

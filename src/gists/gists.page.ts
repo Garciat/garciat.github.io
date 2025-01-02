@@ -1,23 +1,23 @@
 import { getPaginatedUserGists, GitHubGist } from "../_includes/github.ts";
 import { consume } from "../_includes/utils.ts";
 
-interface Gist {
-  id: string;
-  github_url: string;
-  title?: string;
-  description?: string;
-  files: GistFile[];
-  created_at: Date;
-  updated_at: Date;
-}
-
-interface GistFile {
-  name: string;
-  language?: string;
-  content?: string;
-}
-
 declare global {
+  interface Gist {
+    id: string;
+    github_url: string;
+    title?: string;
+    description?: string;
+    files: GistFile[];
+    created_at: Date;
+    updated_at: Date;
+  }
+
+  interface GistFile {
+    name: string;
+    language?: string;
+    content?: string;
+  }
+
   interface GistPageData {
     type: "gist";
     url: string;

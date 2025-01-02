@@ -100,7 +100,7 @@ const ProjectView = ({ project }: { project: Project }) => (
       {" — "}
       <span>
         {"Updated  "}
-        <time datetime={project.updated_at.toISOString()}>
+        <time datetime={project.updated_at.toISOString()} class="relative-time">
           {moment(project.updated_at).fromNow()}
         </time>
       </span>

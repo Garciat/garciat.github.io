@@ -31,7 +31,7 @@ export default (
         {" — "}
         <span>
           {"Updated  "}
-          <time datetime={gist.updated_at.toISOString()}>
+          <time datetime={gist.updated_at.toISOString()} class="relative-time">
             {moment(gist.updated_at).fromNow()}
           </time>
         </span>

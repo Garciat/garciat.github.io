@@ -31,6 +31,12 @@ export default (
           href={h.url("/favicon.png")}
           type="image/png"
         />
+
+        <script
+          type="module"
+          src={h.url("/public/js/relative-time.js")}
+          defer
+        />
       </head>
 
       <body>
