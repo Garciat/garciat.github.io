@@ -302,6 +302,7 @@ body > footer {
 /* Sidebar nav */
 .sidebar-nav {
   display: flex;
+  flex-wrap: wrap;
 }
 .sidebar-nav-item {
   flex-grow: 1;
