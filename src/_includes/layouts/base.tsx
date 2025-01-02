@@ -1,5 +1,5 @@
 export default (
-  { comp, config, title, description, children }: Lume.Data,
+  { comp, config, url, title, description, children }: Lume.Data,
   h: Lume.Helpers,
 ) => {
   return (
@@ -12,6 +12,8 @@ export default (
         <meta name="viewport" content="width=device-width,initial-scale=1" />
 
         <title>{`${title}${config.titleSeparator}${config.title}`}</title>
+
+        <link rel="canonical" href={h.url(url, true)} />
 
         <link rel="stylesheet" href={h.url("/public/css/main.css")} />
         <link rel="stylesheet" href={h.url("/public/css/gists.css")} />

@@ -1,4 +1,5 @@
 import lume from "lume/mod.ts";
+import sitemap from "lume/plugins/sitemap.ts";
 import date from "lume/plugins/date.ts";
 import jsx from "lume/plugins/jsx_preact.ts";
 // import esbuild from "lume/plugins/esbuild.ts";
@@ -24,6 +25,8 @@ site.use(jsx({
 }));
 
 site.use(date());
+
+site.use(sitemap(/* Options */));
 
 site.use(toc({
   anchor: linkInsideHeader(),
