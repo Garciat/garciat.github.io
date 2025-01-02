@@ -1,4 +1,6 @@
-export default function* ({ gists }: Lume.Data): Generator<Partial<Lume.Data>> {
+export default function* (
+  { config, gists, title }: Lume.Data,
+): Generator<GistPageData | GistFileData> {
   for (const gist of gists) {
     const indexFile = gist.files.find((file) => file.name === "index.html");
 
@@ -7,9 +9,9 @@ export default function* ({ gists }: Lume.Data): Generator<Partial<Lume.Data>> {
     }
 
     const common = {
-      type: "gist",
+      type: "gist" as const,
       url: `/gists/${gist.id}/`,
-      title: gist.id,
+      title: `${gist.title}${config.titleSeparator}${title}`,
       date: gist.created_at,
       gist: gist,
     };
@@ -31,9 +33,28 @@ export default function* ({ gists }: Lume.Data): Generator<Partial<Lume.Data>> {
         continue;
       }
       yield {
+        type: "gist-file",
         url: `/gists/${gist.id}/${file.name}`,
         content: file.content,
       };
     }
+  }
+}
+
+declare global {
+  interface GistPageData {
+    type: "gist";
+    url: string;
+    date: Date;
+    gist: Gist;
+    layout?: string;
+    title?: string;
+    content?: string;
+  }
+
+  interface GistFileData {
+    type: "gist-file";
+    url: string;
+    content?: string;
   }
 }

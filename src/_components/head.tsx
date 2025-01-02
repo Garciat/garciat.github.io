@@ -10,7 +10,7 @@ export default ({ config, title }: Lume.Data, { url }: Lume.Helpers) => {
         content="width=device-width, initial-scale=1.0, maximum-scale=1"
       />
 
-      <title>{`${title} · ${config.title}`}</title>
+      <title>{`${title}${config.titleSeparator}${config.title}`}</title>
 
       <link rel="stylesheet" href={url("/public/css/poole.css")} />
       <link rel="stylesheet" href={url("/public/css/hyde.css")} />

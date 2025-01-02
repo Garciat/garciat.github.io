@@ -6,12 +6,18 @@
   padding: 0;
 }
 
-.gists .gist {
+.gists .item {
   list-style: none;
   flex: calc(50% - 1rem);
   margin: 0.5rem;
   padding: 0.5rem;
   border: 1px solid #ccc;
+}
+
+.gists .item header .gist-id {
+  max-width: 10rem;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 .gist header {
@@ -30,16 +36,22 @@
   font-weight: bold;
 }
 
-.gists .gist header .gist-id {
-  max-width: 10rem;
-  overflow: hidden;
-  text-overflow: ellipsis;
-}
-
 .gist header .source {
   color: inherit;
 }
 
+.gist aside {
+  margin-bottom: 0.5rem;
+}
+
+.gist .message {
+  margin: 0.5rem 0;
+}
+
 .gist ul {
-  margin: 0;
+  margin: 0.5rem 0;
+}
+
+.gist ul li {
+  list-style-type: disc;
 }

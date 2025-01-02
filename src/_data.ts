@@ -1,5 +1,6 @@
 export const config = {
   title: "garciat",
+  titleSeparator: " · ",
   description: "",
   google_analytics: "UA-19283098-3",
   sourceDir: "src",
