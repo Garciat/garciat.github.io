@@ -12,6 +12,7 @@ export default function* (
       type: "gist" as const,
       url: `/gists/${gist.id}/`,
       title: `${gist.title}${config.titleSeparator}${title}`,
+      description: gist.description,
       created_at: gist.created_at,
       updated_at: gist.updated_at,
       gist: gist,

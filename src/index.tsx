@@ -1,6 +1,8 @@
+export const layout = "layouts/default.tsx";
+
 export const title = "Home";
 
-export const layout = "layouts/default.tsx";
+export const description = "The personal website of Gabriel Garcia.";
 
 export default ({ search }: Lume.Data, { url, date }: Lume.Helpers) => {
   return (

@@ -1,18 +1,15 @@
 export default (
-  { comp, config, title, children }: Lume.Data,
+  { comp, config, title, description, children }: Lume.Data,
   h: Lume.Helpers,
 ) => {
   return (
-    <html>
+    <html lang="en">
       <head>
-        <link href="https://gmpg.org/xfn/11" rel="profile" />
-        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-        <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+        <meta charset="utf-8" />
 
-        <meta
-          name="viewport"
-          content="width=device-width, initial-scale=1.0, maximum-scale=1"
-        />
+        {description && <meta name="description" content={description} />}
+
+        <meta name="viewport" content="width=device-width,initial-scale=1" />
 
         <title>{`${title}${config.titleSeparator}${config.title}`}</title>
 
@@ -21,32 +18,18 @@ export default (
         <link
           rel="stylesheet"
           href="https://fonts.googleapis.com/css?family=PT+Sans:400,400italic,700|Abril+Fatface"
+          crossorigin="anonymous"
         />
         <link
           rel="stylesheet"
           href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.11.1/styles/github-dark.min.css"
+          crossorigin="anonymous"
         />
 
         <link
-          rel="apple-touch-icon"
-          sizes="180x180"
-          href={h.url("/public/icon/apple-touch-icon.png")}
-        />
-        <link
           rel="icon"
+          href={h.url("/favicon.png")}
           type="image/png"
-          sizes="32x32"
-          href={h.url("/public/icon/favicon-32x32.png")}
-        />
-        <link
-          rel="icon"
-          type="image/png"
-          sizes="16x16"
-          href={h.url("/public/icon/favicon-16x16.png")}
-        />
-        <link
-          rel="shortcut icon"
-          href={h.url("/public/icon/favicon.ico")}
         />
       </head>
 

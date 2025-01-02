@@ -1,6 +1,9 @@
+export const type = "page";
+
 export const layout = "layouts/page.tsx";
 
-export const type = "page";
+export const description =
+  "A list of all of my GitHub gists that are viewable in the browser.";
 
 export default ({ comp, search }: Lume.Data, _helpers: Lume.Helpers) => {
   return (

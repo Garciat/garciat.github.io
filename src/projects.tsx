@@ -3,11 +3,13 @@ import moment from "npm:moment";
 import { getPaginatedUserRepos, GitHubRepository } from "./_includes/github.ts";
 import { consume, sortedByDate } from "./_includes/utils.ts";
 
-export const layout = "layouts/page.tsx";
-
 export const type = "page";
 
+export const layout = "layouts/page.tsx";
+
 export const title = "Projects";
+
+export const description = "Projects I've worked on.";
 
 interface Project {
   name: string;

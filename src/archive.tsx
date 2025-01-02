@@ -1,8 +1,10 @@
 export const type = "page";
 
+export const layout = "layouts/default.tsx";
+
 export const title = "Archive";
 
-export const layout = "layouts/default.tsx";
+export const description = "Archived posts from my blog.";
 
 export default ({ search }: Lume.Data, { url, date }: Lume.Helpers) => {
   return (
