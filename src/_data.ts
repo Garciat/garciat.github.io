@@ -41,7 +41,11 @@ export const config = {
     ],
     "script-src-elem": [
       "'self'",
+      Deno.env.get("DEV") === "true" ? "'unsafe-inline'" : "",
       "https://esm.sh",
+    ],
+    "connect-src": [
+      "'self'",
     ],
   },
 };
