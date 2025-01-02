@@ -17,7 +17,7 @@ export const config = {
   // Content Security Policy
   csp: {
     "default-src": [
-      "'self'",
+      "'none'",
     ],
     "style-src-elem": [
       "'self'",
