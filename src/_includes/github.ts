@@ -55,3 +55,59 @@ export function getPaginatedUserRepos(username: string): AsyncIterable<
     },
   );
 }
+
+export function getRepositoryURL(
+  repositoryName: string,
+  branchName?: string,
+): string {
+  const base = `https://github.com/${repositoryName}`;
+  if (branchName) {
+    return `${base}/tree/${branchName}`;
+  } else {
+    return base;
+  }
+}
+
+export function getConfigUserGistsURL(config: SiteConfig): string {
+  return `https://gist.github.com/${config.github.username}`;
+}
+
+export function getConfigPagesURL(
+  config: SiteConfig,
+  repoName: string,
+): string {
+  return `${config.github.base_project_url}/${repoName}`;
+}
+
+export function getConfigRepositoryURL(config: SiteConfig): string {
+  return getRepositoryURL(
+    config.github.site.repo,
+    config.github.site.branch,
+  );
+}
+
+export function getConfigRepositoryPathURL(
+  config: SiteConfig,
+  path: string,
+): string {
+  return `${getConfigRepositoryURL(config)}/${config.sourceDir}${path}`;
+}
+
+export function getConfigWorkflowRunRequestURL(config: SiteConfig) {
+  const request = octokit.request.endpoint(
+    "GET /repos/{owner}/{repo}/actions/workflows/{workflow_id}/runs",
+    {
+      owner: config.github.username,
+      repo: config.github.site.repo,
+      workflow_id: config.github.site.buildWorkflow,
+      status: "completed",
+      branch: config.github.site.branch,
+      per_page: 1,
+    },
+  );
+  return request.url;
+}
+
+export function getWorkflowRunStartedAtQuery() {
+  return "$.workflow_runs[0].run_started_at";
+}

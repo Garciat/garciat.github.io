@@ -1,6 +1,46 @@
-export default function* (
-  { config, gists, title }: Lume.Data,
-): Generator<GistPageData | GistFileData> {
+import { getPaginatedUserGists, GitHubGist } from "../_includes/github.ts";
+import { consume } from "../_includes/utils.ts";
+
+interface Gist {
+  id: string;
+  github_url: string;
+  title?: string;
+  description?: string;
+  files: GistFile[];
+  created_at: Date;
+  updated_at: Date;
+}
+
+interface GistFile {
+  name: string;
+  language?: string;
+  content?: string;
+}
+
+declare global {
+  interface GistPageData {
+    type: "gist";
+    url: string;
+    created_at: Date;
+    updated_at: Date;
+    gist: Gist;
+    layout?: string;
+    title?: string;
+    content?: string;
+  }
+
+  interface GistFileData {
+    type: "gist-file";
+    url: string;
+    content?: string;
+  }
+}
+
+export default async function* (
+  { config, title }: Lume.Data,
+): AsyncGenerator<GistPageData | GistFileData> {
+  const gists = await consume(getDisplayableGists(config));
+
   for (const gist of gists) {
     const indexFile = gist.files.find((file) => file.name === "index.html");
 
@@ -43,21 +83,53 @@ export default function* (
   }
 }
 
-declare global {
-  interface GistPageData {
-    type: "gist";
-    url: string;
-    created_at: Date;
-    updated_at: Date;
-    gist: Gist;
-    layout?: string;
-    title?: string;
-    content?: string;
-  }
+function isDisplayableGist(
+  gist: GitHubGist,
+) {
+  return containsHtmlFile(gist) && !hasHideTag(gist);
+}
 
-  interface GistFileData {
-    type: "gist-file";
-    url: string;
-    content?: string;
+function containsHtmlFile(
+  gist: GitHubGist,
+) {
+  return Object.values(gist.files).some((file) =>
+    file.filename?.endsWith(".html")
+  );
+}
+
+function hasHideTag(
+  gist: GitHubGist,
+) {
+  return gist.description?.startsWith("[hide]") ?? false;
+}
+
+async function* getDisplayableGists(config: SiteConfig): AsyncGenerator<Gist> {
+  for await (const response of getPaginatedUserGists(config.github.username)) {
+    for (const gist of response.data) {
+      if (isDisplayableGist(gist)) {
+        const [title, description] = gist.description?.split(" // ", 2) ?? [];
+
+        yield {
+          id: gist.id,
+          github_url: gist.html_url,
+          title: title || gist.id,
+          description: description || undefined,
+          files: await consume(loadGistFiles(gist)),
+          created_at: new Date(gist.created_at),
+          updated_at: new Date(gist.updated_at),
+        };
+      }
+    }
+  }
+}
+
+async function* loadGistFiles(gist: GitHubGist): AsyncGenerator<GistFile> {
+  for (const [filename, file] of Object.entries(gist.files)) {
+    yield {
+      name: filename,
+      language: file.language,
+      content: file.raw_url &&
+        await fetch(file.raw_url).then((res) => res.text()),
+    };
   }
 }

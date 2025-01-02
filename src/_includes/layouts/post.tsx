@@ -1,3 +1,5 @@
+import { getConfigRepositoryPathURL } from "../github.ts";
+
 export const layout = "layouts/base.tsx";
 
 export default (
@@ -10,7 +12,7 @@ export default (
         <div class="navigation noprint">
           <h4>
             <a
-              href={`https://github.com/${config.github.repo}/tree/${config.github.branch}/${config.sourceDir}${page.sourcePath}`}
+              href={getConfigRepositoryPathURL(config, page.sourcePath)}
               style="float:right;color:#999"
             >
               View post on GitHub

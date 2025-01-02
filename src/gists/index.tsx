@@ -1,3 +1,5 @@
+import { getConfigUserGistsURL } from "../_includes/github.ts";
+
 export const type = "page";
 
 export const layout = "layouts/page.tsx";
@@ -5,12 +7,15 @@ export const layout = "layouts/page.tsx";
 export const description =
   "A list of all of my GitHub gists that are viewable in the browser.";
 
-export default ({ comp, search }: Lume.Data, _helpers: Lume.Helpers) => {
+export default (
+  { comp, config, search }: Lume.Data,
+  _helpers: Lume.Helpers,
+) => {
   return (
     <>
       <p>
         This is a list of all of{" "}
-        <a href="https://gist.github.com/Garciat" target="_blank">
+        <a href={getConfigUserGistsURL(config)} target="_blank">
           my GitHub gists
         </a>{" "}
         that contain HTML files. Click on a file to open it.

@@ -1,6 +1,10 @@
 import moment from "npm:moment";
 
-import { getPaginatedUserRepos, GitHubRepository } from "./_includes/github.ts";
+import {
+  getConfigPagesURL,
+  getPaginatedUserRepos,
+  GitHubRepository,
+} from "./_includes/github.ts";
 import { consume, sortedByDate } from "./_includes/utils.ts";
 
 export const type = "page";
@@ -21,36 +25,57 @@ interface Project {
   is_archived: boolean;
 }
 
+export default async ({ config }: Lume.Data, _helpers: Lume.Helpers) => {
+  const allProjects = await consume(getGitHubProjects(config));
+
+  const [projects, projectsArchived] = [
+    allProjects.filter((project) => !project.is_archived),
+    allProjects.filter((project) => project.is_archived),
+  ];
+
+  return (
+    <>
+      <ul>
+        {sortedByDate("created_at", projects).map((project) => (
+          <li>
+            <ProjectView project={project} />
+          </li>
+        ))}
+      </ul>
+      <hr />
+      <h3>Archived Projects</h3>
+      <ul>
+        {sortedByDate("created_at", projectsArchived).map((project) => (
+          <li>
+            <ProjectView project={project} />
+          </li>
+        ))}
+      </ul>
+    </>
+  );
+};
+
 function isGitHubProject(repo: GitHubRepository) {
   return repo.has_pages && repo.topics?.includes("showcase-project");
 }
 
-async function* getGitHubProjects(): AsyncGenerator<Project> {
-  for await (const response of getPaginatedUserRepos("Garciat")) {
-    for (const project of response.data) {
-      if (isGitHubProject(project)) {
+async function* getGitHubProjects(config: SiteConfig): AsyncGenerator<Project> {
+  for await (const response of getPaginatedUserRepos(config.github.username)) {
+    for (const repo of response.data) {
+      if (isGitHubProject(repo)) {
         yield {
-          name: project.name,
-          github_url: project.html_url,
-          homepage: project.homepage || `https://garciat.com/${project.name}`,
-          description: project.description ?? undefined,
-          created_at: new Date(project.created_at ?? 0),
-          updated_at: new Date(project.updated_at ?? project.created_at ?? 0),
-          is_archived: project.topics?.includes("archived") ?? false,
+          name: repo.name,
+          github_url: repo.html_url,
+          homepage: repo.homepage || getConfigPagesURL(config, repo.name),
+          description: repo.description ?? undefined,
+          created_at: new Date(repo.created_at ?? 0),
+          updated_at: new Date(repo.updated_at ?? repo.created_at ?? 0),
+          is_archived: repo.topics?.includes("archived") ?? false,
         };
       }
     }
   }
 }
-
-const [projects, projectsArchived] = await (async () => {
-  const projects = await consume(getGitHubProjects());
-
-  return [
-    projects.filter((project) => !project.is_archived),
-    projects.filter((project) => project.is_archived),
-  ];
-})();
 
 const ProjectView = ({ project }: { project: Project }) => (
   <>
@@ -85,26 +110,3 @@ const ProjectView = ({ project }: { project: Project }) => (
     </p>
   </>
 );
-
-export default (_data: Lume.Data, _helpers: Lume.Helpers) => {
-  return (
-    <>
-      <ul>
-        {sortedByDate("created_at", projects).map((project) => (
-          <li>
-            <ProjectView project={project} />
-          </li>
-        ))}
-      </ul>
-      <hr />
-      <h3>Archived Projects</h3>
-      <ul>
-        {sortedByDate("created_at", projectsArchived).map((project) => (
-          <li>
-            <ProjectView project={project} />
-          </li>
-        ))}
-      </ul>
-    </>
-  );
-};

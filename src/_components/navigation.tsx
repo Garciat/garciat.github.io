@@ -49,7 +49,7 @@ export default ({ search, config, url }: Lume.Data, h: Lume.Helpers) => {
           ))}
 
           <NavItem
-            url="https://github.com/garciat"
+            url={config.github.profile_url}
             title="GitHub"
             target="_blank"
           />
