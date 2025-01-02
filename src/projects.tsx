@@ -62,16 +62,17 @@ const ProjectView = ({ project }: { project: Project }) => (
                   "
         />
       </a>
-      <br />
+    </p>
+    <p>
       <span>
         {"Created on "}
         <time datetime={project.created_at.toISOString()}>
           {moment(project.created_at).format("MMMM D, YYYY")}
         </time>
       </span>
-      {" // "}
+      {" — "}
       <span>
-        {"\u21BB  "}
+        {"Updated  "}
         <time datetime={project.updated_at.toISOString()}>
           {moment(project.updated_at).fromNow()}
         </time>

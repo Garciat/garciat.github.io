@@ -13,28 +13,29 @@ export default (
 ) => {
   return (
     <div class="gist">
-      <header>
+      <p class="gist-header">
         <a href={url(pageUrl)} class="gist-id" title={gist.id}>
           {gist.title}
         </a>
-        <a href={gist.github_url} class="source" target="_blank">
-          source
+        <a href={gist.github_url} class="flat" target="_blank">
+          view source
         </a>
-      </header>
-      <aside>
+      </p>
+      <p>
         <span>
+          {"Created on "}
           <time datetime={gist.created_at.toISOString()}>
             {date(gist.created_at)}
           </time>
         </span>
-        {" // "}
+        {" — "}
         <span>
-          {"\u21BB  "}
+          {"Updated  "}
           <time datetime={gist.updated_at.toISOString()}>
             {moment(gist.updated_at).fromNow()}
           </time>
         </span>
-      </aside>
+      </p>
       <p class="message" hidden={!gist.description}>{gist.description}</p>
       <ul>
         {gist.files.map((file) => (

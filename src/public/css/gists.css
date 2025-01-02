@@ -11,38 +11,26 @@
   border-radius: 0.25rem;
 }
 
-.gists .item header .gist-id {
+.gists .item .gist-header .gist-id {
   max-width: 10rem;
   overflow: hidden;
   text-overflow: ellipsis;
 }
 
-.gist header {
+.gist .gist-header {
   display: flex;
   justify-content: space-between;
   align-items: center;
 }
 
-.gist header a {
+.gist .gist-header a {
   display: inline-block;
   vertical-align: middle;
   white-space: nowrap;
 }
 
-.gist header .gist-id {
+.gist .gist-header .gist-id {
   font-weight: bold;
-}
-
-.gist header .source {
-  color: inherit;
-}
-
-.gist aside {
-  margin-bottom: 0.5rem;
-}
-
-.gist .message {
-  margin: 0.5rem 0;
 }
 
 .gist ul {
