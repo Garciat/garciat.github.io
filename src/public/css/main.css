@@ -165,6 +165,10 @@ pre code {
   color: inherit;
   background-color: transparent;
 }
+pre:has(> code.hljs) {
+  padding: 0;
+  background-color: transparent;
+}
 
 /* Quotes */
 blockquote {
