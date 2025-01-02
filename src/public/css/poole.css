@@ -67,7 +67,10 @@ a:focus {
 }
 
 a[target="_blank"]::after {
-  content: "\00A0🔗" / "opens in new tab/window";
+  display: inline-block;
+  content: "\21F1\00A0" / "opens in new tab/window";
+  -webkit-transform: scaleX(-1);
+  transform: scaleX(-1);
 }
 
 /* Headings */

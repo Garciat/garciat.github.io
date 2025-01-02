@@ -11,7 +11,9 @@ export default ({ search }: Lume.Data, { url, date }: Lume.Helpers) => {
     <>
       <p>
         This is a list of all of{" "}
-        <a href="https://gist.github.com/Garciat">my GitHub gists</a>{" "}
+        <a href="https://gist.github.com/Garciat" target="_blank">
+          my GitHub gists
+        </a>{" "}
         that contain HTML files. Click on a file to open it.
       </p>
       <ul class="gists">
