@@ -1,22 +1,18 @@
+export const layout = "layouts/base.tsx";
+
 export default (
-  { comp, url, title, children }: Lume.Data,
+  { comp, url, children }: Lume.Data,
   _helpers: Lume.Helpers,
 ) => {
   return (
-    <html>
-      <comp.Head title={title} />
+    <>
+      <comp.Navigation url={url} />
 
-      <body>
-        <comp.Sidebar url={url} />
+      <div class="content container">
+        {children}
+      </div>
 
-        <div class="content sidebar-adapt container">
-          {children}
-        </div>
-
-        <comp.Footer sidebarAdapt={true} />
-
-        <comp.Analytics />
-      </body>
-    </html>
+      <comp.Footer />
+    </>
   );
 };

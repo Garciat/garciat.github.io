@@ -1,9 +1,9 @@
 export default (
-  { config, sidebarAdapt = false }: Lume.Data,
-  h: Lume.Helpers,
+  { config }: Lume.Data,
+  _helpers: Lume.Helpers,
 ) => {
   return (
-    <footer class={`content ${sidebarAdapt ? "sidebar-adapt" : ""} container`}>
+    <footer class={`content container`}>
       <p>
         Built with <a href="https://www.typescriptlang.org/">TypeScript</a>,
         {" "}
@@ -17,9 +17,6 @@ export default (
         >
           source
         </a>.
-      </p>
-      <p>
-        <a href={h.url("/THEME-LICENSE/")}>Hyde Theme</a>
       </p>
       <p>
         {shieldGitHubWorkflowLastRun(
