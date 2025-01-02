@@ -3,7 +3,7 @@ export default (
   h: Lume.Helpers,
 ) => {
   return (
-    <footer class={`content ${sidebarAdapt && "sidebar-adapt"} container`}>
+    <footer class={`content ${sidebarAdapt ? "sidebar-adapt" : ""} container`}>
       <p>
         Built with <a href="https://www.typescriptlang.org/">TypeScript</a>,
         {" "}
