@@ -1,5 +1,5 @@
 import { getPaginatedUserGists, GitHubGist } from "../_includes/github.ts";
-import { consume, sortByUpdatedAt } from "../_includes/utils.ts";
+import { consume } from "../_includes/utils.ts";
 
 export const title = "Gists";
 
@@ -54,7 +54,7 @@ async function* loadGistFiles(gist: GitHubGist): AsyncGenerator<GistFile> {
   }
 }
 
-export const gists = sortByUpdatedAt(await consume(getDisplayableGists()));
+export const gists = await consume(getDisplayableGists());
 
 declare global {
   interface Gist {

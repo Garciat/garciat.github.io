@@ -13,7 +13,9 @@ export default ({ comp, search }: Lume.Data, _helpers: Lume.Helpers) => {
         that contain HTML files. Click on a file to open it.
       </p>
       <ul class="gists">
-        {search.pages<GistPageData>("type=gist", "date=desc").map((page) => (
+        {search.pages<GistPageData>("type=gist", "created_at=desc").map((
+          page,
+        ) => (
           <li class="item">
             <comp.Gist
               pageUrl={page.url}

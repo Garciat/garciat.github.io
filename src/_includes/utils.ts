@@ -6,10 +6,17 @@ export async function consume<T>(iterable: AsyncIterable<T>): Promise<T[]> {
   return items;
 }
 
-export function sortByUpdatedAt<T extends { updated_at: Date }>(
+export function sortedByDate<
+  T extends { [P in K]: Date },
+  K extends keyof T,
+>(
+  key: K,
   items: T[],
+  { ascending = false } = {},
 ): T[] {
-  return items.toSorted((a, b) =>
-    b.updated_at.getTime() - a.updated_at.getTime()
-  );
+  return items.toSorted((a, b) => {
+    const dateA = a[key].getTime();
+    const dateB = b[key].getTime();
+    return ascending ? dateA - dateB : dateB - dateA;
+  });
 }

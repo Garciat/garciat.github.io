@@ -12,7 +12,8 @@ export default function* (
       type: "gist" as const,
       url: `/gists/${gist.id}/`,
       title: `${gist.title}${config.titleSeparator}${title}`,
-      date: gist.created_at,
+      created_at: gist.created_at,
+      updated_at: gist.updated_at,
       gist: gist,
     };
 
@@ -45,7 +46,8 @@ declare global {
   interface GistPageData {
     type: "gist";
     url: string;
-    date: Date;
+    created_at: Date;
+    updated_at: Date;
     gist: Gist;
     layout?: string;
     title?: string;
