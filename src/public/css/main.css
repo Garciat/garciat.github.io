@@ -20,8 +20,6 @@
  */
 
 * {
-  -webkit-box-sizing: border-box;
-  -moz-box-sizing: border-box;
   box-sizing: border-box;
 }
 
@@ -41,6 +39,9 @@ body {
 body {
   color: var(--color-text-main);
   background-color: var(--color-background);
+  display: grid;
+  grid-template-rows: max-content 1fr max-content;
+  height: 100%;
 }
 
 /* No `:visited` state is required by default (browsers will use `a`) */
@@ -55,6 +56,9 @@ a strong {
 a:hover,
 a:focus {
   text-decoration: underline;
+}
+a.flat {
+  color: inherit;
 }
 
 a[target="_blank"]::after {
@@ -300,6 +304,7 @@ body > footer {
   display: block;
   padding: 0.5rem;
   line-height: 1.75;
+  white-space: nowrap;
 }
 a.sidebar-nav-item:hover,
 a.sidebar-nav-item:focus {

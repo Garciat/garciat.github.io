@@ -2,12 +2,19 @@ export const layout = "layouts/default.tsx";
 
 export default (
   data: Lume.Data & GistPageData,
-  _helpers: Lume.Helpers,
+  h: Lume.Helpers,
 ) => {
   return (
-    <data.comp.Gist
-      pageUrl={data.url}
-      gist={data.gist}
-    />
+    <>
+      <p>
+        <a href={h.url("/gists/")} class="flat">
+          &#8676; Back
+        </a>
+      </p>
+      <data.comp.Gist
+        pageUrl={data.url}
+        gist={data.gist}
+      />
+    </>
   );
 };

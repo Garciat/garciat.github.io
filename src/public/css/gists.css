@@ -1,17 +1,14 @@
 .gists {
-  display: flex;
-  flex-wrap: wrap;
-
-  margin: -0.5rem;
+  margin-top: 2rem;
   padding: 0;
 }
 
 .gists .item {
   list-style: none;
-  flex: calc(50% - 1rem);
-  margin: 0.5rem;
-  padding: 0.5rem;
+  margin-bottom: 1rem;
+  padding: 1rem;
   border: 1px solid #ccc;
+  border-radius: 0.25rem;
 }
 
 .gists .item header .gist-id {
