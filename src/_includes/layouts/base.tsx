@@ -14,6 +14,7 @@ export default (
           http-equiv="X-Content-Type-Options"
           content="nosniff"
         />
+        <meta name="referrer" content="same-origin" />
 
         {description && <meta name="description" content={description} />}
 
