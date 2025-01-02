@@ -23,6 +23,15 @@
  * Themes
  */
 
+:root {
+  --width: 34.5;
+  --rounding: 4px;
+  --accent: #696;
+  --dark-grey: #ddd;
+  --grey: #eee;
+  --light-grey: #f8f8f8;
+}
+
 /*
  * Global resets
  *
@@ -31,16 +40,14 @@
 
 html {
   font-family: "PT Sans", Helvetica, Arial, sans-serif;
+  font-size: 1.3rem;
+  font-weight: 300;
+  font-size: clamp(18px, 100vw / var(--width), 20px);
 }
-@media (min-width: 48em) {
-  html {
-    font-size: 16px;
-  }
-}
-@media (min-width: 58em) {
-  html {
-    font-size: 20px;
-  }
+
+body > footer {
+  text-align: center;
+  color: #888;
 }
 
 /*
@@ -120,12 +127,12 @@ a.sidebar-nav-item:focus {
  */
 
 .content {
-  padding-top: 4rem;
-  padding-bottom: 4rem;
+  margin: 2rem 0;
+  padding: 0 2rem;
 }
 
 @media (min-width: 48em) {
-  .content {
+  .content.sidebar-adapt {
     max-width: 38rem;
     margin-left: 20rem;
     margin-right: 2rem;
@@ -133,7 +140,7 @@ a.sidebar-nav-item:focus {
 }
 
 @media (min-width: 64em) {
-  .content {
+  .content.sidebar-adapt {
     max-width: 42rem;
     margin-left: 22rem;
     margin-right: 4rem;
@@ -144,8 +151,7 @@ a.sidebar-nav-item:focus {
  */
 
 .blogpost {
-  padding-top: 2rem;
-  padding-bottom: 2rem;
+  padding: 0 2rem;
 }
 .blogpost .navigation {
   margin-bottom: 2rem;

@@ -48,24 +48,11 @@ export default ({ search, config, url }: Lume.Data, h: Lume.Helpers) => {
             />
           ))}
 
-          <hr />
-
           <NavItem
             url="https://github.com/garciat"
             title="GitHub"
             target="_blank"
           />
-
-          <hr />
-
-          {search.pages("type=credits", "title=asc").map((page) => (
-            <NavItem
-              url={page.url}
-              title={page.title!}
-              currentUrl={url}
-              normalizedUrl={h.url(page.url)}
-            />
-          ))}
         </nav>
       </div>
     </div>

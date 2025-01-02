@@ -4,12 +4,6 @@ date:         2020-06-27
 description:  "I tackled the problem of data validation in Java with declarative & functional programming inspired by Haskell."
 ---
 
-## Contents
-
-{:.no_toc}
-
-1. TOC {:toc}
-
 ## Abstract
 
 This proposal tackles input validation in Java with a functional Parser

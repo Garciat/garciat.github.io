@@ -3,6 +3,9 @@ import date from "lume/plugins/date.ts";
 import jsx from "lume/plugins/jsx_preact.ts";
 // import esbuild from "lume/plugins/esbuild.ts";
 import code_highlight from "lume/plugins/code_highlight.ts";
+import toc, {
+  linkInsideHeader,
+} from "https://deno.land/x/lume_markdown_plugins@v0.8.0/toc.ts";
 
 import beautify from "npm:js-beautify@1.15.1";
 
@@ -37,6 +40,10 @@ site.use(jsx({
 // }));
 
 site.use(date());
+
+site.use(toc({
+  anchor: linkInsideHeader(),
+}));
 
 site.copy([".wgsl", ".css", ".jpg", ".png", ".html"]);
 

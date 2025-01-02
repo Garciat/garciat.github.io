@@ -9,11 +9,11 @@ export default (
       <body>
         <comp.Sidebar url={url} />
 
-        <div class="content container">
+        <div class="content sidebar-adapt container">
           {children}
         </div>
 
-        <comp.Footer />
+        <comp.Footer sidebarAdapt={true} />
 
         <comp.Analytics />
       </body>

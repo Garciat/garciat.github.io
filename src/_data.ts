@@ -10,10 +10,17 @@ export const config = {
   },
 };
 
+export const i18n = {
+  nav: {
+    toc: "Table of Contents",
+  },
+};
+
 declare global {
   namespace Lume {
     interface Data {
       config: typeof config;
+      i18n: typeof i18n;
     }
   }
 }

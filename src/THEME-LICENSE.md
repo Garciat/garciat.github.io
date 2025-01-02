@@ -1,6 +1,5 @@
 ---
 layout: layouts/page.tsx
-type: credits
 title: Hyde theme
 ---
 
