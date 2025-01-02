@@ -16,6 +16,7 @@ export const config = {
   },
   // Content Security Policy
   csp: {
+    "upgrade-insecure-requests": [],
     "base-uri": [
       "'none'",
     ],
