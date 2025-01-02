@@ -360,8 +360,8 @@ The `andThen` method of a `Parser<T, R>` takes a `Parser<R, S>` and returns a
 threaded to `Parser<T, S>`. The result is a new parser that can take `T` objects
 as input and produce `S` objects as output.
 
-<p style="text-align: center;">
-<img src="/public/resources/java-functional-validation/fun1.png" style="display:inline-block" />
+<p class="text-center">
+<img src="/public/resources/java-functional-validation/fun1.png" />
 </p>
 
 Making use of the composition method:
@@ -439,8 +439,8 @@ UUID paymentProfileUuid = accountIdParser.parse(request);
 
 Notice how the **types match** between inputs and outputs:
 
-<p style="text-align: center;">
-<img src="/public/resources/java-functional-validation/fun2.png" style="display:inline-block" />
+<p class="text-center">
+<img src="/public/resources/java-functional-validation/fun2.png" />
 </p>
 
 ### Parsers for free

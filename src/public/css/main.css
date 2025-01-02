@@ -13,6 +13,12 @@
   --color-text-code: #bf616a;
 }
 
+@media print {
+  .noprint {
+    display: none;
+  }
+}
+
 /*
  * Body resets
  *
@@ -96,6 +102,10 @@ h4, h5, h6 {
 p {
   margin-top: 0;
   margin-bottom: 1rem;
+}
+
+.text-center {
+  text-align: center;
 }
 
 strong {
@@ -340,4 +350,8 @@ a.sidebar-nav-item:focus {
 }
 .blogpost .navigation {
   margin-bottom: 2rem;
+}
+.blogpost .navigation a.github-source {
+  float: right;
+  color: var(--color-text-weak);
 }

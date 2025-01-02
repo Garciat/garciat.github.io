@@ -13,7 +13,7 @@ export default (
           <h4>
             <a
               href={getConfigRepositoryPathURL(config, page.sourcePath)}
-              style="float:right;color:#999"
+              class="github-source"
             >
               View post on GitHub
             </a>

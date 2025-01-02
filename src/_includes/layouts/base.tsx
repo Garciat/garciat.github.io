@@ -6,6 +6,10 @@ export default (
     <html lang="en">
       <head>
         <meta charset="utf-8" />
+        <meta
+          http-equiv="Content-Security-Policy"
+          content={formatCSP(config.csp)}
+        />
 
         {description && <meta name="description" content={description} />}
 
@@ -49,3 +53,9 @@ export default (
     </html>
   );
 };
+
+function formatCSP(csp: Record<string, string[]>) {
+  return Object.entries(csp)
+    .map(([key, values]) => `${key} ${values.join(" ")}`)
+    .join("; ");
+}

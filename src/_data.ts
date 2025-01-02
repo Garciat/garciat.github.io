@@ -14,6 +14,29 @@ export const config = {
       buildWorkflow: "build.yml",
     },
   },
+  // Content Security Policy
+  csp: {
+    "default-src": [
+      "'self'",
+    ],
+    "style-src-elem": [
+      "'self'",
+      "https://fonts.googleapis.com",
+      "https://cdnjs.cloudflare.com",
+    ],
+    "font-src": [
+      "'self'",
+      "https://fonts.gstatic.com",
+    ],
+    "img-src": [
+      "'self'",
+      "https://img.shields.io",
+    ],
+    "script-src-elem": [
+      "'self'",
+      "https://esm.sh",
+    ],
+  },
 };
 
 export const i18n = {
