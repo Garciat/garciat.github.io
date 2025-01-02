@@ -10,6 +10,10 @@ export default (
           http-equiv="Content-Security-Policy"
           content={formatCSP(config.csp)}
         />
+        <meta
+          http-equiv="X-Content-Type-Options"
+          content="nosniff"
+        />
 
         {description && <meta name="description" content={description} />}
 
