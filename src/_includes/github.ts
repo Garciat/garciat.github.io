@@ -57,10 +57,11 @@ export function getPaginatedUserRepos(username: string): AsyncIterable<
 }
 
 export function getRepositoryURL(
+  username: string,
   repositoryName: string,
   branchName?: string,
 ): string {
-  const base = `https://github.com/${repositoryName}`;
+  const base = `https://github.com/${username}/${repositoryName}`;
   if (branchName) {
     return `${base}/tree/${branchName}`;
   } else {
@@ -81,6 +82,7 @@ export function getConfigPagesURL(
 
 export function getConfigRepositoryURL(config: SiteConfig): string {
   return getRepositoryURL(
+    config.github.username,
     config.github.site.repo,
     config.github.site.branch,
   );
