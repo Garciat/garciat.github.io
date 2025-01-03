@@ -25,13 +25,45 @@ interface Project {
   is_archived: boolean;
 }
 
-export default async ({ config }: Lume.Data, _helpers: Lume.Helpers) => {
+export default async ({ comp, config }: Lume.Data, _helpers: Lume.Helpers) => {
   const allProjects = await consume(getGitHubProjects(config));
 
   const [projects, projectsArchived] = [
     allProjects.filter((project) => !project.is_archived),
     allProjects.filter((project) => project.is_archived),
   ];
+
+  const ProjectView = ({ project }: { project: Project }) => (
+    <>
+      <p>
+        <a href={project.homepage}>{project.name}</a>
+        {" — "}
+        <a href={project.github_url}>
+          <img
+            alt="GitHub Repository"
+            src="https://img.shields.io/badge/GitHub-source-blue?logo=GitHub
+                    "
+          />
+        </a>
+      </p>
+      <p>
+        <span>
+          {"Created on "}
+          <time datetime={project.created_at.toISOString()}>
+            {moment(project.created_at).format("MMMM D, YYYY")}
+          </time>
+        </span>
+        {" — "}
+        <span>
+          {"Updated  "}
+          <comp.RelativeTime time={project.updated_at} />
+        </span>
+      </p>
+      <p class="message">
+        {project.description}
+      </p>
+    </>
+  );
 
   return (
     <>
@@ -76,37 +108,3 @@ async function* getGitHubProjects(config: SiteConfig): AsyncGenerator<Project> {
     }
   }
 }
-
-const ProjectView = ({ project }: { project: Project }) => (
-  <>
-    <p>
-      <a href={project.homepage}>{project.name}</a>
-      {" — "}
-      <a href={project.github_url}>
-        <img
-          alt="GitHub Repository"
-          src="https://img.shields.io/badge/GitHub-source-blue?logo=GitHub
-                  "
-        />
-      </a>
-    </p>
-    <p>
-      <span>
-        {"Created on "}
-        <time datetime={project.created_at.toISOString()}>
-          {moment(project.created_at).format("MMMM D, YYYY")}
-        </time>
-      </span>
-      {" — "}
-      <span>
-        {"Updated  "}
-        <time datetime={project.updated_at.toISOString()} class="relative-time">
-          {moment(project.updated_at).fromNow()}
-        </time>
-      </span>
-    </p>
-    <p class="message">
-      {project.description}
-    </p>
-  </>
-);

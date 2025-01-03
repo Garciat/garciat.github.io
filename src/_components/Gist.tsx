@@ -1,5 +1,3 @@
-import moment from "npm:moment";
-
 export const layout = "layouts/default.tsx";
 
 interface GistComponentProps {
@@ -8,7 +6,7 @@ interface GistComponentProps {
 }
 
 export default (
-  { pageUrl, gist }: GistComponentProps,
+  { comp, pageUrl, gist }: Lume.Data & GistComponentProps,
   { url, date }: Lume.Helpers,
 ) => {
   return (
@@ -31,9 +29,7 @@ export default (
         {" — "}
         <span>
           {"Updated  "}
-          <time datetime={gist.updated_at.toISOString()} class="relative-time">
-            {moment(gist.updated_at).fromNow()}
-          </time>
+          <comp.RelativeTime time={gist.updated_at} />
         </span>
       </p>
       <p class="message" hidden={!gist.description}>{gist.description}</p>

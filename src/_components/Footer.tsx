@@ -9,7 +9,7 @@ export default (
   _helpers: Lume.Helpers,
 ) => {
   return (
-    <footer class={`content container`}>
+    <footer class="content container">
       <p>
         Built with <a href="https://www.typescriptlang.org/">TypeScript</a>,
         {" "}
