@@ -6,7 +6,7 @@ interface GistComponentProps {
 }
 
 export default (
-  { comp, pageUrl, gist }: Lume.Data & GistComponentProps,
+  { pageUrl, gist }: Lume.Data & GistComponentProps,
   { url, date }: Lume.Helpers,
 ) => {
   return (
@@ -23,13 +23,8 @@ export default (
         <span>
           {"Created on "}
           <time datetime={gist.created_at.toISOString()}>
-            {date(gist.created_at)}
+            {date(gist.created_at, "HUMAN_DATE")}
           </time>
-        </span>
-        {" — "}
-        <span>
-          {"Updated  "}
-          <comp.RelativeTime time={gist.updated_at} />
         </span>
       </p>
       <p class="message" hidden={!gist.description}>{gist.description}</p>
