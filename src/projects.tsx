@@ -25,6 +25,11 @@ interface Project {
   is_archived: boolean;
 }
 
+interface ProjectViewProps {
+  project: Project;
+  hideUpdated?: boolean;
+}
+
 export default async ({ comp, config }: Lume.Data, _helpers: Lume.Helpers) => {
   const allProjects = await consume(getGitHubProjects(config));
 
@@ -33,7 +38,9 @@ export default async ({ comp, config }: Lume.Data, _helpers: Lume.Helpers) => {
     allProjects.filter((project) => project.is_archived),
   ];
 
-  const ProjectView = ({ project }: { project: Project }) => (
+  const ProjectView = (
+    { project, hideUpdated = false }: ProjectViewProps,
+  ) => (
     <>
       <p>
         <a href={project.homepage}>{project.name}</a>
@@ -41,8 +48,7 @@ export default async ({ comp, config }: Lume.Data, _helpers: Lume.Helpers) => {
         <a href={project.github_url}>
           <img
             alt="GitHub Repository"
-            src="https://img.shields.io/badge/GitHub-source-blue?logo=GitHub
-                    "
+            src="https://img.shields.io/badge/GitHub-source-blue?logo=GitHub"
           />
         </a>
       </p>
@@ -53,9 +59,8 @@ export default async ({ comp, config }: Lume.Data, _helpers: Lume.Helpers) => {
             {moment(project.created_at).format("MMMM D, YYYY")}
           </time>
         </span>
-        {" — "}
-        <span>
-          {"Updated  "}
+        <span hidden={hideUpdated}>
+          {" — Updated  "}
           <comp.RelativeTime time={project.updated_at} />
         </span>
       </p>
@@ -79,7 +84,7 @@ export default async ({ comp, config }: Lume.Data, _helpers: Lume.Helpers) => {
       <ul>
         {sortedByDate("created_at", projectsArchived).map((project) => (
           <li>
-            <ProjectView project={project} />
+            <ProjectView project={project} hideUpdated={true} />
           </li>
         ))}
       </ul>
