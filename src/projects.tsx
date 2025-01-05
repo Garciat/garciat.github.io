@@ -1,5 +1,3 @@
-import moment from "npm:moment";
-
 import {
   getConfigPagesURL,
   getPaginatedUserRepos,
@@ -30,7 +28,7 @@ interface ProjectViewProps {
   hideUpdated?: boolean;
 }
 
-export default async ({ comp, config }: Lume.Data, _helpers: Lume.Helpers) => {
+export default async ({ comp, config }: Lume.Data, { date }: Lume.Helpers) => {
   const allProjects = await consume(getGitHubProjects(config));
 
   const [projects, projectsArchived] = [
@@ -59,7 +57,7 @@ export default async ({ comp, config }: Lume.Data, _helpers: Lume.Helpers) => {
         <span>
           {"Created on "}
           <time datetime={project.created_at.toISOString()}>
-            {moment(project.created_at).format("MMMM D, YYYY")}
+            {date(project.created_at, "HUMAN_DATE")}
           </time>
         </span>
         <span hidden={hideUpdated}>
