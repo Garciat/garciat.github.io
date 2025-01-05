@@ -1,3 +1,5 @@
+import { filesize } from "npm:filesize";
+
 export const layout = "layouts/default.tsx";
 
 interface GistComponentProps {
@@ -33,7 +35,8 @@ export default (
           <li>
             <a href={url(`/gists/${gist.id}/${file.name}`)}>
               <code>{file.name}</code>
-            </a>
+            </a>{" "}
+            <small>{filesize(file.size)}</small>
           </li>
         ))}
       </ul>

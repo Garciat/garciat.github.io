@@ -16,6 +16,7 @@ declare global {
     name: string;
     language?: string;
     content?: string;
+    size: number;
   }
 
   interface GistPageData {
@@ -130,6 +131,7 @@ async function* loadGistFiles(gist: GitHubGist): AsyncGenerator<GistFile> {
       language: file.language,
       content: file.raw_url &&
         await fetch(file.raw_url).then((res) => res.text()),
+      size: file.size ?? 0,
     };
   }
 }
