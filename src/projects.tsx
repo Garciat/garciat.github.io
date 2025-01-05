@@ -46,9 +46,12 @@ export default async ({ comp, config }: Lume.Data, _helpers: Lume.Helpers) => {
         <a href={project.homepage}>{project.name}</a>
         {" — "}
         <a href={project.github_url}>
-          <img
-            alt="GitHub Repository"
-            src="https://img.shields.io/badge/GitHub-source-blue?logo=GitHub"
+          <comp.BadgeStatic
+            altText="GitHub Repository"
+            label="GitHub"
+            message="source"
+            logo="github"
+            color="blue"
           />
         </a>
       </p>
