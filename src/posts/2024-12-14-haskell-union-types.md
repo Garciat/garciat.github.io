@@ -1,6 +1,6 @@
 ---
 title:        "TypeScript and Haskell: Unions & Singletons"
-date:         2025-01-15
+date:         2024-12-14
 description:  "I briefly explore union types and singleton types in Haskell and TypeScript."
 no_toc: true
 ---
