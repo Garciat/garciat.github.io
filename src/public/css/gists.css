@@ -7,7 +7,7 @@
   list-style: none;
   margin-bottom: 1rem;
   padding: 1rem;
-  border: 1px solid #ccc;
+  border: 1px solid var(--color-background-off2);
   border-radius: 0.25rem;
 }
 

@@ -4,9 +4,9 @@
   --width: 34.5;
   --rounding: 4px;
   --color-accent: #268bd2;
-  --color-background: light-dark(#ffffff, #0e0e0e);
-  --color-background-off1: light-dark(#f9f9f9, #1e1e1e);
-  --color-background-off2: light-dark(#e5e5e5, #222222);
+  --color-background: light-dark(#ffffff, #1e1e1e);
+  --color-background-off1: light-dark(#f9f9f9, #2a2a2a);
+  --color-background-off2: light-dark(#e5e5e5, #333333);
   --color-background-off3: light-dark(#9a9a9a, #aaaaaa);
   --color-text-title: light-dark(#000000, #ffffff);
   --color-text-main: light-dark(#515151, #cccccc);
