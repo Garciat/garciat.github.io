@@ -1,16 +1,25 @@
 :root {
+  color-scheme: light dark;
+
   --width: 34.5;
   --rounding: 4px;
   --color-accent: #268bd2;
-  --color-background: #ffffff;
-  --color-background-off1: #f9f9f9;
-  --color-background-off2: #e5e5e5;
-  --color-background-off3: #9a9a9a;
-  --color-text-title: #000000;
-  --color-text-main: #515151;
-  --color-text-strong: #313131;
-  --color-text-weak: #7a7a7a;
+  --color-background: light-dark(#ffffff, #0e0e0e);
+  --color-background-off1: light-dark(#f9f9f9, #1e1e1e);
+  --color-background-off2: light-dark(#e5e5e5, #222222);
+  --color-background-off3: light-dark(#9a9a9a, #aaaaaa);
+  --color-text-title: light-dark(#000000, #ffffff);
+  --color-text-main: light-dark(#515151, #cccccc);
+  --color-text-strong: light-dark(#313131, #dddddd);
+  --color-text-weak: light-dark(#7a7a7a, #999999);
   --color-text-code: #bf616a;
+}
+
+body.light {
+  color-scheme: light;
+}
+body.dark {
+  color-scheme: dark;
 }
 
 @media print {
@@ -48,6 +57,21 @@ body {
   display: grid;
   grid-template-rows: max-content 1fr max-content;
   height: 100%;
+}
+
+select {
+  font-family:
+    "SF Pro Text",
+    -apple-system,
+    BlinkMacSystemFont,
+    Roboto,
+    "Segoe UI",
+    Helvetica,
+    Arial,
+    sans-serif,
+    "Apple Color Emoji",
+    "Segoe UI Emoji",
+    "Segoe UI Symbol";
 }
 
 /* No `:visited` state is required by default (browsers will use `a`) */

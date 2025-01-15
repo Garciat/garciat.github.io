@@ -6,10 +6,13 @@ import {
 
 export default (
   { comp, config }: Lume.Data,
-  _helpers: Lume.Helpers,
+  _h: Lume.Helpers,
 ) => {
   return (
     <footer class="content container">
+      <p>
+        <comp.ColorScheme />
+      </p>
       <p>
         Built with <a href="https://www.typescriptlang.org/">TypeScript</a>,
         {" "}
