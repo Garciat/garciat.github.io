@@ -16,6 +16,7 @@ import lang_java from "npm:highlight.js/lib/languages/java";
 import lang_python from "npm:highlight.js/lib/languages/python";
 import lang_bash from "npm:highlight.js/lib/languages/bash";
 import lang_haskell from "npm:highlight.js/lib/languages/haskell";
+import lang_x86asm from "npm:highlight.js/lib/languages/x86asm";
 
 const site = lume({
   src: "./src",
@@ -61,6 +62,7 @@ site.use(
       python: lang_python,
       bash: lang_bash,
       haskell: lang_haskell,
+      x86asm: lang_x86asm,
     },
   }),
 );
