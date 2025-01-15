@@ -9,7 +9,7 @@
   --color-background-off2: light-dark(#e5e5e5, #333333);
   --color-background-off3: light-dark(#9a9a9a, #aaaaaa);
   --color-text-title: light-dark(#000000, #ffffff);
-  --color-text-main: light-dark(#515151, #cccccc);
+  --color-text-main: light-dark(#515151, #dddddd);
   --color-text-strong: light-dark(#313131, #dddddd);
   --color-text-weak: light-dark(#7a7a7a, #999999);
   --color-text-code: #bf616a;
@@ -371,6 +371,9 @@ a.sidebar-nav-item:focus {
 
 .blogpost {
   padding: 0 2rem;
+}
+.container.blogpost {
+  max-width: 48rem;
 }
 .blogpost .navigation {
   margin-bottom: 2rem;
