@@ -379,3 +379,6 @@ a.sidebar-nav-item:focus {
   float: right;
   color: var(--color-text-weak);
 }
+.blogpost .post-date {
+  margin-bottom: 2rem;
+}
