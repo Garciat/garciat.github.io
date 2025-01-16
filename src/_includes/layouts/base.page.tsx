@@ -29,7 +29,16 @@ export default (
         />
         <link
           rel="stylesheet"
+          href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.11.1/styles/github.min.css"
+          media="(prefers-color-scheme: light)"
+          data-theme="light"
+          crossorigin="anonymous"
+        />
+        <link
+          rel="stylesheet"
           href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.11.1/styles/github-dark.min.css"
+          media="(prefers-color-scheme: dark)"
+          data-theme="dark"
           crossorigin="anonymous"
         />
 
