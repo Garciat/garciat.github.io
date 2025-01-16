@@ -217,20 +217,20 @@ package abi
 
 // Type is the runtime representation of a Go type.
 type Type struct {
-	Size_       uintptr
-	// ... etc ... a lot of information about the type
+  Size_       uintptr
+  // ... etc ... a lot of information about the type
 }
 
 type StructType struct {
-	Type
-	PkgPath Name
-	Fields  []StructField
+  Type
+  PkgPath Name
+  Fields  []StructField
 }
 
 type InterfaceType struct {
-	Type
-	PkgPath Name
-	Methods []Imethod
+  Type
+  PkgPath Name
+  Methods []Imethod
 }
 
 // and so on ... for ArrayType, ChanType, MapType, FuncType, etc.
@@ -465,58 +465,58 @@ implement the interface’s methods.
 // It is ok to call this multiple times on the same m, even concurrently
 // (although it will only be called once with firstTime==true).
 func itabInit(m *itab, firstTime bool) string {
-	inter := m.Inter
-	typ := m.Type
-	x := typ.Uncommon()
+  inter := m.Inter
+  typ := m.Type
+  x := typ.Uncommon()
 
-	// both inter and typ have method sorted by name,
-	// and interface names are unique,
-	// so can iterate over both in lock step;
-	// the loop is O(ni+nt) not O(ni*nt).
-	ni := len(inter.Methods)
-	nt := int(x.Mcount)
-	xmhdr := (*[1 << 16]abi.Method)(add(unsafe.Pointer(x), uintptr(x.Moff)))[:nt:nt]
-	j := 0
-	methods := (*[1 << 16]unsafe.Pointer)(unsafe.Pointer(&m.Fun[0]))[:ni:ni]
-	var fun0 unsafe.Pointer
+  // both inter and typ have method sorted by name,
+  // and interface names are unique,
+  // so can iterate over both in lock step;
+  // the loop is O(ni+nt) not O(ni*nt).
+  ni := len(inter.Methods)
+  nt := int(x.Mcount)
+  xmhdr := (*[1 << 16]abi.Method)(add(unsafe.Pointer(x), uintptr(x.Moff)))[:nt:nt]
+  j := 0
+  methods := (*[1 << 16]unsafe.Pointer)(unsafe.Pointer(&m.Fun[0]))[:ni:ni]
+  var fun0 unsafe.Pointer
 imethods:
-	for k := 0; k < ni; k++ {
-		i := &inter.Methods[k]
-		itype := toRType(&inter.Type).typeOff(i.Typ)
-		name := toRType(&inter.Type).nameOff(i.Name)
-		iname := name.Name()
-		ipkg := pkgPath(name)
-		if ipkg == "" {
-			ipkg = inter.PkgPath.Name()
-		}
-		for ; j < nt; j++ {
-			t := &xmhdr[j]
-			rtyp := toRType(typ)
-			tname := rtyp.nameOff(t.Name)
-			if rtyp.typeOff(t.Mtyp) == itype && tname.Name() == iname {
-				pkgPath := pkgPath(tname)
-				if pkgPath == "" {
-					pkgPath = rtyp.nameOff(x.PkgPath).Name()
-				}
-				if tname.IsExported() || pkgPath == ipkg {
-					ifn := rtyp.textOff(t.Ifn)
-					if k == 0 {
-						fun0 = ifn // we'll set m.Fun[0] at the end
-					} else if firstTime {
-						methods[k] = ifn
-					}
-					continue imethods
-				}
-			}
-		}
-		// didn't find method
-		// Leaves m.Fun[0] set to 0.
-		return iname
-	}
-	if firstTime {
-		m.Fun[0] = uintptr(fun0)
-	}
-	return ""
+  for k := 0; k < ni; k++ {
+    i := &inter.Methods[k]
+    itype := toRType(&inter.Type).typeOff(i.Typ)
+    name := toRType(&inter.Type).nameOff(i.Name)
+    iname := name.Name()
+    ipkg := pkgPath(name)
+    if ipkg == "" {
+      ipkg = inter.PkgPath.Name()
+    }
+    for ; j < nt; j++ {
+      t := &xmhdr[j]
+      rtyp := toRType(typ)
+      tname := rtyp.nameOff(t.Name)
+      if rtyp.typeOff(t.Mtyp) == itype && tname.Name() == iname {
+        pkgPath := pkgPath(tname)
+        if pkgPath == "" {
+          pkgPath = rtyp.nameOff(x.PkgPath).Name()
+        }
+        if tname.IsExported() || pkgPath == ipkg {
+          ifn := rtyp.textOff(t.Ifn)
+          if k == 0 {
+            fun0 = ifn // we'll set m.Fun[0] at the end
+          } else if firstTime {
+            methods[k] = ifn
+          }
+          continue imethods
+        }
+      }
+    }
+    // didn't find method
+    // Leaves m.Fun[0] set to 0.
+    return iname
+  }
+  if firstTime {
+    m.Fun[0] = uintptr(fun0)
+  }
+  return ""
 }
 ```
 
@@ -559,8 +559,8 @@ pointers. For a full running example, check out
 
 ## Resources
 
-- [https://github.com/teh-cmc/go-internals/blob/master/chapter2_interfaces/README.md](https://github.com/teh-cmc/go-internals/blob/master/chapter2_interfaces/README.md)
-  - Kickstarter for my investigation
-- [https://go.dev/ref/spec](https://go.dev/ref/spec)
-- [https://github.com/golang/go/tree/master/src/cmd/compile](https://github.com/golang/go/tree/master/src/cmd/compile)
-- [https://godbolt.org/](https://godbolt.org/)
+- [Clement Rey's Go Internals: Chapter 2: Interfaces](https://github.com/teh-cmc/go-internals/blob/master/chapter2_interfaces/README.md)
+  - This was the kickstarter for my investigation
+- [Go language spec](https://go.dev/ref/spec)
+- [Go compiler source](https://github.com/golang/go/tree/master/src/cmd/compile)
+- [Compiler Explorer](https://godbolt.org/)
