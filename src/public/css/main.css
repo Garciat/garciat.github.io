@@ -64,8 +64,6 @@ body {
 body {
   color: var(--color-text-main);
   background-color: var(--color-background);
-  display: grid;
-  grid-template-rows: max-content 1fr max-content;
   height: 100%;
 }
 
@@ -353,22 +351,19 @@ a.sidebar-nav-item:focus {
 }
 
 /* Container
- *
- * Align the contents of the site above the proper threshold with some margin-fu
- * with a 25%-wide `.sidebar`.
  */
 
 .content {
   margin-top: 2rem;
   margin-bottom: 2rem;
-  padding: 0 2rem;
+  padding: 0 1.5rem;
 }
 
 /* Blog Post
  */
 
 .blogpost {
-  padding: 0 2rem;
+  padding: 0 1.5rem;
 }
 .container.blogpost {
   max-width: 48rem;
