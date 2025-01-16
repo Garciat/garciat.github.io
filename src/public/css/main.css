@@ -137,6 +137,15 @@ strong {
 ul, ol, dl {
   margin-top: 0;
   margin-bottom: 1rem;
+  padding-inline-start: 2em;
+}
+ul ul, ol ol, ul ol, ol ul {
+  margin-top: 0.5em;
+  margin-bottom: 0.5em;
+  padding-inline-start: 1em;
+}
+ul li, ol li {
+  margin-bottom: 0.5rem;
 }
 
 dt {
