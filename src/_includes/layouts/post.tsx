@@ -26,7 +26,7 @@ export default (
         <div class="post">
           <h1 class="post-title">{title}</h1>
           <span class="post-date">
-            Posted on <strong>{h.date(date, "HUMAN_DATE")}</strong>
+            {h.date(date, "HUMAN_DATE")}
           </span>
 
           <nav class="toc" hidden={no_toc ?? false}>

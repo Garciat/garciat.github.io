@@ -4,14 +4,14 @@
   --width: 34.5;
   --rounding: 4px;
   --color-accent: #268bd2;
-  --color-background: light-dark(#ffffff, #1e1e1e);
-  --color-background-off1: light-dark(#f9f9f9, #2a2a2a);
+  --color-background: light-dark(#ffffff, #0e0e0e);
+  --color-background-off1: light-dark(#f9f9f9, #202020);
   --color-background-off2: light-dark(#e5e5e5, #333333);
   --color-background-off3: light-dark(#9a9a9a, #aaaaaa);
   --color-text-title: light-dark(#000000, #ffffff);
   --color-text-main: light-dark(#515151, #dddddd);
-  --color-text-strong: light-dark(#313131, #dddddd);
-  --color-text-weak: light-dark(#7a7a7a, #999999);
+  --color-text-strong: light-dark(#313131, #eeeeee);
+  --color-text-weak: light-dark(#7a7a7a, #aaaaaa);
   --color-text-code: #bf616a;
 }
 
@@ -39,10 +39,20 @@ body.dark {
 }
 
 html {
-  font-family: "PT Sans", Helvetica, Arial, sans-serif;
+  font-family:
+    system-ui,
+    -apple-system,
+    Segoe UI,
+    Roboto,
+    Helvetica,
+    Arial,
+    sans-serif,
+    Apple Color Emoji,
+    Segoe UI Emoji;
   font-size: 1.3rem;
   font-weight: 300;
   font-size: clamp(18px, 100vw / var(--width), 20px);
+  line-height: 1.5;
 }
 
 html,
@@ -60,18 +70,7 @@ body {
 }
 
 select {
-  font-family:
-    "SF Pro Text",
-    -apple-system,
-    BlinkMacSystemFont,
-    Roboto,
-    "Segoe UI",
-    Helvetica,
-    Arial,
-    sans-serif,
-    "Apple Color Emoji",
-    "Segoe UI Emoji",
-    "Segoe UI Symbol";
+  font-family: inherit;
 }
 
 /* No `:visited` state is required by default (browsers will use `a`) */
@@ -101,7 +100,7 @@ a[target="_blank"]::after {
 /* Headings */
 h1, h2, h3, h4, h5, h6 {
   margin-bottom: 1rem;
-  font-weight: bold;
+  font-weight: normal;
   line-height: 1.25;
   color: var(--color-text-strong);
   text-rendering: optimizeLegibility;
@@ -178,20 +177,19 @@ code {
   font-size: 85%;
   color: var(--color-text-code);
   background-color: var(--color-background-off1);
-  border-radius: 3px;
+  border-radius: 4px;
 }
 pre {
   display: block;
-  margin-top: 0;
-  margin-bottom: 1rem;
+  overflow: auto;
+  margin-top: 1.5rem;
+  margin-bottom: 1.5rem;
   padding: 1rem;
   font-size: 0.8rem;
   line-height: 1.4;
-  white-space: pre;
-  white-space: pre-wrap;
-  word-break: break-all;
-  word-wrap: break-word;
   background-color: var(--color-background-off1);
+  border: 1px solid var(--color-background-off2);
+  border-radius: 4px;
 }
 pre code {
   padding: 0;
@@ -348,10 +346,10 @@ body > footer {
 a.sidebar-nav-item:hover,
 a.sidebar-nav-item:focus {
   text-decoration: none;
-  background-color: var(--color-background-off2);
+  color: var(--color-text-code);
 }
 .sidebar-nav-item.active {
-  font-weight: bold;
+  color: var(--color-text-strong);
 }
 
 /* Container
