@@ -1,6 +1,6 @@
 import { getConfigRepositoryPathURL } from "../github.ts";
 
-export const layout = "layouts/base.tsx";
+export const layout: SiteLayout = "layouts/base.page.tsx";
 
 export default (
   { comp, config, i18n, page, title, date, toc, no_toc, children }: Lume.Data,

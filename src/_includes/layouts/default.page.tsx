@@ -1,4 +1,4 @@
-export const layout = "layouts/base.tsx";
+export const layout: SiteLayout = "layouts/base.page.tsx";
 
 export default (
   { comp, url, children }: Lume.Data,

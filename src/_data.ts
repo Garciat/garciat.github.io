@@ -61,6 +61,13 @@ export const i18n = {
 declare global {
   type SiteConfig = typeof config;
 
+  type SiteLayout =
+    | "layouts/base.page.tsx"
+    | "layouts/default.page.tsx"
+    | "layouts/gist.page.tsx"
+    | "layouts/page.page.tsx"
+    | "layouts/post.page.tsx";
+
   namespace Lume {
     interface Data {
       config: SiteConfig;

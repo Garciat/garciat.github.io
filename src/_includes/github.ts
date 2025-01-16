@@ -34,9 +34,6 @@ export function getPaginatedUserGists(username: string): AsyncIterable<
     {
       username: username,
       per_page: 100,
-      headers: {
-        "X-GitHub-Api-Version": "2022-11-28",
-      },
     },
   );
 }
@@ -49,9 +46,6 @@ export function getPaginatedUserRepos(username: string): AsyncIterable<
     {
       username: username,
       per_page: 100,
-      headers: {
-        "X-GitHub-Api-Version": "2022-11-28",
-      },
     },
   );
 }

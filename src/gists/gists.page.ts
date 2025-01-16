@@ -25,7 +25,7 @@ declare global {
     created_at: Date;
     updated_at: Date;
     gist: Gist;
-    layout?: string;
+    layout?: SiteLayout;
     title?: string;
     content?: string;
   }
@@ -67,7 +67,7 @@ export default async function* (
     } else {
       yield {
         ...common,
-        layout: "layouts/gist.tsx",
+        layout: "layouts/gist.page.tsx",
       };
     }
 

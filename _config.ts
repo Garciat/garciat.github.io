@@ -23,7 +23,7 @@ const site = lume({
 });
 
 site.use(jsx({
-  extensions: [".tsx"],
+  extensions: [".page.tsx"],
 }));
 
 site.use(date());

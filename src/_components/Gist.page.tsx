@@ -1,6 +1,6 @@
 import { filesize } from "npm:filesize";
 
-export const layout = "layouts/default.tsx";
+export const layout: SiteLayout = "layouts/default.page.tsx";
 
 interface GistComponentProps {
   pageUrl: string;

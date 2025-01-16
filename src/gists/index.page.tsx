@@ -2,7 +2,7 @@ import { getConfigUserGistsURL } from "../_includes/github.ts";
 
 export const type = "page";
 
-export const layout = "layouts/page.tsx";
+export const layout: SiteLayout = "layouts/page.page.tsx";
 
 export const description =
   "A list of all of my GitHub gists that are viewable in the browser.";

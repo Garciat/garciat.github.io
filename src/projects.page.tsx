@@ -7,7 +7,7 @@ import { consume, sortedByDate } from "./_includes/utils.ts";
 
 export const type = "page";
 
-export const layout = "layouts/page.tsx";
+export const layout: SiteLayout = "layouts/page.page.tsx";
 
 export const title = "Projects";
 

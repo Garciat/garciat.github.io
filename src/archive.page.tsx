@@ -1,6 +1,6 @@
 export const type = "page";
 
-export const layout = "layouts/default.tsx";
+export const layout: SiteLayout = "layouts/default.page.tsx";
 
 export const title = "Archive";
 
