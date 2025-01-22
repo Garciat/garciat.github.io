@@ -11,7 +11,7 @@ export default (
   return (
     <footer class="content container">
       <p>
-        <comp.ColorScheme />
+        <select id="color-scheme-selector" />
       </p>
       <p>
         Built with <a href="https://www.typescriptlang.org/">TypeScript</a>,

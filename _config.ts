@@ -2,6 +2,7 @@ import lume from "lume/mod.ts";
 import sitemap from "lume/plugins/sitemap.ts";
 import date from "lume/plugins/date.ts";
 import jsx from "lume/plugins/jsx_preact.ts";
+import esbuild from "lume/plugins/esbuild.ts";
 // import esbuild from "lume/plugins/esbuild.ts";
 import code_highlight from "lume/plugins/code_highlight.ts";
 import toc, {
@@ -24,6 +25,22 @@ const site = lume({
 
 site.use(jsx({
   extensions: [".page.tsx"],
+}));
+
+site.use(esbuild({
+  extensions: [".ts", ".js"],
+  options: {
+    plugins: [],
+    bundle: false,
+    format: "esm",
+    minify: false,
+    keepNames: true,
+    platform: "browser",
+    target: "esnext",
+    treeShaking: false,
+    outdir: "./",
+    outbase: ".",
+  },
 }));
 
 site.use(date());

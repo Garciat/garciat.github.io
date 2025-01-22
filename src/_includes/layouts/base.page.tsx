@@ -51,6 +51,9 @@ export default (
       </head>
 
       <body>
+        {/* Load this as a render-blocking script to prevent screen flickering. */}
+        <script src={h.url("/public/js/theme.js")} />
+
         {children}
 
         <comp.Analytics />
