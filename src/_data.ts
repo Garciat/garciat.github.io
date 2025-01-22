@@ -30,12 +30,9 @@ export const config = {
     ],
     "style-src": [
       "'self'",
-      "https://fonts.googleapis.com",
-      "https://cdnjs.cloudflare.com",
     ],
     "font-src": [
       "'self'",
-      "https://fonts.gstatic.com",
     ],
     "img-src": [
       "'self'",

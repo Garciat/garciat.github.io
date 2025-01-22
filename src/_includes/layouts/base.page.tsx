@@ -24,19 +24,14 @@ export default (
         <link rel="stylesheet" href={h.url("/public/css/gists.css")} />
         <link
           rel="stylesheet"
-          href="https://fonts.googleapis.com/css?family=PT+Sans:400,400italic,700|Abril+Fatface"
-          crossorigin="anonymous"
-        />
-        <link
-          rel="stylesheet"
-          href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.11.1/styles/github.min.css"
+          href={h.url("/public/css/highlight.js@11.11.1/github.css")}
           media="(prefers-color-scheme: light)"
           data-theme="light"
           crossorigin="anonymous"
         />
         <link
           rel="stylesheet"
-          href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.11.1/styles/github-dark.min.css"
+          href={h.url("/public/css/highlight.js@11.11.1/github-dark.css")}
           media="(prefers-color-scheme: dark)"
           data-theme="dark"
           crossorigin="anonymous"
