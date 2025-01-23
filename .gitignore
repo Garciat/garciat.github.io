@@ -4,3 +4,5 @@ _cache/
 
 # Workaround for integrity bug with "npm:@js-temporal/polyfill@0.4.4"
 deno.lock
+
+*.draft.md
