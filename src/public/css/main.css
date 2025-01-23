@@ -9,9 +9,9 @@
   --color-background-off2: light-dark(#e5e5e5, #333333);
   --color-background-off3: light-dark(#9a9a9a, #aaaaaa);
   --color-text-title: light-dark(#000000, #ffffff);
-  --color-text-main: light-dark(#515151, #dddddd);
-  --color-text-strong: light-dark(#313131, #eeeeee);
-  --color-text-weak: light-dark(#7a7a7a, #aaaaaa);
+  --color-text-main: light-dark(#333333, #dddddd);
+  --color-text-strong: light-dark(#222222, #eeeeee);
+  --color-text-weak: light-dark(#666666, #aaaaaa);
   --color-text-code: #bf616a;
 }
 
