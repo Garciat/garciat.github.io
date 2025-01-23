@@ -18,6 +18,7 @@ import lang_python from "npm:highlight.js/lib/languages/python";
 import lang_bash from "npm:highlight.js/lib/languages/bash";
 import lang_haskell from "npm:highlight.js/lib/languages/haskell";
 import lang_x86asm from "npm:highlight.js/lib/languages/x86asm";
+import { Page } from "lume/core/file.ts";
 
 const site = lume({
   src: "./src",
@@ -83,5 +84,33 @@ site.use(
     },
   }),
 );
+
+site.addEventListener("beforeSave", async () => {
+  const resources = new Set<string>();
+
+  for (const data of site.search.pages()) {
+    resources.add(site.url(data.url));
+  }
+
+  for (const path of site.search.files()) {
+    if (/\.(html)$/.test(path)) {
+      continue;
+    }
+    resources.add(site.url(path));
+  }
+
+  const sitemap = Page.create({
+    url: "/resources.json",
+    content: JSON.stringify(
+      {
+        resources: Array.from(resources),
+      },
+      null,
+      2,
+    ),
+  });
+
+  site.pages.push(sitemap);
+});
 
 export default site;

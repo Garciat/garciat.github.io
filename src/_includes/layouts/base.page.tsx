@@ -45,6 +45,11 @@ export default (
 
         <script
           type="module"
+          src={h.url("/public/js/offline.js")}
+          defer
+        />
+        <script
+          type="module"
           src={h.url("/public/js/relative-time.js")}
           defer
         />

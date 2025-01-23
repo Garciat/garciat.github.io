@@ -14,6 +14,9 @@ export default (
         <select id="color-scheme-selector" />
       </p>
       <p>
+        Offline mode: <input type="checkbox" id="offline-mode" />
+      </p>
+      <p>
         Built with <a href="https://www.typescriptlang.org/">TypeScript</a>,
         {" "}
         <a href="https://lume.land">Lume</a>, and{" "}

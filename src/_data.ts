@@ -46,6 +46,9 @@ export const config = {
     "connect-src": [
       "'self'",
     ],
+    "worker-src": [
+      "'self'",
+    ],
   },
 };
 
