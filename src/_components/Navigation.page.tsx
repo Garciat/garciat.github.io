@@ -12,23 +12,31 @@ const NavItem = (
   <a
     class={`sidebar-nav-item ${currentUrl === url ? "active" : ""}`}
     target={target}
-    href={normalizedUrl || url}
+    href={normalizedUrl ?? url}
   >
     {title}
   </a>
 );
 
 export default ({ search, config, url }: Lume.Data, h: Lume.Helpers) => {
+  const isHome = false;
+
   return (
-    <div class="sidebar">
+    <div class={["sidebar", isHome ? "home" : ""].join(" ")}>
       <div class="container sidebar-sticky">
         <div class="sidebar-about">
           <h1>
-            <a href={h.url("/")}>
-              {config.title}
-            </a>
+            <img
+              src={h.url("/public/resources/avatar.jpeg")}
+              alt="Me"
+              width="50"
+              height="50"
+            />
+            <span class="name">Gabriel Garcia</span>
           </h1>
-          <p class="lead">{config.description}</p>
+          <p class="lead">
+            Recreational programmer turned Software Engineer.
+          </p>
         </div>
 
         <nav class="sidebar-nav">
@@ -42,7 +50,7 @@ export default ({ search, config, url }: Lume.Data, h: Lume.Helpers) => {
           {search.pages("type=page", "title=asc").map((page) => (
             <NavItem
               url={page.url}
-              title={page.title!}
+              title={page.nav_title ?? page.title!}
               currentUrl={url}
               normalizedUrl={h.url(page.url)}
             />

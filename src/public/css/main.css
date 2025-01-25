@@ -332,10 +332,24 @@ body > footer {
 /* About section */
 .sidebar-about h1 {
   margin-top: 0;
-  font-size: 3.25rem;
+  font-size: 2rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+.sidebar-about h1 img {
+  display: block;
+  margin-right: 1rem;
+  width: 2.5rem;
+  height: 2.5rem;
+  border-radius: 50%;
 }
 .sidebar-about h1 a:hover {
   text-decoration: none;
+}
+.sidebar-about a {
+  color: inherit;
 }
 
 /* Sidebar nav */
