@@ -11,7 +11,7 @@ import toc, {
   linkInsideHeader,
 } from "https://deno.land/x/lume_markdown_plugins@v0.8.0/toc.ts";
 import { Node as NodeTOC } from "https://deno.land/x/lume_markdown_plugins@v0.8.0/toc/mod.ts";
-
+import footnotes from "https://deno.land/x/lume_markdown_plugins@v0.8.0/footnotes.ts";
 import beautify from "npm:js-beautify@1.15.1";
 
 import lang_javascript from "npm:highlight.js/lib/languages/javascript";
@@ -32,6 +32,8 @@ site.use(slugifyUrls());
 site.use(readingInfo({
   wordsPerMinute: 100, // there's usually a lot of code in my posts
 }));
+
+site.use(footnotes());
 
 site.use(jsx({
   extensions: [".page.tsx"],
@@ -66,6 +68,11 @@ declare global {
     interface Data {
       no_toc?: boolean;
       toc: NodeTOC[];
+      footnotes?: {
+        id: string;
+        refId: string;
+        content: string;
+      }[];
       readingInfo: ReadingInfo;
     }
 

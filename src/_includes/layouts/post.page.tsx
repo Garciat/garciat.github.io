@@ -55,6 +55,8 @@ export default (
           </nav>
 
           {children}
+
+          <comp.Footnotes footnotes={post.footnotes} />
         </div>
       </div>
 

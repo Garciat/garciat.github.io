@@ -8,6 +8,7 @@
   --color-background-off1: light-dark(#f9f9f9, #202020);
   --color-background-off2: light-dark(#e5e5e5, #333333);
   --color-background-off3: light-dark(#9a9a9a, #aaaaaa);
+  --color-background-notice: light-dark(#fffbb4, #2e2e01);
   --color-text-title: light-dark(#000000, #ffffff);
   --color-text-main: light-dark(#333333, #dddddd);
   --color-text-strong: light-dark(#222222, #eeeeee);
@@ -439,4 +440,43 @@ h2.post-title {
 }
 .blogpost .post-meta {
   margin-bottom: 2rem;
+}
+
+/**
+ * Footnotes
+ */
+.footnotes {
+  margin-top: 2rem;
+  padding-top: 1rem;
+  border-top: 1px solid var(--color-background-off2);
+  color: var(--color-text-weak);
+  font-size: 0.8rem;
+}
+.footnote {
+  width: fit-content;
+  padding: 0 0.25rem;
+  border-radius: 4px;
+  border: 1px solid transparent;
+}
+.footnote:has(a:target) {
+  background-color: var(--color-background-notice);
+  border: 1px solid var(--color-background-off3);
+}
+.footnote-ref {
+  padding: 0.1rem;
+  border-radius: 4px;
+  border: 1px solid transparent;
+}
+.footnote-ref:target {
+  background-color: var(--color-background-notice);
+  border: 1px solid var(--color-background-off3);
+}
+.footnote-ref::before {
+  content: "[";
+}
+.footnote-ref::after {
+  content: "]";
+}
+.backref {
+  margin-left: 0.5rem;
 }
