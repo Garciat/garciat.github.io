@@ -9,13 +9,14 @@ interface NavItemProps {
 const NavItem = (
   { url, title, currentUrl, normalizedUrl, target }: NavItemProps,
 ) => (
-  <a
-    class={`sidebar-nav-item ${currentUrl === url ? "active" : ""}`}
-    target={target}
-    href={normalizedUrl ?? url}
-  >
-    {title}
-  </a>
+  <li class={`sidebar-nav-item ${currentUrl === url ? "active" : ""}`}>
+    <a
+      target={target}
+      href={normalizedUrl ?? url}
+    >
+      {title}
+    </a>
+  </li>
 );
 
 export default ({ search, config, url }: Lume.Data, h: Lume.Helpers) => {
@@ -39,28 +40,30 @@ export default ({ search, config, url }: Lume.Data, h: Lume.Helpers) => {
           </p>
         </div>
 
-        <nav class="sidebar-nav">
-          <NavItem
-            url="/"
-            title="Home"
-            currentUrl={url}
-            normalizedUrl={h.url("/")}
-          />
-
-          {search.pages("type=page", "title=asc").map((page) => (
+        <nav>
+          <ul class="sidebar-nav">
             <NavItem
-              url={page.url}
-              title={page.nav_title ?? page.title!}
+              url="/"
+              title="Home"
               currentUrl={url}
-              normalizedUrl={h.url(page.url)}
+              normalizedUrl={h.url("/")}
             />
-          ))}
 
-          <NavItem
-            url={config.github.profile_url}
-            title="GitHub"
-            target="_blank"
-          />
+            {search.pages("type=page", "title=asc").map((page) => (
+              <NavItem
+                url={page.url}
+                title={page.nav_title ?? page.title!}
+                currentUrl={url}
+                normalizedUrl={h.url(page.url)}
+              />
+            ))}
+
+            <NavItem
+              url={config.github.profile_url}
+              title="GitHub"
+              target="_blank"
+            />
+          </ul>
         </nav>
       </div>
     </div>

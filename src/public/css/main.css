@@ -356,20 +356,25 @@ body > footer {
 .sidebar-nav {
   display: flex;
   flex-wrap: wrap;
+
+  list-style: none;
+  padding: 0;
+  margin: 0;
 }
 .sidebar-nav-item {
   flex-grow: 1;
   display: block;
+  margin-bottom: 0;
   padding: 0.5rem;
   line-height: 1.75;
   white-space: nowrap;
 }
-a.sidebar-nav-item:hover,
-a.sidebar-nav-item:focus {
+.sidebar-nav-item a:hover,
+.sidebar-nav-item a:focus {
   text-decoration: none;
   color: var(--color-text-code);
 }
-.sidebar-nav-item.active {
+.sidebar-nav-item.active a {
   color: var(--color-text-strong);
 }
 
