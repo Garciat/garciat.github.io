@@ -3,17 +3,18 @@ import { getConfigRepositoryPathURL } from "../github.ts";
 export const layout: SiteLayout = "layouts/base.page.tsx";
 
 export default (
-  { comp, config, i18n, page, title, date, tags, toc, no_toc, children }:
-    Lume.Data,
+  post: Lume.Data & Lume.Layout,
   h: Lume.Helpers,
 ) => {
+  const { comp, config, i18n, children } = post;
+
   return (
     <>
       <div class="blogpost container">
         <div class="navigation noprint">
           <h4>
             <a
-              href={getConfigRepositoryPathURL(config, page.sourcePath)}
+              href={getConfigRepositoryPathURL(config, post.page.sourcePath)}
               class="github-source"
             >
               View post on GitHub
@@ -25,17 +26,18 @@ export default (
         </div>
 
         <div class="post">
-          <h1 class="post-title">{title}</h1>
+          <h1 class="post-title">{post.title}</h1>
 
           <div class="post-meta">
-            <div class="post-date">{h.date(date, "HUMAN_DATE")}</div>
-            <comp.TagsList tags={tags} />
+            <div class="post-date">{h.date(post.date, "HUMAN_DATE")}</div>
+            <div class="post-time">{post.readingInfo.minutes} min read</div>
+            <comp.TagsList tags={post.tags} />
           </div>
 
-          <nav class="toc" hidden={no_toc ?? false}>
+          <nav class="toc" hidden={post.no_toc ?? false}>
             <h2>{i18n.nav.toc}</h2>
             <ol>
-              {toc.map((item) => (
+              {post.toc.map((item) => (
                 <>
                   <li>
                     <a href={`#${item.slug}`}>{item.text}</a>

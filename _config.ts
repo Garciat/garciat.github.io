@@ -1,5 +1,6 @@
 import lume from "lume/mod.ts";
 import slugifyUrls from "lume/plugins/slugify_urls.ts";
+import readingInfo, { ReadingInfo } from "lume/plugins/reading_info.ts";
 import sitemap from "lume/plugins/sitemap.ts";
 import date from "lume/plugins/date.ts";
 import jsx from "lume/plugins/jsx_preact.ts";
@@ -20,11 +21,17 @@ import lang_bash from "npm:highlight.js/lib/languages/bash";
 import lang_haskell from "npm:highlight.js/lib/languages/haskell";
 import lang_x86asm from "npm:highlight.js/lib/languages/x86asm";
 
+import { JSX } from "npm:preact@10.25.4";
+
 const site = lume({
   src: "./src",
 });
 
 site.use(slugifyUrls());
+
+site.use(readingInfo({
+  wordsPerMinute: 100, // there's usually a lot of code in my posts
+}));
 
 site.use(jsx({
   extensions: [".page.tsx"],
@@ -57,7 +64,13 @@ site.use(toc({
 declare global {
   namespace Lume {
     interface Data {
+      no_toc?: boolean;
       toc: NodeTOC[];
+      readingInfo: ReadingInfo;
+    }
+
+    interface Layout {
+      children?: JSX.Element;
     }
   }
 }
