@@ -6,22 +6,52 @@ export const title = "Archive";
 
 export const description = "Archived posts from my blog.";
 
-export default ({ search }: Lume.Data, { url, date }: Lume.Helpers) => {
+export default ({ search }: Lume.Data, h: Lume.Helpers) => {
+  const posts = search.pages<Lume.Data>("type=post", "date=desc");
+
   return (
     <>
-      <div class="posts">
-        {search.pages("type=post archived=true", "date=desc").map((post) => (
-          <div class="post">
-            <h2 class="post-title">
-              <a href={url(post.url)}>{post.title}</a>
-            </h2>
-
-            <span class="post-date">{date(post.date, "HUMAN_DATE")}</span>
-
-            {post.description}
-          </div>
-        ))}
-      </div>
+      {postsByYear(posts).map(([year, posts]) => (
+        <section>
+          <h2>{year}</h2>
+          <ul class="no-list-style">
+            {postsByMonth(posts).map(([month, posts]) => (
+              <li>
+                <h3>{h.date(new Date(year, month), "MMMM")}</h3>
+                <ul>
+                  {posts.map((post) => (
+                    <li>
+                      <a href={h.url(post.url)}>{post.title}</a>
+                    </li>
+                  ))}
+                </ul>
+              </li>
+            ))}
+          </ul>
+        </section>
+      ))}
     </>
   );
 };
+
+function postsByYear(posts: Lume.Data[]) {
+  return groupBy(posts, (post) => post.date.getFullYear()).entries().toArray();
+}
+
+function postsByMonth(posts: Lume.Data[]) {
+  return groupBy(posts, (post) => post.date.getMonth()).entries().toArray();
+}
+
+function groupBy<T, K>(list: T[], getKey: (item: T) => K) {
+  const map = new Map<K, T[]>();
+  list.forEach((item) => {
+    const key = getKey(item);
+    const collection = map.get(key);
+    if (!collection) {
+      map.set(key, [item]);
+    } else {
+      collection.push(item);
+    }
+  });
+  return map;
+}
