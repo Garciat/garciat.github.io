@@ -6,11 +6,17 @@ export const title = "Archive";
 
 export const description = "Archived posts from my blog.";
 
-export default ({ search }: Lume.Data, h: Lume.Helpers) => {
+export default ({ comp, search }: Lume.Data, h: Lume.Helpers) => {
+  const tags = search.values<string>("tags").toSorted();
+
   const posts = search.pages<Lume.Data>("type=post", "date=desc");
 
   return (
     <>
+      <section>
+        <h3 class="weak">Tags</h3>
+        <comp.TagsList tags={tags} />
+      </section>
       {postsByYear(posts).map(([year, posts]) => (
         <section>
           <h2>{year}</h2>

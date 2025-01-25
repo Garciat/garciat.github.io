@@ -2,6 +2,8 @@
 title:        "My Programming Principles in 2020"
 date:         2020-12-20
 description:  "This is rough brain dump of several principles/ideas that I applied in 2020 while working at Uber."
+tags:
+  - Brain Dump
 ---
 
 ## Abstract

@@ -3,7 +3,8 @@ import { getConfigRepositoryPathURL } from "../github.ts";
 export const layout: SiteLayout = "layouts/base.page.tsx";
 
 export default (
-  { comp, config, i18n, page, title, date, toc, no_toc, children }: Lume.Data,
+  { comp, config, i18n, page, title, date, tags, toc, no_toc, children }:
+    Lume.Data,
   h: Lume.Helpers,
 ) => {
   return (
@@ -25,9 +26,11 @@ export default (
 
         <div class="post">
           <h1 class="post-title">{title}</h1>
-          <span class="post-date">
-            {h.date(date, "HUMAN_DATE")}
-          </span>
+
+          <div class="post-meta">
+            <div class="post-date">{h.date(date, "HUMAN_DATE")}</div>
+            <comp.TagsList tags={tags} />
+          </div>
 
           <nav class="toc" hidden={no_toc ?? false}>
             <h2>{i18n.nav.toc}</h2>

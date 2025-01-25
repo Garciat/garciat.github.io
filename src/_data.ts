@@ -1,9 +1,8 @@
 const isDev = Deno.env.get("DEV") === "true";
 
 export const config = {
-  title: "garciat",
+  title: "Gabriel Garcia (garciat)",
   titleSeparator: " · ",
-  description: "",
   google_analytics: "UA-19283098-3",
   sourceDir: "src",
   github: {
@@ -63,7 +62,8 @@ declare global {
     | "layouts/default.page.tsx"
     | "layouts/gist.page.tsx"
     | "layouts/page.page.tsx"
-    | "layouts/post.page.tsx";
+    | "layouts/post.page.tsx"
+    | "layouts/archive_result.page.tsx";
 
   namespace Lume {
     interface Data {

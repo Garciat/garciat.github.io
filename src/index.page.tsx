@@ -4,7 +4,7 @@ export const title = "Home";
 
 export const description = "The personal website of Gabriel Garcia.";
 
-export default ({ search }: Lume.Data, { url, date }: Lume.Helpers) => {
+export default ({ comp, search }: Lume.Data, { url, date }: Lume.Helpers) => {
   return (
     <>
       <div class="posts">
@@ -14,7 +14,10 @@ export default ({ search }: Lume.Data, { url, date }: Lume.Helpers) => {
               <a href={url(post.url)}>{post.title}</a>
             </h2>
 
-            <span class="post-date">{date(post.date, "HUMAN_DATE")}</span>
+            <div class="post-meta">
+              <div class="post-date">{date(post.date, "HUMAN_DATE")}</div>
+              <comp.TagsList tags={post.tags} />
+            </div>
 
             {post.description}
           </div>

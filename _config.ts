@@ -1,4 +1,5 @@
 import lume from "lume/mod.ts";
+import slugifyUrls from "lume/plugins/slugify_urls.ts";
 import sitemap from "lume/plugins/sitemap.ts";
 import date from "lume/plugins/date.ts";
 import jsx from "lume/plugins/jsx_preact.ts";
@@ -22,6 +23,8 @@ import lang_x86asm from "npm:highlight.js/lib/languages/x86asm";
 const site = lume({
   src: "./src",
 });
+
+site.use(slugifyUrls());
 
 site.use(jsx({
   extensions: [".page.tsx"],

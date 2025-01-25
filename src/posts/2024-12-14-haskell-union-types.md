@@ -3,6 +3,10 @@ title:        "TypeScript and Haskell: Unions & Singletons"
 date:         2024-12-14
 description:  "I briefly explore union types and singleton types in Haskell and TypeScript."
 no_toc: true
+tags:
+  - Haskell
+  - TypeScript
+  - Type Systems
 ---
 
 I like TypeScript's type system. In particular, I like the combination of

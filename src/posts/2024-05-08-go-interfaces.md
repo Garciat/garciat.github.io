@@ -2,6 +2,9 @@
 title:        "Understanding Go interfaces"
 date:         2024-05-08
 description:  "I explore the implementation details of Go interfaces."
+tags:
+  - Go
+  - Tutorial
 ---
 
 ## Introduction

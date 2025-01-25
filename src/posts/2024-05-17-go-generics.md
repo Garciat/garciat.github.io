@@ -2,6 +2,9 @@
 title:        "Understanding Go generics"
 date:         2024-05-17
 description:  "A complete brain dump of my understanding of Go generics at the time."
+tags:
+  - Go
+  - Tutorial
 ---
 
 ## Introduction

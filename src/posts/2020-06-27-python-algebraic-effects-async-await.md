@@ -2,6 +2,9 @@
 title:        "Python: Algebraic Effects via async/await"
 date:         2020-06-27
 description:  "I implement some kind of restricted effects system in Python via async/await."
+tags:
+  - Python
+  - Experiment
 ---
 
 ## TL;DR
