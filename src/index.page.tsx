@@ -1,6 +1,6 @@
 export const layout: SiteLayout = "layouts/default.page.tsx";
 
-export const title = "Home";
+export const title = "Gabriel Garcia";
 
 export const description = "The personal website of Gabriel Garcia.";
 

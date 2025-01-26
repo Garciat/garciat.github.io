@@ -1,7 +1,9 @@
 export default (
-  { comp, config, url, title, description, children }: Lume.Data,
+  page: Lume.Data,
   h: Lume.Helpers,
 ) => {
+  const { comp, config, children } = page;
+
   return (
     <html lang="en">
       <head>
@@ -12,13 +14,15 @@ export default (
         />
         <meta name="referrer" content="same-origin" />
 
-        {description && <meta name="description" content={description} />}
+        {page.description && (
+          <meta name="description" content={page.description} />
+        )}
 
         <meta name="viewport" content="width=device-width,initial-scale=1" />
 
-        <title>{`${title}${config.titleSeparator}${config.title}`}</title>
+        <title>{page.title}</title>
 
-        <link rel="canonical" href={h.url(url, true)} />
+        <link rel="canonical" href={h.url(page.url, true)} />
 
         <link rel="stylesheet" href={h.url("/public/css/main.css")} />
         <link rel="stylesheet" href={h.url("/public/css/gists.css")} />
