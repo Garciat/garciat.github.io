@@ -68,11 +68,6 @@ body {
   height: 100%;
 }
 
-body > footer {
-  text-align: center;
-  color: var(--color-text-weak);
-}
-
 select {
   font-family: inherit;
 }
@@ -372,7 +367,7 @@ img {
 .sidebar {
   text-align: center;
   margin-top: 1rem;
-  margin-bottom: 1rem;
+  margin-bottom: 2rem;
 }
 
 /* About section */
@@ -424,12 +419,20 @@ img {
   color: var(--color-text-strong);
 }
 
+/* Footer
+ */
+
+.site-footer {
+  margin-top: 4rem;
+  margin-bottom: 2rem;
+  text-align: center;
+  color: var(--color-text-weak);
+}
+
 /* Container
  */
 
 .content {
-  margin-top: 2rem;
-  margin-bottom: 2rem;
   padding: 0 1.5rem;
 }
 

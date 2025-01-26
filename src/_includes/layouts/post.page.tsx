@@ -11,7 +11,7 @@ export default (
   return (
     <>
       <div class="blogpost container">
-        <div class="navigation noprint">
+        <nav class="navigation noprint">
           <h4>
             <a
               href={getConfigRepositoryPathURL(config, post.page.sourcePath)}
@@ -23,16 +23,16 @@ export default (
               &#8676; Back
             </a>
           </h4>
-        </div>
+        </nav>
 
-        <div class="post">
+        <main class="post">
           <h1 class="post-title">{post.title}</h1>
 
-          <div class="post-meta">
+          <section class="post-meta">
             <div class="post-date">{h.date(post.date, "HUMAN_DATE")}</div>
             <div class="post-time">{post.readingInfo.minutes} min read</div>
             <comp.TagsList tags={post.tags} />
-          </div>
+          </section>
 
           <nav class="toc" hidden={post.no_toc ?? false}>
             <h2>{i18n.nav.toc}</h2>
@@ -57,7 +57,7 @@ export default (
           {children}
 
           <comp.Footnotes footnotes={post.footnotes} />
-        </div>
+        </main>
       </div>
 
       <comp.Footer />

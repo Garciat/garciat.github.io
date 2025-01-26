@@ -12,7 +12,7 @@ export default (
   { url, date }: Lume.Helpers,
 ) => {
   return (
-    <div class="gist">
+    <article class="gist">
       <p class="gist-header">
         <a href={url(pageUrl)} class="gist-id" title={gist.id}>
           {gist.title}
@@ -40,6 +40,6 @@ export default (
           </li>
         ))}
       </ul>
-    </div>
+    </article>
   );
 };

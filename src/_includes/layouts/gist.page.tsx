@@ -4,6 +4,7 @@ export default (
   data: Lume.Data & GistPageData,
   h: Lume.Helpers,
 ) => {
+  const { comp } = data;
   return (
     <>
       <p>
@@ -11,7 +12,7 @@ export default (
           &#8676; Back
         </a>
       </p>
-      <data.comp.Gist
+      <comp.Gist
         pageUrl={data.url}
         gist={data.gist}
       />

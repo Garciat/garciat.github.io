@@ -23,9 +23,9 @@ export default ({ search, url }: Lume.Data, h: Lume.Helpers) => {
   const isHome = false;
 
   return (
-    <div class={["sidebar", isHome ? "home" : ""].join(" ")}>
+    <header class={["sidebar", isHome ? "home" : ""].join(" ")}>
       <div class="container sidebar-sticky">
-        <div class="sidebar-about">
+        <section class="sidebar-about">
           <h1>
             <img
               src={h.url("/public/resources/avatar.jpeg")}
@@ -38,7 +38,7 @@ export default ({ search, url }: Lume.Data, h: Lume.Helpers) => {
           <p class="lead">
             Recreational programmer turned Software Engineer.
           </p>
-        </div>
+        </section>
 
         <nav>
           <ul class="sidebar-nav">
@@ -60,6 +60,6 @@ export default ({ search, url }: Lume.Data, h: Lume.Helpers) => {
           </ul>
         </nav>
       </div>
-    </div>
+    </header>
   );
 };

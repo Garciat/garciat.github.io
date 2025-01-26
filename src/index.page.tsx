@@ -9,19 +9,19 @@ export default ({ comp, search }: Lume.Data, { url, date }: Lume.Helpers) => {
     <>
       <div class="posts">
         {search.pages<Lume.Data>("type=post", "date=desc").map((post) => (
-          <div class="post">
+          <article class="post">
             <h2 class="post-title">
               <a href={url(post.url)}>{post.title}</a>
             </h2>
 
-            <div class="post-meta">
+            <section class="post-meta">
               <div class="post-date">{date(post.date, "HUMAN_DATE")}</div>
               <div class="post-time">{post.readingInfo.minutes} min read</div>
               <comp.TagsList tags={post.tags} />
-            </div>
+            </section>
 
-            {post.description}
-          </div>
+            <p>{post.description}</p>
+          </article>
         ))}
       </div>
     </>

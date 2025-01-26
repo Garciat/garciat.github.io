@@ -3,7 +3,7 @@ export default (
   _h: Lume.Helpers,
 ) => {
   return (
-    <footer class="content container">
+    <footer class="site-footer content container">
       <p>
         <select id="color-scheme-selector" />
       </p>
