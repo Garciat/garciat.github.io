@@ -1,6 +1,7 @@
 const isDev = Deno.env.get("DEV") === "true";
 
 export const config = {
+  titleSeparator: " · ",
   google_analytics: "UA-19283098-3",
   sourceDir: "src",
   github: {
