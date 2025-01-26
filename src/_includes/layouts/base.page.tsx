@@ -22,6 +22,24 @@ export default (
 
         <title>{page.title}</title>
 
+        {page.url === "/" && (
+          <script
+            type="application/ld+json"
+            dangerouslySetInnerHTML={{
+              __html: JSON.stringify(
+                {
+                  "@context": "https://schema.org",
+                  "@type": "WebSite",
+                  "name": config.title,
+                  "url": h.url("/", true),
+                },
+                null,
+                2,
+              ),
+            }}
+          />
+        )}
+
         <link rel="canonical" href={h.url(page.url, true)} />
 
         <link rel="stylesheet" href={h.url("/public/css/main.css")} />
