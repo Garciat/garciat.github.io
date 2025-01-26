@@ -1,7 +1,7 @@
 enum ColorScheme {
-  system = "◐ OS Default",
-  dark = "☾ Dark",
-  light = "☀︎ Light",
+  system = "◐ System theme",
+  dark = "☾ Dark theme",
+  light = "☀︎ Light theme",
 }
 
 type ColorSchemeKey = keyof typeof ColorScheme;

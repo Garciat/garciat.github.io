@@ -14,7 +14,10 @@ programmers who share the same curiosity for code.
 
 Outside of tech, I enjoy playing the piano, rock climbing, and cooking.
 
-You can find me on [GitHub](https://github.com/Garciat),
+You can find me on [GitHub](https://github.com/garciat),
 [Instagram](https://www.instagram.com/garciat.climbs/) (rock climbing),
 [Reddit](https://www.reddit.com/user/garciat/) (not active), and
 [LinkedIn](https://www.linkedin.com/in/ggarciat/).
+
+The source code for this site can be found
+[here](https://github.com/garciat/garciat.github.io).
