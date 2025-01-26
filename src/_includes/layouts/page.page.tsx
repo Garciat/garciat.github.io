@@ -7,20 +7,26 @@ export default (
   const { comp, children } = page;
 
   return (
-    <div class="page">
-      <h1 class="page-title">{page.title}</h1>
+    <main class="page container content">
+      <header>
+        <h1>{page.title}</h1>
 
-      {page.last_update && (
-        <div class="post-meta">
-          <div class="post-date">
-            Updated on: {h.date(page.last_update, "HUMAN_DATE")}
+        {page.last_update && (
+          <div class="post-meta">
+            <div class="post-date">
+              Updated on: {h.date(page.last_update, "HUMAN_DATE")}
+            </div>
           </div>
-        </div>
-      )}
+        )}
+      </header>
 
-      {children}
+      <section>
+        {children}
+      </section>
 
-      <comp.Footnotes footnotes={page.footnotes} />
-    </div>
+      <footer>
+        <comp.Footnotes footnotes={page.footnotes} />
+      </footer>
+    </main>
   );
 };

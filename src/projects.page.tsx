@@ -7,7 +7,7 @@ import { consume, sortedByDate } from "./_includes/utils.ts";
 
 export const type = "page";
 
-export const layout: SiteLayout = "layouts/page.page.tsx";
+export const layout: SiteLayout = "layouts/default.page.tsx";
 
 export const title = "Projects";
 
@@ -39,57 +39,60 @@ export default async ({ comp, config }: Lume.Data, { date }: Lume.Helpers) => {
   const ProjectView = (
     { project, hideUpdated = false }: ProjectViewProps,
   ) => (
-    <>
+    <article>
+      <header>
+        <h3>
+          <a href={project.homepage}>{project.name}</a>
+        </h3>
+        <p>
+        </p>
+        <p class="weak small">
+          <a
+            href={project.github_url}
+            title="View on GitHub"
+          >
+            View on GitHub
+          </a>
+          {" — "}
+          <span>
+            {"Created on "}
+            <time datetime={project.created_at.toISOString()}>
+              {date(project.created_at, "HUMAN_DATE")}
+            </time>
+          </span>
+          {!hideUpdated && (
+            <>
+              {" — "}
+              <span>
+                {"Updated  "}
+                <comp.RelativeTime time={project.updated_at} />
+              </span>
+            </>
+          )}
+        </p>
+      </header>
       <p>
-        <a href={project.homepage}>{project.name}</a>
-        {" — "}
-        <a href={project.github_url}>
-          <comp.BadgeStatic
-            altText="GitHub Repository"
-            label="GitHub"
-            message="source"
-            logo="github"
-            color="blue"
-          />
-        </a>
-      </p>
-      <p>
-        <span>
-          {"Created on "}
-          <time datetime={project.created_at.toISOString()}>
-            {date(project.created_at, "HUMAN_DATE")}
-          </time>
-        </span>
-        <span hidden={hideUpdated}>
-          {" — Updated  "}
-          <comp.RelativeTime time={project.updated_at} />
-        </span>
-      </p>
-      <p class="message">
         {project.description}
       </p>
-    </>
+    </article>
   );
 
   return (
-    <>
-      <ul>
+    <main class="container content">
+      <section>
+        <h1>{title}</h1>
         {sortedByDate("created_at", projects).map((project) => (
-          <li>
-            <ProjectView project={project} />
-          </li>
+          <ProjectView project={project} />
         ))}
-      </ul>
+      </section>
       <hr />
-      <h3>Archived Projects</h3>
-      <ul>
+      <section>
+        <h2>Archived Projects</h2>
         {sortedByDate("created_at", projectsArchived).map((project) => (
-          <li>
-            <ProjectView project={project} hideUpdated={true} />
-          </li>
+          <ProjectView project={project} hideUpdated={true} />
         ))}
-      </ul>
-    </>
+      </section>
+    </main>
   );
 };
 

@@ -7,14 +7,14 @@ export default (
   const posts = search.pages<Lume.Data>(search_query, "date=desc");
 
   return (
-    <>
+    <main class="container content">
       <header>
         <p>
           <a href={h.url("/archive/")}>&#8676; Back</a>
         </p>
+        <h2>{title}</h2>
       </header>
       <section>
-        <h2>{title}</h2>
         <ul>
           {posts.map((post) => (
             <li>
@@ -24,6 +24,6 @@ export default (
           ))}
         </ul>
       </section>
-    </>
+    </main>
   );
 };

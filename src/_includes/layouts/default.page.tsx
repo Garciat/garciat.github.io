@@ -8,9 +8,7 @@ export default (
     <>
       <comp.Navigation url={url} />
 
-      <div class="content container">
-        {children}
-      </div>
+      {children}
 
       <comp.Footer />
     </>

@@ -10,22 +10,22 @@ export default (
 
   return (
     <>
-      <div class="blogpost container">
-        <nav class="navigation noprint">
-          <h4>
-            <a
-              href={getConfigRepositoryPathURL(config, post.page.sourcePath)}
-              class="github-source"
-            >
-              View post on GitHub
-            </a>
-            <a href={h.url("/")}>
-              &#8676; Back
-            </a>
-          </h4>
+      <header>
+        <nav class="post-navigation container content noprint">
+          <a href={h.url("/")}>
+            &#8676; Back
+          </a>{" "}
+          <a
+            href={getConfigRepositoryPathURL(config, post.page.sourcePath)}
+            class="github-source"
+          >
+            View post on GitHub
+          </a>
         </nav>
+      </header>
 
-        <main class="post">
+      <main class="post container content">
+        <header>
           <h1 class="post-title">{post.title}</h1>
 
           <section class="post-meta">
@@ -34,31 +34,37 @@ export default (
             <comp.TagsList tags={post.tags} />
           </section>
 
-          <nav class="toc" hidden={post.no_toc ?? false}>
-            <h2>{i18n.nav.toc}</h2>
-            <ol>
-              {post.toc.map((item) => (
-                <>
-                  <li>
-                    <a href={`#${item.slug}`}>{item.text}</a>
-                  </li>
-                  <ul hidden={!item.children.length}>
-                    {item.children.map((child) => (
-                      <li>
-                        <a href={`#${child.slug}`}>{child.text}</a>
-                      </li>
-                    ))}
-                  </ul>
-                </>
-              ))}
-            </ol>
-          </nav>
+          {!post.no_toc && post.toc.length > 0 && (
+            <nav class="toc" hidden={post.no_toc ?? false}>
+              <h2>{i18n.nav.toc}</h2>
+              <ol>
+                {post.toc.map((item) => (
+                  <>
+                    <li>
+                      <a href={`#${item.slug}`}>{item.text}</a>
+                    </li>
+                    {item.children.length > 0 && (
+                      <ul>
+                        {item.children.map((child) => (
+                          <li>
+                            <a href={`#${child.slug}`}>{child.text}</a>
+                          </li>
+                        ))}
+                      </ul>
+                    )}
+                  </>
+                ))}
+              </ol>
+            </nav>
+          )}
+        </header>
 
-          {children}
+        {children}
 
+        <footer>
           <comp.Footnotes footnotes={post.footnotes} />
-        </main>
-      </div>
+        </footer>
+      </main>
 
       <comp.Footer />
     </>

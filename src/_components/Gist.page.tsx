@@ -13,28 +13,28 @@ export default (
 ) => {
   return (
     <article class="gist">
-      <p class="gist-header">
-        <a href={url(pageUrl)} class="gist-id" title={gist.id}>
-          {gist.title}
-        </a>
-        <a href={gist.github_url} class="flat" target="_blank">
-          view source
-        </a>
-      </p>
-      <p>
-        <span>
-          {"Created on "}
-          <time datetime={gist.created_at.toISOString()}>
-            {date(gist.created_at, "HUMAN_DATE")}
+      <header class="gist-header">
+        <h3>
+          <a href={url(pageUrl)} class="gist-id" title={gist.id}>
+            {gist.title}
+          </a>
+          <span class="weak separator">{" \u2014 "}</span>
+          <time class="weak" datetime={gist.created_at.toISOString()}>
+            {date(gist.created_at, "MMM dd, yyyy")}
           </time>
-        </span>
-      </p>
-      <p class="message" hidden={!gist.description}>{gist.description}</p>
+        </h3>
+        <nav>
+          <a href={gist.github_url} class="flat" target="_blank">
+            view source
+          </a>
+        </nav>
+      </header>
+      {gist.description && <p>{gist.description}</p>}
       <ul>
         {gist.files.map((file) => (
           <li>
             <a href={url(`/gists/${gist.id}/${file.name}`)}>
-              <code>{file.name}</code>
+              {file.name}
             </a>{" "}
             <small>{filesize(file.size)}</small>
           </li>

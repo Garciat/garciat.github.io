@@ -1,35 +1,17 @@
-.gists {
-  margin-top: 2rem;
-  padding: 0;
-}
-
-.gists .item {
-  list-style: none;
-  margin-bottom: 1rem;
-  padding: 1rem;
-  border: 1px solid var(--color-background-off2);
-  border-radius: 0.25rem;
-}
-
-.gists .item .gist-header .gist-id {
-  max-width: 10rem;
-  overflow: hidden;
-  text-overflow: ellipsis;
-}
-
-.gist .gist-header {
+.gist-header {
   display: flex;
   justify-content: space-between;
   align-items: center;
+  margin-bottom: 1rem;
 }
 
-.gist .gist-header a {
-  display: inline-block;
-  vertical-align: middle;
-  white-space: nowrap;
+.gist-header h3 {
+  margin-top: 0;
+  margin-bottom: 0;
+  font-size: 1rem;
 }
 
-.gist .gist-header .gist-id {
+.gist-header .gist-id {
   font-weight: bold;
 }
 

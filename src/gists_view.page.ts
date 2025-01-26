@@ -1,5 +1,5 @@
-import { getPaginatedUserGists, GitHubGist } from "../_includes/github.ts";
-import { consume } from "../_includes/utils.ts";
+import { getPaginatedUserGists, GitHubGist } from "./_includes/github.ts";
+import { consume } from "./_includes/utils.ts";
 
 declare global {
   interface Gist {
@@ -38,7 +38,7 @@ declare global {
 }
 
 export default async function* (
-  { config, title }: Lume.Data,
+  { config }: Lume.Data,
 ): AsyncGenerator<GistPageData | GistFileData> {
   const gists = await consume(getDisplayableGists(config));
 
@@ -52,7 +52,7 @@ export default async function* (
     const common = {
       type: "gist" as const,
       url: `/gists/${gist.id}/`,
-      title: `${gist.title}${config.titleSeparator}${title}`,
+      title: `${gist.title}${config.titleSeparator}Gists`,
       description: gist.description,
       created_at: gist.created_at,
       updated_at: gist.updated_at,

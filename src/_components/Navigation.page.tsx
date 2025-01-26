@@ -23,45 +23,26 @@ export default ({ search, url }: Lume.Data, h: Lume.Helpers) => {
   const isHome = false;
 
   return (
-    <header class={["sidebar", isHome ? "home" : ""].join(" ")}>
-      <div class="container sidebar-sticky">
-        <section class="sidebar-about">
-          <header>
-            <img
-              src={h.url("/public/resources/avatar.jpeg")}
-              alt="Me"
-              width="50"
-              height="50"
-            />
-            <h1>
-              Gabriel Garcia
-            </h1>
-          </header>
-          <p class="lead">
-            Recreational programmer turned Software Engineer.
-          </p>
-        </section>
+    <header class="sidebar container">
+      <nav>
+        <ul class="sidebar-nav">
+          <NavItem
+            url="/"
+            title="Home"
+            currentUrl={url}
+            normalizedUrl={h.url("/")}
+          />
 
-        <nav>
-          <ul class="sidebar-nav">
+          {search.pages("type=page", "title=asc").map((page) => (
             <NavItem
-              url="/"
-              title="Home"
+              url={page.url}
+              title={page.nav_title ?? page.title!}
               currentUrl={url}
-              normalizedUrl={h.url("/")}
+              normalizedUrl={h.url(page.url)}
             />
-
-            {search.pages("type=page", "title=asc").map((page) => (
-              <NavItem
-                url={page.url}
-                title={page.nav_title ?? page.title!}
-                currentUrl={url}
-                normalizedUrl={h.url(page.url)}
-              />
-            ))}
-          </ul>
-        </nav>
-      </div>
+          ))}
+        </ul>
+      </nav>
     </header>
   );
 };

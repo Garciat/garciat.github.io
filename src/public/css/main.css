@@ -51,7 +51,7 @@ html {
     Apple Color Emoji,
     Segoe UI Emoji;
   font-size: 1.3rem;
-  font-weight: 300;
+  font-weight: 350;
   font-size: clamp(18px, 100vw / var(--width), 20px);
   line-height: 1.5;
 }
@@ -75,8 +75,10 @@ select {
 .weak {
   color: var(--color-text-weak);
 }
+.small {
+  font-size: 80%;
+}
 
-/* No `:visited` state is required by default (browsers will use `a`) */
 a {
   color: var(--color-accent);
   text-decoration: none;
@@ -84,7 +86,6 @@ a {
 a strong {
   color: inherit;
 }
-/* `:focus` is linked to `:hover` for basic accessibility */
 a:hover,
 a:focus {
   text-decoration: underline;
@@ -259,11 +260,8 @@ img {
   vertical-align: middle;
 }
 
-/*
+/**
  * Messages
- *
- * Show alert messages to users. You may add it to single elements like a `<p>`,
- * or to a parent if there are multiple elements to show.
  */
 
 .message {
@@ -285,41 +283,8 @@ img {
   margin-right: auto;
 }
 
-/*
- * Posts and pages
- *
- * Each post is wrapped in `.post` and is used on default and post layouts. Each
- * page is wrapped in `.page` and is only used on the page layout.
- */
-
-.page,
-.post {
-  margin-bottom: 4rem;
-}
-
-.posts > .post {
-  margin-bottom: 4rem;
-}
-.posts h2.post-title {
-  margin-bottom: 0.5rem;
-}
-
-/* Blog post or page title */
-.page-title,
-.post-title,
-.post-title a {
-  color: var(--color-text-title);
-}
-.page-title,
-.post-title {
-  margin-top: 0;
-}
-
-.page-title {
-  margin-bottom: 2rem;
-}
-.page-title:has(+ .post-meta) {
-  margin-bottom: 0;
+.content {
+  padding: 0 1.5rem;
 }
 
 /* Meta data line below post title */
@@ -329,7 +294,7 @@ img {
   flex-wrap: wrap;
   column-gap: 1.5rem;
   row-gap: 0.5rem;
-  margin-bottom: 1rem;
+  margin-bottom: 2rem;
 }
 .post-date {
   color: var(--color-text-weak);
@@ -371,18 +336,18 @@ img {
 }
 
 /* About section */
-.sidebar-about > header {
+.sidebar-about {
   margin-top: 0;
   margin-bottom: 1rem;
   display: flex;
   align-items: center;
   justify-content: center;
 }
-.sidebar-about > header h1 {
+.sidebar-about h1 {
   margin: 0;
   font-size: 2rem;
 }
-.sidebar-about > header img {
+.sidebar-about img {
   display: block;
   margin-right: 1rem;
   width: 2.5rem;
@@ -403,8 +368,6 @@ img {
   flex-grow: 1;
   display: block;
   margin-bottom: 0;
-  padding: 0.5rem;
-  line-height: 1.75;
   white-space: nowrap;
 }
 .sidebar-nav-item a:hover,
@@ -416,7 +379,8 @@ img {
   color: var(--color-text-strong);
 }
 
-/* Footer
+/**
+ * Footer
  */
 
 .site-footer {
@@ -426,27 +390,22 @@ img {
   color: var(--color-text-weak);
 }
 
-/* Container
+/**
+ * Post
  */
-
-.content {
-  padding: 0 1.5rem;
+.post-title {
+  margin-top: 0;
 }
-
-/* Blog Post
- */
-
-.blogpost {
-  padding: 0 1.5rem;
+.page-title:has(+ .post-meta) {
+  margin-bottom: 0;
 }
-.container.blogpost {
-  max-width: 48rem;
-}
-.blogpost .navigation {
+.post-navigation {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 1rem;
   margin-bottom: 2rem;
 }
-.blogpost .navigation a.github-source {
-  float: right;
+.post-navigation a.github-source {
   color: var(--color-text-weak);
 }
 .blogpost .post-meta {
@@ -493,4 +452,26 @@ img {
 }
 .backref {
   margin-left: 0.5rem;
+}
+
+/**
+ * Post Index
+ */
+.post-index {
+  list-style: none;
+  padding-left: 0;
+}
+.post-index-item {
+  display: flex;
+  align-items: center;
+  column-gap: 1rem;
+}
+.post-index-item time {
+  display: inline-block;
+  min-width: 10ch;
+  font-size: 80%;
+  text-align: right;
+}
+.post-index-item .separator {
+  display: none;
 }

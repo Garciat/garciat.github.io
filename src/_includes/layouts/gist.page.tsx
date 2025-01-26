@@ -6,7 +6,7 @@ export default (
 ) => {
   const { comp } = data;
   return (
-    <>
+    <main class="container content">
       <p>
         <a href={h.url("/gists/")} class="flat">
           &#8676; Back
@@ -16,6 +16,6 @@ export default (
         pageUrl={data.url}
         gist={data.gist}
       />
-    </>
+    </main>
   );
 };

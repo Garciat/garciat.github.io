@@ -5,7 +5,7 @@ export default function* ({ search }: Lume.Data) {
   for (const tag of search.values("tags")) {
     yield {
       url: `/archive/${tag}/`,
-      title: `Tagged  “${tag}”`,
+      title: `Posts tagged  “${tag}”`,
       type: "tag",
       search_query: `type=post '${tag}'`,
       tag,

@@ -4,7 +4,8 @@ export const layout: SiteLayout = "layouts/default.page.tsx";
 
 export const title = "Archive";
 
-export const description = "Archived posts from my blog.";
+export const description =
+  "Full archive of all the posts in this blog, organized by tags and date.";
 
 export default ({ comp, search }: Lume.Data, h: Lume.Helpers) => {
   const tags = search.values<string>("tags").toSorted();
@@ -12,7 +13,11 @@ export default ({ comp, search }: Lume.Data, h: Lume.Helpers) => {
   const posts = search.pages<Lume.Data>("type=post", "date=desc");
 
   return (
-    <>
+    <main class="container content">
+      <header>
+        <h1>{title}</h1>
+        <p>{description}</p>
+      </header>
       <section>
         <h3 class="weak">Tags</h3>
         <comp.TagsList tags={tags} />
@@ -36,7 +41,7 @@ export default ({ comp, search }: Lume.Data, h: Lume.Helpers) => {
           </ul>
         </section>
       ))}
-    </>
+    </main>
   );
 };
 
