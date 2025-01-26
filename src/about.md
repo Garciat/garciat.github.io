@@ -13,3 +13,8 @@ practical tips, I hope my blog inspires, teaches, or entertains other
 programmers who share the same curiosity for code.
 
 Outside of tech, I enjoy playing the piano, rock climbing, and cooking.
+
+You can find me on [GitHub](https://github.com/Garciat),
+[Instagram](https://www.instagram.com/garciat.climbs/) (rock climbing),
+[Reddit](https://www.reddit.com/user/garciat/) (not active), and
+[LinkedIn](https://www.linkedin.com/in/ggarciat/).

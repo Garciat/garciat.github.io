@@ -19,7 +19,7 @@ const NavItem = (
   </li>
 );
 
-export default ({ search, config, url }: Lume.Data, h: Lume.Helpers) => {
+export default ({ search, url }: Lume.Data, h: Lume.Helpers) => {
   const isHome = false;
 
   return (
@@ -57,12 +57,6 @@ export default ({ search, config, url }: Lume.Data, h: Lume.Helpers) => {
                 normalizedUrl={h.url(page.url)}
               />
             ))}
-
-            <NavItem
-              url={config.github.profile_url}
-              title="GitHub"
-              target="_blank"
-            />
           </ul>
         </nav>
       </div>
