@@ -371,26 +371,23 @@ img {
 }
 
 /* About section */
-.sidebar-about h1 {
+.sidebar-about > header {
   margin-top: 0;
-  font-size: 2rem;
+  margin-bottom: 1rem;
   display: flex;
   align-items: center;
   justify-content: center;
-  flex-wrap: wrap;
 }
-.sidebar-about h1 img {
+.sidebar-about > header h1 {
+  margin: 0;
+  font-size: 2rem;
+}
+.sidebar-about > header img {
   display: block;
   margin-right: 1rem;
   width: 2.5rem;
   height: 2.5rem;
   border-radius: 50%;
-}
-.sidebar-about h1 a:hover {
-  text-decoration: none;
-}
-.sidebar-about a {
-  color: inherit;
 }
 
 /* Sidebar nav */

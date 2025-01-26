@@ -26,15 +26,17 @@ export default ({ search, url }: Lume.Data, h: Lume.Helpers) => {
     <header class={["sidebar", isHome ? "home" : ""].join(" ")}>
       <div class="container sidebar-sticky">
         <section class="sidebar-about">
-          <h1>
+          <header>
             <img
               src={h.url("/public/resources/avatar.jpeg")}
               alt="Me"
               width="50"
               height="50"
             />
-            <span class="name">Gabriel Garcia</span>
-          </h1>
+            <h1>
+              Gabriel Garcia
+            </h1>
+          </header>
           <p class="lead">
             Recreational programmer turned Software Engineer.
           </p>
