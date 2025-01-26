@@ -193,10 +193,12 @@ pre {
   font-family: Menlo, Monaco, "Courier New", monospace;
 }
 code {
+  white-space: nowrap;
   padding: 0.25em 0.5em;
   font-size: 85%;
   color: var(--color-text-code);
   background-color: var(--color-background-off1);
+  border: 1px solid var(--color-background-off2);
   border-radius: var(--rounding);
 }
 pre {
@@ -212,10 +214,12 @@ pre {
   border-radius: var(--rounding);
 }
 pre code {
+  white-space: pre;
   padding: 0;
   font-size: 100%;
   color: inherit;
   background-color: transparent;
+  border: 0;
 }
 pre:has(> code.hljs) {
   padding: 0;
