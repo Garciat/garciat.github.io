@@ -1,7 +1,15 @@
 ---
 layout: layouts/page.page.tsx
 type: page
-title: About
+nav_title: About
+title: About Gabriel
 ---
 
-The personal website of Gabriel Garcia.
+Hi, my name is Gabriel Garcia and I'm a programmer.
+
+This website is my personal space to share my favorite hobby: programming. From
+personal projects and deep dives into languages to quirky experiments and
+practical tips, I hope my blog inspires, teaches, or entertains other
+programmers who share the same curiosity for code.
+
+Outside of tech, I enjoy playing the piano, rock climbing, and cooking.

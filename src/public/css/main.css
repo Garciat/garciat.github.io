@@ -301,6 +301,9 @@ img {
 .posts > .post {
   margin-bottom: 4rem;
 }
+.posts h2.post-title {
+  margin-bottom: 0.5rem;
+}
 
 /* Blog post or page title */
 .page-title,
@@ -313,12 +316,11 @@ img {
   margin-top: 0;
 }
 
-h2.post-title {
-  margin-bottom: 0.5rem;
-}
-
-.page > .page-title {
+.page-title {
   margin-bottom: 2rem;
+}
+.page-title:has(+ .post-meta) {
+  margin-bottom: 0;
 }
 
 /* Meta data line below post title */
@@ -335,16 +337,21 @@ h2.post-title {
 }
 .post-tags {
   list-style: none;
+  display: flex;
+  align-content: flex-start;
+  flex-wrap: wrap;
+  column-gap: 0.5rem;
+  row-gap: 0.5rem;
   margin-bottom: 0;
   padding: 0;
 }
 .post-tags li {
   display: inline-block;
+  margin-bottom: 0;
 }
 .post-tags li a {
   display: inline-block;
   margin-top: -1px; /* offset border width */
-  margin-right: 0.5rem;
   padding: 0 0.5rem;
   border-radius: 4px;
   border: 1px solid var(--color-background-off2);
@@ -457,6 +464,9 @@ h2.post-title {
   padding: 0 0.25rem;
   border-radius: 4px;
   border: 1px solid transparent;
+}
+.footnote::marker {
+  content: attr(title) ".";
 }
 .footnote:has(a:target) {
   background-color: var(--color-background-notice);

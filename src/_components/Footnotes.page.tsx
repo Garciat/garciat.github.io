@@ -7,7 +7,7 @@ export default function FootnotesPage(
       {hasFootnotes(footnotes) && (
         <ol class="footnotes">
           {footnotes.map((note) => (
-            <li class="footnote">
+            <li class="footnote" title={note.label}>
               <a id={note.id}></a>
               <span
                 dangerouslySetInnerHTML={{

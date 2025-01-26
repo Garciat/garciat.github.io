@@ -70,6 +70,7 @@ declare global {
       toc: NodeTOC[];
       footnotes?: {
         id: string;
+        label: string;
         refId: string;
         content: string;
       }[];
