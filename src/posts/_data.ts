@@ -2,6 +2,8 @@ export const layout: SiteLayout = "layouts/post.page.tsx";
 
 export const type = "post";
 
+export const mergedKeys = { structuredData: "object" };
+
 export const structuredData: BlogPostingSD = {
   "@type": "BlogPosting",
   url: "site-url:self",
