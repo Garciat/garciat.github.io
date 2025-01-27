@@ -4,12 +4,24 @@ type: page
 nav_title: About
 title: About Gabriel
 structuredData:
-  "@context": "https://schema.org/"
-  "@type": "Person"
-  name: "Gabriel Garcia Torrico"
-  url: "website-url:self"
-  givenName: "Gabriel"
-  familyName: "Garcia Torrico"
+  "@type": "ProfilePage"
+  dateCreated: "lume-data:date"
+  dateModified: "lume-data:dateModified"
+  mainEntity:
+    "@type": "Person"
+    url: "site-url:self"
+    name: "lume-data:config.me.name"
+    givenName: "lume-data:config.me.firstName"
+    familyName: "lume-data:config.me.lastName"
+    alternateName: "lume-data:config.me.alternateName"
+    description: "lume-data:config.me.description"
+    image:
+      - "site-url:/public/resources/me-2018.jpeg"
+    sameAs:
+      - "https://github.com/garciat"
+      - "https://www.instagram.com/garciat.climbs/"
+      - "https://www.reddit.com/user/garciat/"
+      - "https://www.linkedin.com/in/ggarciat/"
 ---
 
 Hi, my name is Gabriel Garcia Torrico and I'm a programmer.

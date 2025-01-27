@@ -26,7 +26,10 @@ export default (
           <script
             type="application/ld+json"
             dangerouslySetInnerHTML={{
-              __html: JSON.stringify(page.structuredData),
+              __html: JSON.stringify({
+                "@context": "https://schema.org",
+                ...page.structuredData,
+              }),
             }}
           />
         )}

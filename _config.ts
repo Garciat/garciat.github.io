@@ -5,7 +5,6 @@ import sitemap from "lume/plugins/sitemap.ts";
 import date from "lume/plugins/date.ts";
 import jsx from "lume/plugins/jsx_preact.ts";
 import esbuild from "lume/plugins/esbuild.ts";
-// import esbuild from "lume/plugins/esbuild.ts";
 import code_highlight from "lume/plugins/code_highlight.ts";
 import toc, {
   linkInsideHeader,
@@ -22,6 +21,7 @@ import lang_x86asm from "npm:highlight.js/lib/languages/x86asm";
 
 import { beautify } from "./plugins/beautify/mod.ts";
 import { structured_data } from "./plugins/structured_data/mod.ts";
+import { modified_date } from "./plugins/modified_date/mod.ts";
 
 import { JSX } from "npm:preact@10.25.4";
 
@@ -51,6 +51,7 @@ const site = lume({
   .use(sitemap())
   .use(date())
   .use(slugifyUrls())
+  .use(modified_date())
   .use(readingInfo({
     wordsPerMinute: 100, // there's usually a lot of code in my posts
   }))
@@ -72,6 +73,8 @@ const site = lume({
       },
     }),
   );
+
+export default site;
 
 // Typing support for Layout components
 declare global {
@@ -114,5 +117,3 @@ declare global {
     }
   }
 }
-
-export default site;

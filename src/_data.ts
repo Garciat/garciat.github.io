@@ -1,6 +1,26 @@
 const isDev = Deno.env.get("DEV") === "true";
 
 export const config = {
+  me: {
+    firstName: "Gabriel",
+    lastName: "Garcia Torrico",
+    get name() {
+      return `${this.firstName} ${this.lastName}`;
+    },
+    alternateName: "garciat",
+    description: "I'm a software developer based in Amsterdam.",
+  },
+
+  data: {
+    get author(): PersonSD {
+      return {
+        "@type": "Person",
+        name: "lume-data:config.me.name",
+        url: "site-url:/about",
+      };
+    },
+  },
+
   title: "Gabriel Garcia Torrico",
   titleSeparator: " · ",
   google_analytics: "UA-19283098-3",
