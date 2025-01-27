@@ -47,7 +47,6 @@ const site = lume({
     },
   }))
   .copy([".wgsl", ".css", ".jpg", ".jpeg", ".png", ".ico", ".html", ".js"])
-  .use(beautify())
   .use(sitemap())
   .use(date())
   .use(slugifyUrls())
@@ -72,7 +71,8 @@ const site = lume({
         x86asm: lang_x86asm,
       },
     }),
-  );
+  )
+  .use(beautify());
 
 export default site;
 

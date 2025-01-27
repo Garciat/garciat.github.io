@@ -22,16 +22,6 @@ export default (
 
         <title>{page.title}</title>
 
-        {/* TODO: move to a library component? */}
-        {page.structuredData && (
-          <script
-            type="application/ld+json"
-            dangerouslySetInnerHTML={{
-              __html: h.structuredData(page.structuredData),
-            }}
-          />
-        )}
-
         <link rel="canonical" href={h.url(page.url, true)} />
 
         <link rel="stylesheet" href={h.url("/public/css/main.css")} />

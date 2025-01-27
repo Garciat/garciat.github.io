@@ -79,9 +79,7 @@ declare global {
 
 export function structured_data() {
   return (site: Site) => {
-    // Renders structured data into a string
-    site.filter("structuredData", renderStructuredData);
-
+    // Resolve custom references in structured data
     site.preprocess("*", (pages) => {
       for (const page of pages) {
         if (page.data.structuredData) {
@@ -89,6 +87,25 @@ export function structured_data() {
             page,
             page.data.structuredData,
           );
+        }
+      }
+    });
+
+    // Insert structured data into the HTML document
+    site.process([".html"], (pages) => {
+      for (const page of pages) {
+        if (!page.document || !page.data.structuredData) {
+          continue;
+        }
+        const s = page.document.createElement("script");
+        s.setAttribute("type", "application/ld+json");
+        s.innerHTML = renderStructuredData(page.data.structuredData);
+
+        const title = page.document.head.querySelector("title");
+        if (title) {
+          title.after(s);
+        } else {
+          page.document.head.append(s);
         }
       }
     });
