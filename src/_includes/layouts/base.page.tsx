@@ -22,14 +22,12 @@ export default (
 
         <title>{page.title}</title>
 
+        {/* TODO: move to a library component? */}
         {page.structuredData && (
           <script
             type="application/ld+json"
             dangerouslySetInnerHTML={{
-              __html: JSON.stringify({
-                "@context": "https://schema.org",
-                ...page.structuredData,
-              }),
+              __html: h.structuredData(page.structuredData),
             }}
           />
         )}

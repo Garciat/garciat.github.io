@@ -18,7 +18,11 @@ type SiteURL = `${typeof prefixWebsiteURL}${string}`;
 declare global {
   namespace Lume {
     interface Data {
-      structuredData?: StructuredData;
+      structuredData?: StructuredData | StructuredData[];
+    }
+
+    interface Helpers {
+      structuredData(data: StructuredData | StructuredData[]): string;
     }
   }
 
@@ -44,9 +48,10 @@ declare global {
     url: SomeURL;
     headline: Val<string>;
     author: Val<PersonSD>;
-    description?: Val<string>;
     datePublished?: Val<string>;
     dateModified?: Val<string>;
+    description?: Val<string>;
+    keywords?: Val<string[]>;
   }
 
   interface PersonSD {
@@ -54,6 +59,16 @@ declare global {
     name: Val<string>;
     url: SomeURL;
     alternateName?: Val<string>;
+  }
+
+  interface BreadcrumpListSD {
+    "@type": "BreadcrumbList";
+    itemListElement: {
+      "@type": "ListItem";
+      position: number;
+      item?: Val<string>;
+      name?: Val<string>;
+    }[];
   }
 
   interface AnySD {
@@ -64,11 +79,13 @@ declare global {
 
 export function structured_data() {
   return (site: Site) => {
+    // Renders structured data into a string
+    site.filter("structuredData", renderStructuredData);
+
     site.preprocess("*", (pages) => {
       for (const page of pages) {
         if (page.data.structuredData) {
-          validateStructuredData(page.data.structuredData);
-          page.data.structuredData = walkObject(
+          page.data.structuredData = formatValue(
             page,
             page.data.structuredData,
           );
@@ -151,15 +168,17 @@ export function structured_data() {
   };
 }
 
-function validateStructuredData(
-  data: Record<string, unknown>,
-): asserts data is AnySD {
-  if (!data["@context"]) {
-    data["@context"] = defaultContext;
-  }
+function renderStructuredData(data: StructuredData | StructuredData[]): string {
+  return JSON.stringify(appendContext(data));
+}
 
-  if (!data["@type"]) {
-    throw new Error("Structured data must have a @type.");
+function appendContext<T extends StructuredData | StructuredData[]>(
+  data: T,
+): T {
+  if (Array.isArray(data)) {
+    return data.map((item) => appendContext(item)) as T;
+  } else {
+    return { "@context": defaultContext, ...data } as T;
   }
 }
 

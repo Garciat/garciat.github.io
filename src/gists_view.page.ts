@@ -19,7 +19,7 @@ declare global {
     size: number;
   }
 
-  interface GistPageData {
+  interface GistPageData extends Partial<Lume.Data> {
     type: "gist";
     url: string;
     created_at: Date;
@@ -68,6 +68,23 @@ export default async function* (
       yield {
         ...common,
         layout: "layouts/gist.page.tsx",
+        structuredData: [
+          {
+            "@type": "BreadcrumbList",
+            itemListElement: [
+              {
+                "@type": "ListItem",
+                position: 1,
+                item: "site-url:/gists/",
+              },
+              {
+                "@type": "ListItem",
+                position: 2,
+                name: gist.title,
+              },
+            ],
+          } satisfies BreadcrumpListSD,
+        ],
       };
     }
 
