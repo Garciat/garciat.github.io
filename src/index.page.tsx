@@ -13,15 +13,17 @@ export const structuredData: WebSiteSD = {
 };
 
 export default ({ search }: Lume.Data, h: Lume.Helpers) => {
+  const authorRef = `${h.url("/about/", true)}#Person`;
+
   return (
     <>
       <main
         itemscope
         itemtype="http://schema.org/Person"
-        itemid="#garciat"
+        itemid={authorRef}
         class="container content"
       >
-        <link itemprop="url" href={h.url("/about/")} />
+        <link itemprop="url" href={h.url("/about/", true)} />
         <header>
           <h1 itemprop="name">{title}</h1>
         </header>
@@ -38,18 +40,40 @@ export default ({ search }: Lume.Data, h: Lume.Helpers) => {
           </p>
         </section>
       </main>
-      <section class="container content">
+      <section
+        itemscope
+        itemtype="http://schema.org/Blog"
+        class="container content"
+      >
         <header>
           <h2>Posts</h2>
         </header>
         <ul class="post-index">
-          {search.pages("type=post", "date=desc").map((post) => (
+          {search.pages<Lume.Data>("type=post", "date=desc").map((post) => (
             <li
+              itemprop="blogPost"
               itemscope
               itemtype="http://schema.org/BlogPosting"
+              itemid={`${h.url(post.url, true)}#BlogPosting`}
               class="post-index-item"
             >
-              <link itemprop="author" href="#garciat" />
+              <link
+                itemprop="author"
+                href={authorRef}
+              />
+              <meta itemprop="description" content={post.description} />
+              {post.tags && (
+                post.tags.map((tag) => (
+                  <meta itemprop="keywords" content={tag} />
+                ))
+              )}
+              {post.dateModified && (
+                <meta
+                  itemprop="dateModified"
+                  content={post.dateModified.toISOString()}
+                />
+              )}
+
               <time
                 itemprop="datePublished"
                 class="col1 weak"
@@ -57,7 +81,9 @@ export default ({ search }: Lume.Data, h: Lume.Helpers) => {
               >
                 {h.date(post.date, "MMM dd, yyyy")}
               </time>
+
               <span class="separator">{" \u2014 "}</span>
+
               <a itemprop="url" class="col2" href={h.url(post.url)}>
                 <span itemprop="headline">{post.title}</span>
               </a>

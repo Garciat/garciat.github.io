@@ -6,6 +6,7 @@ export const mergedKeys = { structuredData: "object" };
 
 export const structuredData: BlogPostingSD = {
   "@type": "BlogPosting",
+  mainEntityOfPage: "site-url:self",
   url: "site-url:self",
   headline: "lume-data:title",
   datePublished: "lume-data:date",

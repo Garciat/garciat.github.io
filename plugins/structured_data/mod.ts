@@ -45,6 +45,7 @@ declare global {
 
   interface BlogPostingSD {
     "@type": "BlogPosting";
+    mainEntityOfPage: SomeURL;
     url: SomeURL;
     headline: Val<string>;
     author: Val<PersonSD>;
