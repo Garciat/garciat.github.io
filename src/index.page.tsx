@@ -41,10 +41,27 @@ export default ({ search }: Lume.Data, h: Lume.Helpers) => {
             for nearly 20 years. I am primarily a backend developer, but I have
             my roots in web development. Most recently, I have worked as a
             software engineer at <a href="https://www.uber.com/">Uber</a>{" "}
-            for about 6 years. For more details, check out{" "}
+            for about 6 years. For more details, refer to{" "}
             <a itemprop="sameAs" href="https://www.linkedin.com/in/ggarciat/">
               my LinkedIn profile
             </a>.
+          </p>
+          <p>
+            You can find me on{" "}
+            <a itemprop="sameAs" href="https://github.com/garciat">
+              GitHub
+            </a>,{" "}
+            <a
+              itemprop="sameAs"
+              href="https://www.instagram.com/garciat.climbs/"
+            >
+              Instagram
+            </a>{" "}
+            (rock climbing), and{" "}
+            <a itemprop="sameAs" href="https://www.reddit.com/user/garciat/">
+              Reddit
+            </a>{" "}
+            (not active).
           </p>
         </section>
       </main>
