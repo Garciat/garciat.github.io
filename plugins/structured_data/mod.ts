@@ -35,7 +35,12 @@ declare global {
     | BlogPostingSD
     | AnySD;
 
-  interface WebSiteSD {
+  interface BaseSD {
+    "@type": string;
+    "@id"?: string;
+  }
+
+  interface WebSiteSD extends BaseSD {
     "@type": "WebSite";
     url: SomeURL;
     name: Val<string>;
@@ -43,7 +48,7 @@ declare global {
     author?: Val<PersonSD>;
   }
 
-  interface BlogPostingSD {
+  interface BlogPostingSD extends BaseSD {
     "@type": "BlogPosting";
     mainEntityOfPage: SomeURL;
     url: SomeURL;
@@ -57,14 +62,14 @@ declare global {
     keywords?: Val<string[]>;
   }
 
-  interface PersonSD {
+  interface PersonSD extends BaseSD {
     "@type": "Person";
     name: Val<string>;
     url: SomeURL;
     alternateName?: Val<string>;
   }
 
-  interface BreadcrumpListSD {
+  interface BreadcrumpListSD extends BaseSD {
     "@type": "BreadcrumbList";
     itemListElement: {
       "@type": "ListItem";
@@ -74,7 +79,7 @@ declare global {
     }[];
   }
 
-  interface AnySD {
+  interface AnySD extends BaseSD {
     "@type": string;
     [key: string]: unknown;
   }

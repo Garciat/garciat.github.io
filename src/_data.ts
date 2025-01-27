@@ -14,6 +14,7 @@ export const config = {
   data: {
     get author(): PersonSD {
       return {
+        "@id": "site-url:/about/#Person",
         "@type": "Person",
         name: "lume-data:config.me.name",
         url: "site-url:/about/",

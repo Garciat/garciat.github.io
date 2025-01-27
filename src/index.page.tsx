@@ -27,7 +27,15 @@ export default ({ search }: Lume.Data, h: Lume.Helpers) => {
         <header>
           <h1 itemprop="name">{title}</h1>
         </header>
-        <section itemprop="description">
+        <section itemprop="description" class="bio">
+          <img
+            itemprop="image"
+            class="avatar"
+            alt={title}
+            src={h.url("/public/resources/me-2018.jpeg")}
+            width="150"
+            height="150"
+          />
           <p>
             I'm a software developer based in Amsterdam who's been writing code
             for nearly 20 years. I am primarily a backend developer, but I have
