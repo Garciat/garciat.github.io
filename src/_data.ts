@@ -16,7 +16,7 @@ export const config = {
       return {
         "@type": "Person",
         name: "lume-data:config.me.name",
-        url: "site-url:/about",
+        url: "site-url:/about/",
       };
     },
   },
