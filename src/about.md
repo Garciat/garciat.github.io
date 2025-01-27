@@ -8,6 +8,7 @@ structuredData:
   dateCreated: "lume-data:date"
   dateModified: "lume-data:dateModified"
   mainEntity:
+    "@id": "site-url:/about/#Person"
     "@type": "Person"
     url: "site-url:self"
     name: "lume-data:config.me.name"
