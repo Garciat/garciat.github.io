@@ -7,11 +7,13 @@ export default (
   const { comp } = data;
   return (
     <main class="container content">
-      <p>
-        <a href={h.url("/gists/")} class="flat">
-          &#8676; Back
-        </a>
-      </p>
+      <nav>
+        <p>
+          <a href={h.url("/gists/")} class="flat">
+            &#8676; Back
+          </a>
+        </p>
+      </nav>
       <comp.Gist
         pageUrl={data.url}
         gist={data.gist}

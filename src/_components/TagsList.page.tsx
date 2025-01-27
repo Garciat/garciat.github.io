@@ -1,7 +1,7 @@
 export default function TagsList({ search, tags }: Lume.Data, h: Lume.Helpers) {
   return (
     <>
-      <ul class="post-tags">
+      <ul class="pills">
         {tags.toSorted().map((tag) => (
           <li>
             <a

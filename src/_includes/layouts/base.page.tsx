@@ -43,7 +43,6 @@ export default (
         <link rel="canonical" href={h.url(page.url, true)} />
 
         <link rel="stylesheet" href={h.url("/public/css/main.css")} />
-        <link rel="stylesheet" href={h.url("/public/css/gists.css")} />
         <link
           rel="stylesheet"
           href={h.url("/public/css/highlight.js@11.11.1/github.css")}
