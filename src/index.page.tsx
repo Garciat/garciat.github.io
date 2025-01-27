@@ -61,7 +61,8 @@ export default ({ search }: Lume.Data, h: Lume.Helpers) => {
             <a itemprop="sameAs" href="https://www.reddit.com/user/garciat/">
               Reddit
             </a>{" "}
-            (not active).
+            (inactive). If you wish to contact me directly via email, my email
+            address is <code>gabriel</code> at this domain name.
           </p>
         </section>
       </main>
