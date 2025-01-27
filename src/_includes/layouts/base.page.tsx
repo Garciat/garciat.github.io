@@ -32,7 +32,7 @@ export default (
             <meta property="og:logo" content={h.url("/favicon.png", true)} />
             <meta
               property="og:image"
-              content={h.url("/public/resources/me-2018.jpeg", true)}
+              content={h.url("/public/resources/me-2018-big.jpeg", true)}
             />
             <meta property="og:image:width" content="401" />
             <meta property="og:image:height" content="401" />

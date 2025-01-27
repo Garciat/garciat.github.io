@@ -17,7 +17,7 @@ structuredData:
     alternateName: "lume-data:config.me.alternateName"
     description: "lume-data:config.me.description"
     image:
-      - "site-url:/public/resources/me-2018.jpeg"
+      - "site-url:/public/resources/me-2018-big.jpeg"
     sameAs:
       - "https://github.com/garciat"
       - "https://www.instagram.com/garciat.climbs/"
