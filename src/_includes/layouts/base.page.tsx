@@ -29,9 +29,10 @@ export default (
             <meta property="og:title" content={page.title} />
             <meta property="og:description" content={page.description} />
             <meta property="og:url" content={h.url(page.url, true)} />
+            <meta property="og:logo" content={h.url("/favicon.png", true)} />
             <meta
               property="og:image"
-              content={h.url("/public/resources/me-2018.jpeg")}
+              content={h.url("/public/resources/me-2018.jpeg", true)}
             />
             <meta property="og:image:width" content="401" />
             <meta property="og:image:height" content="401" />
