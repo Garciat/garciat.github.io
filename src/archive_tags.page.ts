@@ -20,6 +20,7 @@ export default function* (
               "@type": "ListItem",
               position: 1,
               item: "site-url:/archive/",
+              name: "Archive", // TODO: refer to page title
             },
             {
               "@type": "ListItem",

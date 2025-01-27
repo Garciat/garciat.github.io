@@ -76,6 +76,7 @@ export default async function* (
                 "@type": "ListItem",
                 position: 1,
                 item: "site-url:/gists/",
+                name: "Gists", // TODO: refer to page title
               },
               {
                 "@type": "ListItem",
