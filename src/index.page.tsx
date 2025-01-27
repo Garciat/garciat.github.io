@@ -4,6 +4,14 @@ export const title = "Gabriel Garcia Torrico";
 
 export const description = "I'm a software developer based in Amsterdam.";
 
+export const structuredData: StructuredData = {
+  "@context": "https://schema.org/",
+  "@type": "WebSite",
+  "name": title,
+  "url": "website-url:self",
+  "description": description,
+};
+
 export default ({ search }: Lume.Data, h: Lume.Helpers) => {
   return (
     <>

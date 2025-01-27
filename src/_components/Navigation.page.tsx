@@ -20,8 +20,6 @@ const NavItem = (
 );
 
 export default ({ search, url }: Lume.Data, h: Lume.Helpers) => {
-  const isHome = false;
-
   return (
     <header class="sidebar container">
       <nav>

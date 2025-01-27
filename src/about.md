@@ -3,9 +3,16 @@ layout: layouts/page.page.tsx
 type: page
 nav_title: About
 title: About Gabriel
+structuredData:
+  "@context": "https://schema.org/"
+  "@type": "Person"
+  name: "Gabriel Garcia Torrico"
+  url: "website-url:self"
+  givenName: "Gabriel"
+  familyName: "Garcia Torrico"
 ---
 
-Hi, my name is Gabriel Garcia and I'm a programmer.
+Hi, my name is Gabriel Garcia Torrico and I'm a programmer.
 
 This website is my personal space to share my favorite hobby: programming. From
 personal projects and deep dives into languages to quirky experiments and

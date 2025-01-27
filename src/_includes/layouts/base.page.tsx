@@ -22,20 +22,11 @@ export default (
 
         <title>{page.title}</title>
 
-        {page.url === "/" && (
+        {page.structuredData && (
           <script
             type="application/ld+json"
             dangerouslySetInnerHTML={{
-              __html: JSON.stringify(
-                {
-                  "@context": "https://schema.org",
-                  "@type": "WebSite",
-                  "name": config.title,
-                  "url": h.url("/", true),
-                },
-                null,
-                2,
-              ),
+              __html: JSON.stringify(page.structuredData),
             }}
           />
         )}

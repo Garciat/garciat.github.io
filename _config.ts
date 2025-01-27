@@ -12,7 +12,6 @@ import toc, {
 } from "https://deno.land/x/lume_markdown_plugins@v0.8.0/toc.ts";
 import { Node as NodeTOC } from "https://deno.land/x/lume_markdown_plugins@v0.8.0/toc/mod.ts";
 import footnotes from "https://deno.land/x/lume_markdown_plugins@v0.8.0/footnotes.ts";
-import beautify from "npm:js-beautify@1.15.1";
 
 import lang_javascript from "npm:highlight.js/lib/languages/javascript";
 import lang_java from "npm:highlight.js/lib/languages/java";
@@ -21,91 +20,99 @@ import lang_bash from "npm:highlight.js/lib/languages/bash";
 import lang_haskell from "npm:highlight.js/lib/languages/haskell";
 import lang_x86asm from "npm:highlight.js/lib/languages/x86asm";
 
+import { beautify } from "./plugins/beautify/mod.ts";
+import { structured_data } from "./plugins/structured_data/mod.ts";
+
 import { JSX } from "npm:preact@10.25.4";
 
 const site = lume({
   src: "./src",
-});
+})
+  .use(jsx({
+    extensions: [".page.tsx"],
+  }))
+  .use(esbuild({
+    extensions: [".ts", ".js"],
+    options: {
+      plugins: [],
+      bundle: false,
+      format: "esm",
+      minify: false,
+      keepNames: true,
+      platform: "browser",
+      target: "esnext",
+      treeShaking: false,
+      outdir: "./",
+      outbase: ".",
+    },
+  }))
+  .copy([".wgsl", ".css", ".jpg", ".jpeg", ".png", ".ico", ".html", ".js"])
+  .use(beautify())
+  .use(sitemap())
+  .use(date())
+  .use(slugifyUrls())
+  .use(readingInfo({
+    wordsPerMinute: 100, // there's usually a lot of code in my posts
+  }))
+  .use(structured_data())
+  .use(toc({
+    anchor: linkInsideHeader(),
+  }))
+  .use(footnotes())
+  .use(
+    code_highlight({
+      extensions: [".html"],
+      languages: {
+        javascript: lang_javascript,
+        java: lang_java,
+        python: lang_python,
+        bash: lang_bash,
+        haskell: lang_haskell,
+        x86asm: lang_x86asm,
+      },
+    }),
+  );
 
-site.use(slugifyUrls());
-
-site.use(readingInfo({
-  wordsPerMinute: 100, // there's usually a lot of code in my posts
-}));
-
-site.use(footnotes());
-
-site.use(jsx({
-  extensions: [".page.tsx"],
-}));
-
-site.use(esbuild({
-  extensions: [".ts", ".js"],
-  options: {
-    plugins: [],
-    bundle: false,
-    format: "esm",
-    minify: false,
-    keepNames: true,
-    platform: "browser",
-    target: "esnext",
-    treeShaking: false,
-    outdir: "./",
-    outbase: ".",
-  },
-}));
-
-site.use(date());
-
-site.use(sitemap(/* Options */));
-
-site.use(toc({
-  anchor: linkInsideHeader(),
-}));
-
+// Typing support for Layout components
 declare global {
   namespace Lume {
-    interface Data {
-      no_toc?: boolean;
-      toc: NodeTOC[];
-      footnotes?: {
-        id: string;
-        label: string;
-        refId: string;
-        content: string;
-      }[];
-      readingInfo: ReadingInfo;
-    }
-
     interface Layout {
       children?: JSX.Element;
     }
   }
 }
 
-site.copy([".wgsl", ".css", ".jpg", ".jpeg", ".png", ".ico", ".html", ".js"]);
-
-site.process([".html"], (files) => {
-  for (const file of files) {
-    file.content = beautify.html(file.content, {
-      indent_size: 2,
-      wrap_line_length: 120,
-    });
+// Typing support for reading_info plugin
+declare global {
+  namespace Lume {
+    interface Data {
+      readingInfo: ReadingInfo;
+    }
   }
-});
+}
 
-site.use(
-  code_highlight({
-    extensions: [".html"],
-    languages: {
-      javascript: lang_javascript,
-      java: lang_java,
-      python: lang_python,
-      bash: lang_bash,
-      haskell: lang_haskell,
-      x86asm: lang_x86asm,
-    },
-  }),
-);
+// Typing support for footnotes plugin
+declare global {
+  namespace Lume {
+    interface Data {
+      footnotes?: {
+        id: string;
+        label: string;
+        refId: string;
+        content: string;
+      }[];
+    }
+  }
+}
+
+// Typing support for toc plugin
+declare global {
+  namespace Lume {
+    interface Data {
+      no_toc?: boolean;
+      toc: NodeTOC[];
+    }
+  }
+}
 
 export default site;
