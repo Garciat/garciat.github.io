@@ -10,5 +10,7 @@ export const structuredData: BlogPostingSD = {
   dateModified: "lume-data:dateModified",
   description: "lume-data:description",
   keywords: "lume-data:tags",
+  timeRequired: "lume-data:readingInfo.minutes | iso8601minutes",
+  wordCount: "lume-data:readingInfo.words",
   author: "lume-data:config.data.author",
 };

@@ -51,6 +51,8 @@ declare global {
     datePublished?: Val<string>;
     dateModified?: Val<string>;
     description?: Val<string>;
+    timeRequired?: Val<string>; // ISO 8601 duration
+    wordCount?: Val<number>;
     keywords?: Val<string[]>;
   }
 
@@ -142,8 +144,37 @@ export function structured_data() {
     }
 
     function formatLumeDataRef(page: Page, ref: LumeDataRef): unknown {
-      const keys = ref.slice(prefixLumeDataRef.length).split(".");
-      return formatValue(page, extract(page.data, keys)); // RECURSION
+      const parts = ref.split("|").map((s) => s.trim());
+      const input = parts.shift() as LumeDataRef;
+      const keys = input.slice(prefixLumeDataRef.length).split(".");
+      const value = extract(page.data, keys);
+      return formatValue(page, applyFilters(value, parts)); // RECURSION
+    }
+
+    function applyFilters(value: unknown, filters: string[]): unknown {
+      let result = value;
+      for (const filter of filters) {
+        result = applyFilter(result, filter);
+      }
+      return result;
+    }
+
+    function applyFilter(value: unknown, filter: string): unknown {
+      switch (filter) {
+        case "iso8601minutes":
+          return formatISO8601Minutes(value);
+        default:
+          throw new Error(`Unknown filter: ${filter}`);
+      }
+    }
+
+    function formatISO8601Minutes(value: unknown): string {
+      if (typeof value !== "number") {
+        throw new Error(
+          `Expected a number to format as ISO 8601 minutes, but got: ${value}`,
+        );
+      }
+      return `PT${value}M`;
     }
 
     function formatObject(page: Page, value: object | null): unknown {
