@@ -6,13 +6,13 @@ export const description = "I'm a software developer based in Amsterdam.";
 
 export const structuredData: WebSiteSD = {
   "@type": "WebSite",
-  name: title,
+  name: "lume-data:config.site.name",
   url: "site-url:self",
-  description: description,
+  description: "lume-data:config.site.description",
   author: "lume-data:config.data.author",
 };
 
-export default ({ search }: Lume.Data, h: Lume.Helpers) => {
+export default ({ search, config }: Lume.Data, h: Lume.Helpers) => {
   const authorRef = `${h.url("/about/", true)}#Person`;
 
   return (
@@ -25,13 +25,13 @@ export default ({ search }: Lume.Data, h: Lume.Helpers) => {
       >
         <link itemprop="url" href={h.url("/about/", true)} />
         <header>
-          <h1 itemprop="name">{title}</h1>
+          <h1 itemprop="name">{config.me.name}</h1>
         </header>
         <section itemprop="description" class="bio">
           <img
             itemprop="image"
             class="avatar"
-            alt={title}
+            alt={config.me.name}
             src={h.url("/public/resources/me-2018.jpeg")}
             width="150"
             height="150"

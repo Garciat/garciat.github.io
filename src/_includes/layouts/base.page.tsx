@@ -22,6 +22,22 @@ export default (
 
         <title>{page.title}</title>
 
+        {page.url === "/" && (
+          <>
+            <meta property="og:type" content="website" />
+            <meta property="og:site_name" content={config.site.name} />
+            <meta property="og:title" content={page.title} />
+            <meta property="og:description" content={page.description} />
+            <meta property="og:url" content={h.url(page.url, true)} />
+            <meta
+              property="og:image"
+              content={h.url("/public/resources/me-2018.jpeg")}
+            />
+            <meta property="og:image:width" content="401" />
+            <meta property="og:image:height" content="401" />
+          </>
+        )}
+
         <link rel="canonical" href={h.url(page.url, true)} />
 
         <link rel="stylesheet" href={h.url("/public/css/main.css")} />

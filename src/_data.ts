@@ -1,6 +1,15 @@
 const isDev = Deno.env.get("DEV") === "true";
 
 export const config = {
+  titleSeparator: " · ",
+  google_analytics: "UA-19283098-3",
+  sourceDir: "src",
+
+  site: {
+    name: "Gabriel Garcia Torrico",
+    description: "I'm a software developer based in Amsterdam.",
+  },
+
   me: {
     firstName: "Gabriel",
     lastName: "Garcia Torrico",
@@ -22,10 +31,6 @@ export const config = {
     },
   },
 
-  title: "Gabriel Garcia Torrico",
-  titleSeparator: " · ",
-  google_analytics: "UA-19283098-3",
-  sourceDir: "src",
   github: {
     username: "Garciat",
     base_project_url: "https://garciat.com",
@@ -36,6 +41,7 @@ export const config = {
       buildWorkflow: "build.yml",
     },
   },
+
   // Content Security Policy
   csp: {
     ...(isDev ? {} : { "upgrade-insecure-requests": [] }),

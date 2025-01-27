@@ -249,6 +249,10 @@ function extract(
     }
 
     cur = Reflect.get(cur, key) as Record<string, unknown>;
+
+    if (cur === undefined || cur === null) {
+      throw new Error(`Value not found: ${keys.join(".")}`);
+    }
   }
   return cur;
 }
