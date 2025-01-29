@@ -41,6 +41,19 @@ export default (
 
         <link rel="canonical" href={h.url(page.url, true)} />
 
+        <link
+          rel="alternate"
+          type="application/rss+xml"
+          href={h.url("/posts.rss", true)}
+          title="Posts"
+        />
+        <link
+          rel="alternate"
+          type="application/json"
+          href={h.url("/posts.json", true)}
+          title="Posts"
+        />
+
         <link rel="stylesheet" href={h.url("/public/css/main.css")} />
         <link
           rel="stylesheet"

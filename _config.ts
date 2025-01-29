@@ -1,6 +1,8 @@
 import lume from "lume/mod.ts";
 import slugifyUrls from "lume/plugins/slugify_urls.ts";
 import readingInfo, { ReadingInfo } from "lume/plugins/reading_info.ts";
+// TODO move to built-in plugin after release of https://github.com/lumeland/lume/pull/725
+import feed from "./plugins/feed_custom/mod.ts";
 import sitemap from "lume/plugins/sitemap.ts";
 import date from "lume/plugins/date.ts";
 import jsx from "lume/plugins/jsx_preact.ts";
@@ -47,6 +49,23 @@ const site = lume({
     },
   }))
   .copy([".wgsl", ".css", ".jpg", ".jpeg", ".png", ".ico", ".html", ".js"])
+  .use(feed({
+    output: ["/posts.rss", "/posts.json"],
+    query: "type=post",
+    info: {
+      title: "=config.site.name",
+      description: "=config.site.description",
+      published: new Date(),
+      lang: "en",
+      hubs: ["https://websubhub.com/hub"],
+    },
+    items: {
+      title: "=title",
+      description: "=description",
+      published: "=date",
+      updated: "=dateModified",
+    },
+  }))
   .use(sitemap())
   .use(date())
   .use(slugifyUrls())

@@ -29,3 +29,8 @@ jobs:
         uses: Garciat/lumeland-build/gh-pages@garciat
         with:
           deno-version: v2.x
+
+      - name: Publish to WebSubHub
+        run: |
+          curl -X POST -d "hub.mode=publish&hub.url=https://garciat.com/posts.rss" https://websubhub.com/hub
+          curl -X POST -d "hub.mode=publish&hub.url=https://garciat.com/posts.json" https://websubhub.com/hub
