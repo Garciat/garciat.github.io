@@ -19,6 +19,8 @@ export function modified_date() {
           const modified = getGitDate("modified", page.src.entry.src);
           if (modified) {
             page.data[dateModifiedField] = modified;
+          } else {
+            page.data[dateModifiedField] = page.data.date;
           }
         }
       }
