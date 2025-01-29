@@ -53,21 +53,26 @@ Here's what I have set up on the MacBook Air:
 - [iTerm2](https://iterm2.com/), with:
   - Profiles > Colors > Color Presets > Dark background
   - Profiles > Keys > Key Mappings > Presets > Natural Text Editing
+    - Enables navigating text with:
+      - &#x2325;&#x2190; and &#x2325;&#x2192; (option + arrow keys)
+      - &#x2318;&#x2190; and &#x2318;&#x2192; (command + arrow keys)
 - Xcode Command Line Tools
   - This is pretty large (2GB), but some development tools rely on it.
 - [Homebrew](https://brew.sh/), with:
   - git
-  - zsh + [ohmyzsh](https://ohmyz.sh/)
-  - [Deno](https://deno.com/)
-  - Go
-  - [GHC](https://www.haskell.org/) (Haskell)[^3]
+    - Fresher version than what comes with macOS.
+  - zsh
+    - Fresher version than what comes with macOS.
+    - To set up as user's default shell:
+      - Add `/opt/homebrew/bin/zsh` to `/etc/shells`
+      - Run `chsh -s /opt/homebrew/bin/zsh`
+  - [ohmyzsh](https://ohmyz.sh/)
+    - I mainly need command autocompletion.
 - Visual Studio Code
 
-As a programming language enthusiast, I expect that I will be installing many
-more language toolchains soon enough. And I will have to watch my disk space as
-I do so.
-
-For the time being, that's all that I need.
+I have also installed a few programming language toolchains, but the set of
+toolchains that I need at any given time may change. So I will not include them
+in this list.
 
 Whenever I install something significant, I should come back and update this
 list, for future reference.
@@ -78,8 +83,3 @@ list, for future reference.
 
 [^2]: That's a story for a different time, but at some point I was running my
     own public server on Windows with no access controls. Yikes.
-
-[^3]: The GHC installation takes up a surprising amount disk space -- about
-    2.5GB. Considering my limited disk space, I hope that I don't have to
-    uninstall it. Worst case, I could use GitHub Codespaces to develop with
-    Haskell.
