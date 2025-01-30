@@ -1,8 +1,6 @@
-_site/
-_cache/
 .DS_Store
 
-# Workaround for integrity bug with "npm:@js-temporal/polyfill@0.4.4"
-deno.lock
+/_site/
+/_cache/
 
 *.draft.md
