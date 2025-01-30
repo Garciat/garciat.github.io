@@ -29,7 +29,7 @@ body.dark {
   }
 }
 
-/*
+/**
  * Body resets
  *
  * Update the foundational and global aspects of the page.
@@ -70,13 +70,6 @@ body {
 
 select {
   font-family: inherit;
-}
-
-.weak {
-  color: var(--color-text-weak);
-}
-.small {
-  font-size: 80%;
 }
 
 a {
@@ -261,22 +254,8 @@ img {
 }
 
 /**
- * Messages
- */
-
-.message {
-  margin-bottom: 1rem;
-  padding: 1rem;
-  color: var(--color-text-weak);
-  background-color: var(--color-background-off1);
-}
-
-/*
  * Container
- *
- * Center the page content.
  */
-
 .container {
   max-width: 42rem;
   margin-left: auto;
@@ -287,47 +266,13 @@ img {
   padding: 0 1.5rem;
 }
 
-/* Meta data line below post title */
-.post-meta {
-  display: flex;
-  align-content: flex-start;
-  flex-wrap: wrap;
-  column-gap: 1.5rem;
-  row-gap: 0.5rem;
-  margin-bottom: 2rem;
-}
-.post-date {
-  color: var(--color-text-weak);
-}
-
-/*
+/**
  * Sidebar
  */
-
 .sidebar {
   text-align: center;
   margin-top: 1rem;
   margin-bottom: 2rem;
-}
-
-/* About section */
-.sidebar-about {
-  margin-top: 0;
-  margin-bottom: 1rem;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-.sidebar-about h1 {
-  margin: 0;
-  font-size: 2rem;
-}
-.sidebar-about img {
-  display: block;
-  margin-right: 1rem;
-  width: 2.5rem;
-  height: 2.5rem;
-  border-radius: 50%;
 }
 
 /* Sidebar nav */
@@ -357,7 +302,6 @@ img {
 /**
  * Footer
  */
-
 .site-footer {
   margin-top: 4rem;
   margin-bottom: 2rem;
@@ -381,6 +325,17 @@ img {
   margin-bottom: 2rem;
 }
 .post-navigation a.github-source {
+  color: var(--color-text-weak);
+}
+.post-meta {
+  display: flex;
+  align-content: flex-start;
+  flex-wrap: wrap;
+  column-gap: 1.5rem;
+  row-gap: 0.5rem;
+  margin-bottom: 2rem;
+}
+.post-date {
   color: var(--color-text-weak);
 }
 .blogpost .post-meta {
@@ -510,4 +465,14 @@ img {
 .pills > li > a:hover {
   text-decoration: none;
   border-color: var(--color-background-off3);
+}
+
+/**
+ * Generic: standalone styles
+ */
+.weak {
+  color: var(--color-text-weak);
+}
+.small {
+  font-size: 80%;
 }
