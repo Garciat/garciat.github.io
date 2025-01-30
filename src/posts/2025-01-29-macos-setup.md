@@ -60,9 +60,9 @@ Here's what I have set up on the MacBook Air:
   - This is pretty large (2GB), but some development tools rely on it.
 - [Homebrew](https://brew.sh/), with:
   - git
-    - Fresher version than what comes with macOS.
+    - Fresher version than macOS's default.
   - zsh
-    - Fresher version than what comes with macOS.
+    - Fresher version than macOS's default.
     - To set up as user's default shell:
       - Add `/opt/homebrew/bin/zsh` to `/etc/shells`
       - Run `chsh -s /opt/homebrew/bin/zsh`
