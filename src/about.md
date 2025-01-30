@@ -1,6 +1,7 @@
 ---
 layout: layouts/page.page.tsx
 type: page
+top_nav: true
 nav_title: About
 title: About Gabriel
 structuredData:

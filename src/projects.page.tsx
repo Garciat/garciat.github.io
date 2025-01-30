@@ -7,6 +7,8 @@ import { consume, sortedByDate } from "./_includes/utils.ts";
 
 export const type = "page";
 
+export const top_nav = true;
+
 export const layout: SiteLayout = "layouts/default.page.tsx";
 
 export const title = "Projects";

@@ -13,35 +13,45 @@ export default ({ comp, search }: Lume.Data, h: Lume.Helpers) => {
   const posts = search.pages<Lume.Data>("type=post", "date=desc");
 
   return (
-    <main class="container content">
-      <header>
-        <h1>{title}</h1>
-        <p>{description}</p>
+    <>
+      <header class="container content">
+        <nav>
+          <p>
+            {/* Go back */}
+            <a href={h.url("/")}>&#8676; Back</a>
+          </p>
+        </nav>
       </header>
-      <section>
-        <h3 class="weak">Tags</h3>
-        <comp.TagsList tags={tags} />
-      </section>
-      {postsByYear(posts).map(([year, posts]) => (
+      <main class="container content">
+        <header>
+          <h1>{title}</h1>
+          <p>{description}</p>
+        </header>
         <section>
-          <h2>{year}</h2>
-          <ul class="no-list-style">
-            {postsByMonth(posts).map(([month, posts]) => (
-              <li>
-                <h3>{h.date(new Date(year, month), "MMMM")}</h3>
-                <ul>
-                  {posts.map((post) => (
-                    <li>
-                      <a href={h.url(post.url)}>{post.title}</a>
-                    </li>
-                  ))}
-                </ul>
-              </li>
-            ))}
-          </ul>
+          <h3 class="weak">Tags</h3>
+          <comp.TagsList tags={tags} />
         </section>
-      ))}
-    </main>
+        {postsByYear(posts).map(([year, posts]) => (
+          <section>
+            <h2>{year}</h2>
+            <ul class="no-list-style">
+              {postsByMonth(posts).map(([month, posts]) => (
+                <li>
+                  <h3>{h.date(new Date(year, month), "MMMM")}</h3>
+                  <ul>
+                    {posts.map((post) => (
+                      <li>
+                        <a href={h.url(post.url)}>{post.title}</a>
+                      </li>
+                    ))}
+                  </ul>
+                </li>
+              ))}
+            </ul>
+          </section>
+        ))}
+      </main>
+    </>
   );
 };
 

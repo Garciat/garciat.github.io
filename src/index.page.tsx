@@ -116,6 +116,9 @@ export default ({ search, config }: Lume.Data, h: Lume.Helpers) => {
             </li>
           ))}
         </ul>
+        <p>
+          <a href={h.url("/archive/")}>View all posts</a>
+        </p>
       </section>
     </>
   );

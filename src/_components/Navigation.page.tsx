@@ -31,7 +31,7 @@ export default ({ search, url }: Lume.Data, h: Lume.Helpers) => {
             normalizedUrl={h.url("/")}
           />
 
-          {search.pages("type=page", "title=asc").map((page) => (
+          {search.pages("type=page top_nav=true", "title=asc").map((page) => (
             <NavItem
               url={page.url}
               title={page.nav_title ?? page.title!}

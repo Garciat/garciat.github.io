@@ -2,6 +2,8 @@ import { getConfigUserGistsURL } from "./_includes/github.ts";
 
 export const type = "page";
 
+export const top_nav = true;
+
 export const layout: SiteLayout = "layouts/default.page.tsx";
 
 export const title = "Gists";
