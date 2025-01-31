@@ -12,8 +12,8 @@ export const description =
   "A list of all of my GitHub gists that are viewable in the browser.";
 
 export default (
-  { comp, config, search }: Lume.Data,
-  _helpers: Lume.Helpers,
+  { config, search }: Lume.Data,
+  h: Lume.Helpers,
 ) => {
   return (
     <main class="page container content">
@@ -22,20 +22,38 @@ export default (
       </header>
       <p>
         This is a list of all of{" "}
-        <a href={getConfigUserGistsURL(config)} target="_blank">
+        <a href={getConfigUserGistsURL(config)}>
           my GitHub gists
         </a>{" "}
-        that contain HTML files. Click on a file to open it.
+        that contain HTML files.
       </p>
       {search.pages<GistPageData>("type=gist", "created_at=desc").map((
         page,
       ) => (
         <>
           <hr />
-          <comp.Gist
-            pageUrl={page.url}
-            gist={page.gist}
-          />
+          <article class="gist">
+            <header>
+              <h3>
+                <a href={h.url(page.url)}>
+                  {page.gist_title}
+                </a>
+              </h3>
+              <time datetime={page.date.toISOString()}>
+                {h.date(page.date, "MMM dd, yyyy")}
+              </time>
+            </header>
+            {page.description && <p>{page.description}</p>}
+            <ul class="pills">
+              {page.displayables.map((file) => (
+                <li>
+                  <a href={h.url(file.url)}>
+                    {file.name}
+                  </a>
+                </li>
+              ))}
+            </ul>
+          </article>
         </>
       ))}
     </main>

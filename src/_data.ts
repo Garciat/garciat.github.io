@@ -72,6 +72,9 @@ export const config = {
     "connect-src": [
       "'self'",
     ],
+    "frame-src": [
+      "'self'",
+    ],
   },
 };
 
