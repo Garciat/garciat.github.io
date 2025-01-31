@@ -14,14 +14,12 @@ export default ({ comp, search }: Lume.Data, h: Lume.Helpers) => {
 
   return (
     <>
-      <header class="container content">
-        <nav>
-          <p>
-            {/* Go back */}
-            <a href={h.url("/")}>&#8676; Back</a>
-          </p>
-        </nav>
-      </header>
+      <nav class="container content">
+        <p>
+          {/* Go back */}
+          <a href={h.url("/")}>&#8676; Back</a>
+        </p>
+      </nav>
       <main class="container content">
         <header>
           <h1>{title}</h1>

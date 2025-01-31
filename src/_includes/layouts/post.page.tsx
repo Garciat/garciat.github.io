@@ -10,19 +10,17 @@ export default (
 
   return (
     <>
-      <header>
-        <nav class="post-navigation container content noprint">
-          <a href={h.url("/")}>
-            &#8676; Back
-          </a>{" "}
-          <a
-            href={getConfigRepositoryPathURL(config, post.page.sourcePath)}
-            class="github-source"
-          >
-            View post on GitHub
-          </a>
-        </nav>
-      </header>
+      <nav class="post-navigation container content noprint">
+        <a href={h.url("/")}>
+          &#8676; Back
+        </a>{" "}
+        <a
+          href={getConfigRepositoryPathURL(config, post.page.sourcePath)}
+          class="github-source"
+        >
+          View post on GitHub
+        </a>
+      </nav>
 
       <main class="post container content">
         <header>

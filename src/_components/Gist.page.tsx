@@ -18,7 +18,7 @@ export default (
               {gist.title}
             </a>
           </h3>
-          <time class="weak" datetime={gist.created_at.toISOString()}>
+          <time datetime={gist.created_at.toISOString()}>
             {date(gist.created_at, "MMM dd, yyyy")}
           </time>
         </section>

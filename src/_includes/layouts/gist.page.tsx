@@ -6,18 +6,18 @@ export default (
 ) => {
   const { comp } = data;
   return (
-    <main class="container content">
-      <nav>
-        <p>
-          <a href={h.url("/gists/")} class="flat">
-            &#8676; Back
-          </a>
-        </p>
+    <>
+      <nav class="container content">
+        <a href={h.url("/gists/")} class="flat">
+          &#8676; Back
+        </a>
       </nav>
-      <comp.Gist
-        pageUrl={data.url}
-        gist={data.gist}
-      />
-    </main>
+      <main class="container content">
+        <comp.Gist
+          pageUrl={data.url}
+          gist={data.gist}
+        />
+      </main>
+    </>
   );
 };

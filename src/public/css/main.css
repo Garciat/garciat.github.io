@@ -419,6 +419,9 @@ img {
 /**
  * Gists
  */
+.gist {
+  margin: 1.5rem 0;
+}
 .gist > header {
   display: flex;
   justify-content: space-between;
@@ -427,15 +430,19 @@ img {
 }
 
 .gist > header h3 {
-  display: inline;
+  display: inline-block;
   margin-top: 0;
   margin-bottom: 0;
   font-size: 1rem;
   font-weight: bold;
 }
-
+.gist > header time {
+  font-size: 80%;
+  color: var(--color-text-weak);
+}
 .gist > header time::before {
-  content: " \2014 ";
+  content: "\2014";
+  margin: 0 0.5rem;
 }
 
 /**
