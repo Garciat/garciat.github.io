@@ -15,34 +15,76 @@ export default (
   { config, search }: Lume.Data,
   h: Lume.Helpers,
 ) => {
+  const authorRef = `${h.url("/about/", true)}#Person`;
+
   const pages = search.pages<GistPageData>("type=gist", "created_at=desc");
 
   return (
-    <main class="page container content">
+    <main
+      itemscope
+      itemtype="http://schema.org/CollectionPage"
+      class="page container content"
+    >
       <header>
-        <h1>{title}</h1>
+        <h1 itemprop="name">{title}</h1>
       </header>
-      <p>
+      <aside
+        itemprop="author"
+        itemscope
+        itemtype="http://schema.org/Person"
+        itemid={authorRef}
+      >
+        <link itemprop="url" href={h.url("/about/", true)} />
+        <meta itemprop="name" content={config.me.name} />
+      </aside>
+      <p itemprop="description">
         These are some of{" "}
-        <a href={getConfigUserGistsURL(config)}>
+        <a itemprop="significantLink" href={getConfigUserGistsURL(config)}>
           my GitHub gists
         </a>{" "}
         that are viewable in the browser.
       </p>
-      <section class="gists-grid">
+      <section
+        itemprop="mainEntity"
+        itemscope
+        itemtype="http://schema.org/ItemList"
+        class="gists-grid"
+      >
         {pages.map((page) => (
           <>
-            <article class="gist">
+            <article
+              itemprop="itemListElement"
+              itemscope
+              itemtype="http://schema.org/Article"
+              class="gist"
+            >
+              <link
+                itemprop="author"
+                href={authorRef}
+              />
+              <meta itemprop="description" content={page.description} />
+              <meta
+                itemprop="datePublished"
+                content={page.date.toISOString()}
+              />
+              {page.dateModified && (
+                <meta
+                  itemprop="dateModified"
+                  content={page.dateModified.toISOString()}
+                />
+              )}
+
               <header>
                 <h3>
-                  <a href={h.url(page.url)} class="flat">
-                    {page.gist_title}
+                  <a itemprop="url" href={h.url(page.url)} class="flat">
+                    <span itemprop="headline">{page.gist_title}</span>
                   </a>
                 </h3>
               </header>
               {page.screenshots["1x1"] && (
                 <a class="screenshot" href={h.url(page.url)}>
                   <img
+                    itemprop="image"
                     src={h.url(page.screenshots["1x1"])}
                     width={200}
                     height={200}
