@@ -110,9 +110,12 @@ export default ({ search, config }: Lume.Data, h: Lume.Helpers) => {
 
               <span class="separator">{" \u2014 "}</span>
 
-              <a itemprop="url" class="col2" href={h.url(post.url)}>
-                <span itemprop="headline">{post.title}</span>
-              </a>
+              {/* TODO(grids): had to wrap this so that the anchor does not span the whole column */}
+              <span>
+                <a itemprop="url" class="col2" href={h.url(post.url)}>
+                  <span itemprop="headline">{post.title}</span>
+                </a>
+              </span>
             </li>
           ))}
         </ul>
