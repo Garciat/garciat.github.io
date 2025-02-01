@@ -28,15 +28,18 @@ declare global {
     date: Date;
     dateUpdated: Date;
     // specific
+    gist_id: string;
     gist_title: string;
     gist_url: string;
-    displayables: Array<{ url: string; name: string }>;
     screenshots: GistScreenshots;
   }
 
   interface GistFileData {
     type: "gist-file";
     url: string;
+    name: string;
+    gist_id: string;
+    is_displayable: boolean;
     content: Uint8Array | string;
   }
 
@@ -52,18 +55,12 @@ export default async function* (
   const gists = await consume(getDisplayableGists(config));
 
   for (const gist of gists) {
-    const displayables = [];
+    const gistUrl = `/gists/${gist.id}/`;
+
     const screenshots: GistScreenshots = {};
 
     for (const file of gist.files) {
-      const fileUrl = `/gists/${gist.id}/${file.name}`;
-
-      if (file.name.endsWith(".html")) {
-        displayables.push({
-          url: fileUrl,
-          name: file.name,
-        });
-      }
+      const fileUrl = `${gistUrl}/${file.name}`;
 
       switch (file.name) {
         case "screenshot-1x1.png":
@@ -73,15 +70,16 @@ export default async function* (
 
       yield {
         type: "gist-file",
-        url: fileUrl,
+        url: `/gists/${gist.id}/${file.name}`,
+        name: file.name,
+        gist_id: gist.id,
+        is_displayable: file.name.endsWith(".html"),
         content: file.content,
       };
     }
 
-    const url = `/gists/${gist.id}/`;
-
     yield {
-      url: url,
+      url: gistUrl,
       type: "gist",
       layout: "layouts/gist.page.tsx",
       title: `${gist.title}${config.titleSeparator}Gists`,
@@ -89,9 +87,9 @@ export default async function* (
       date: gist.created_at,
       dateUpdated: gist.updated_at,
       // specific
+      gist_id: gist.id,
       gist_title: gist.title,
       gist_url: gist.github_url,
-      displayables: displayables,
       screenshots: screenshots,
       // structured data
       structuredData: {

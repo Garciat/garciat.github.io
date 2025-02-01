@@ -4,6 +4,12 @@ export default (
   page: Lume.Data & GistPageData,
   h: Lume.Helpers,
 ) => {
+  const { search } = page;
+
+  const displayables = search.pages<GistFileData>(
+    `type=gist-file gist_id=${page.gist_id} is_displayable=true`,
+  );
+
   return (
     <>
       <nav class="container content">
@@ -26,7 +32,7 @@ export default (
 
         {page.description && <p>{page.description}</p>}
 
-        {page.displayables.map((file) => (
+        {displayables.map((file) => (
           <article>
             <header class="hstack-left">
               <h2>{file.name}</h2>
