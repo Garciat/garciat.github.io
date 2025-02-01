@@ -48,6 +48,17 @@ declare global {
     author?: Val<PersonSD>;
   }
 
+  interface ArticleSD extends BaseSD {
+    "@type": "Article";
+    mainEntityOfPage: SomeURL;
+    url: SomeURL;
+    headline: Val<string>;
+    author: Val<PersonSD>;
+    datePublished?: Val<string>;
+    dateModified?: Val<string>;
+    image?: Val<string> | Val<string[]>;
+  }
+
   interface BlogPostingSD extends BaseSD {
     "@type": "BlogPosting";
     mainEntityOfPage: SomeURL;
@@ -56,6 +67,7 @@ declare global {
     author: Val<PersonSD>;
     datePublished?: Val<string>;
     dateModified?: Val<string>;
+    image?: Val<string> | Val<string[]>;
     description?: Val<string>;
     timeRequired?: Val<string>; // ISO 8601 duration
     wordCount?: Val<number>;

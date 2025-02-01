@@ -426,28 +426,38 @@ iframe {
 /**
  * Gists
  */
-.gist {
-  margin: 1.5rem 0;
+.gists-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(12rem, 1fr));
+  gap: 1.5rem;
 }
-.gist > header {
-  display: flex;
-  align-items: center;
-  margin-bottom: 1rem;
+.gists-grid > .gist {
+  aspect-ratio: 1;
+  overflow: hidden;
+  position: relative;
+  border: 1px solid var(--color-background-off1);
+  border-radius: var(--rounding);
 }
-.gist > header > h3 {
-  display: inline-block;
+.gists-grid > .gist > header {
+  position: absolute;
+  top: 0;
+  left: 0;
+  padding: 0.1rem 0.5rem;
+  background-color: var(--color-background-off1);
+}
+.gists-grid > .gist > header > h3 {
   margin-top: 0;
   margin-bottom: 0;
-  font-size: 1rem;
-  font-weight: bold;
 }
-.gist > header > time {
-  font-size: 80%;
-  color: var(--color-text-weak);
+.gists-grid > .gist > .screenshot {
+  display: block;
+  width: 100%;
+  height: auto;
 }
-.gist > header > time::before {
-  content: "\2014";
-  margin: 0 0.5rem;
+.gists-grid > .gist > .screenshot > img {
+  display: block;
+  width: 100%;
+  height: auto;
 }
 
 .gist-page > header {

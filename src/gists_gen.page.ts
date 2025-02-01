@@ -15,7 +15,7 @@ declare global {
   interface GistFile {
     name: string;
     language?: string;
-    content: string;
+    content: Uint8Array | string;
     size: number;
   }
 
@@ -31,31 +31,46 @@ declare global {
     gist_title: string;
     gist_url: string;
     displayables: Array<{ url: string; name: string }>;
+    screenshots: GistScreenshots;
   }
 
   interface GistFileData {
     type: "gist-file";
     url: string;
-    content?: string;
+    content: Uint8Array | string;
+  }
+
+  interface GistScreenshots {
+    "1x1"?: string;
   }
 }
 
 export default async function* (
   { config }: Lume.Data,
+  h: Lume.Helpers,
 ): AsyncGenerator<GistPageData | GistFileData> {
   const gists = await consume(getDisplayableGists(config));
 
   for (const gist of gists) {
     const displayables = [];
+    const screenshots: GistScreenshots = {};
 
     for (const file of gist.files) {
       const fileUrl = `/gists/${gist.id}/${file.name}`;
+
       if (file.name.endsWith(".html")) {
         displayables.push({
           url: fileUrl,
           name: file.name,
         });
       }
+
+      switch (file.name) {
+        case "screenshot-1x1.png":
+          screenshots["1x1"] = fileUrl;
+          break;
+      }
+
       yield {
         type: "gist-file",
         url: fileUrl,
@@ -63,8 +78,10 @@ export default async function* (
       };
     }
 
+    const url = `/gists/${gist.id}/`;
+
     yield {
-      url: `/gists/${gist.id}/`,
+      url: url,
       type: "gist",
       layout: "layouts/gist.page.tsx",
       title: `${gist.title}${config.titleSeparator}Gists`,
@@ -75,25 +92,18 @@ export default async function* (
       gist_title: gist.title,
       gist_url: gist.github_url,
       displayables: displayables,
+      screenshots: screenshots,
       // structured data
-      structuredData: [
-        {
-          "@type": "BreadcrumbList",
-          itemListElement: [
-            {
-              "@type": "ListItem",
-              position: 1,
-              item: "site-url:/gists/",
-              name: "Gists", // TODO: refer to page title
-            },
-            {
-              "@type": "ListItem",
-              position: 2,
-              name: gist.title,
-            },
-          ],
-        } satisfies BreadcrumpListSD,
-      ],
+      structuredData: {
+        "@type": "Article",
+        mainEntityOfPage: "site-url:self",
+        url: "site-url:self",
+        headline: gist.title,
+        author: "lume-data:config.data.author",
+        datePublished: gist.created_at.toISOString(),
+        dateModified: gist.updated_at.toISOString(),
+        image: screenshots["1x1"] && h.url(screenshots["1x1"]),
+      } satisfies ArticleSD,
     };
   }
 }
@@ -145,11 +155,26 @@ async function* loadGistFiles(gist: GitHubGist): AsyncGenerator<GistFile> {
     if (file.raw_url === undefined) {
       continue;
     }
+
+    const response = await fetch(file.raw_url);
+
+    let content;
+
+    if (isBinaryFile(filename)) {
+      content = new Uint8Array(await response.arrayBuffer());
+    } else {
+      content = await response.text();
+    }
+
     yield {
       name: filename,
       language: file.language,
-      content: await fetch(file.raw_url).then((res) => res.text()),
+      content: content,
       size: file.size ?? 0,
     };
   }
+}
+
+function isBinaryFile(filename: string) {
+  return filename.endsWith(".png");
 }
