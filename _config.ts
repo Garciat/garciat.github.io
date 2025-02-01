@@ -5,6 +5,7 @@ import readingInfo, { ReadingInfo } from "lume/plugins/reading_info.ts";
 import feed from "./plugins/feed_custom/mod.ts";
 import sitemap from "lume/plugins/sitemap.ts";
 import date from "lume/plugins/date.ts";
+import redirects from "lume/plugins/redirects.ts";
 import jsx from "lume/plugins/jsx_preact.ts";
 import esbuild from "lume/plugins/esbuild.ts";
 import code_highlight from "lume/plugins/code_highlight.ts";
@@ -91,7 +92,8 @@ const site = lume({
       },
     }),
   )
-  .use(beautify());
+  .use(beautify())
+  .use(redirects());
 
 export default site;
 
