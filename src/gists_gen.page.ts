@@ -106,7 +106,7 @@ export default async function* (
         author: "lume-data:config.data.author",
         datePublished: gist.created_at.toISOString(),
         dateModified: gist.updated_at.toISOString(),
-        image: screenshots["1x1"] && h.url(screenshots["1x1"]),
+        image: screenshots["1x1"] && h.url(screenshots["1x1"], true),
       } satisfies ArticleSD,
     };
   }
