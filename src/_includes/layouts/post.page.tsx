@@ -6,7 +6,7 @@ export default (
   post: Lume.Data & Lume.Layout,
   h: Lume.Helpers,
 ) => {
-  const { comp, config, i18n, children } = post;
+  const { comp, search, config, i18n, children } = post;
 
   return (
     <>
@@ -27,9 +27,25 @@ export default (
           <h1 class="post-title">{post.title}</h1>
 
           <section class="post-meta">
-            <div class="post-date">{h.date(post.date, "HUMAN_DATE")}</div>
+            <div class="post-date">
+              <time datetime={post.date.toISOString()}>
+                {h.date(post.date, "HUMAN_DATE")}
+              </time>
+            </div>
             <div class="post-time">{post.readingInfo.minutes} min read</div>
-            <comp.TagsList tags={post.tags} />
+            <ul class="pills">
+              {post.tags.toSorted().map((tag) => (
+                <li>
+                  <a
+                    href={h.url(
+                      search.page(`type=tag tag="${tag}"`)!.url,
+                    )}
+                  >
+                    {tag}
+                  </a>
+                </li>
+              ))}
+            </ul>
           </section>
 
           {!post.no_toc && post.toc.length > 0 && (

@@ -2,12 +2,16 @@ export const type = "page";
 
 export const layout: SiteLayout = "layouts/default.page.tsx";
 
-export const title = "Archive";
+export const title = "Posts Archive";
 
 export const description =
-  "Full archive of all the posts in this blog, organized by tags and date.";
+  "A full archive of all the posts on this blog, organized by tags and date.";
 
-export default ({ comp, search }: Lume.Data, h: Lume.Helpers) => {
+export default (page: Lume.Data, h: Lume.Helpers) => {
+  const { search, config } = page;
+
+  const authorRef = `${h.url("/about/", true)}#Person`;
+
   const tags = search.values<string>("tags").toSorted();
 
   const posts = search.pages<Lume.Data>("type=post", "date=desc");
@@ -20,34 +24,83 @@ export default ({ comp, search }: Lume.Data, h: Lume.Helpers) => {
           <a href={h.url("/")}>&#8676; Back</a>
         </p>
       </nav>
-      <main class="container content">
+      <main
+        itemscope
+        itemtype="http://schema.org/CollectionPage"
+        class="container content"
+      >
         <header>
-          <h1>{title}</h1>
-          <p>{description}</p>
+          <h1 itemprop="name">{page.title}</h1>
+          <p itemprop="description">{page.description}</p>
         </header>
+        <aside
+          itemprop="author"
+          itemscope
+          itemtype="http://schema.org/Person"
+          itemid={authorRef}
+        >
+          <link itemprop="url" href={h.url("/about/", true)} />
+          <meta itemprop="name" content={config.me.name} />
+        </aside>
         <section>
           <h3 class="weak">Tags</h3>
-          <comp.TagsList tags={tags} />
-        </section>
-        {postsByYear(posts).map(([year, posts]) => (
-          <section>
-            <h2>{year}</h2>
-            <ul class="no-list-style">
-              {postsByMonth(posts).map(([month, posts]) => (
-                <li>
-                  <h3>{h.date(new Date(year, month), "MMMM")}</h3>
-                  <ul>
-                    {posts.map((post) => (
-                      <li>
-                        <a href={h.url(post.url)}>{post.title}</a>
-                      </li>
-                    ))}
-                  </ul>
+          <ul class="pills">
+            {tags.toSorted().map((tag) => {
+              const tagPage = search.page(`type=tag tag="${tag}"`)!;
+              return (
+                <li
+                  itemprop="hasPart"
+                  itemscope
+                  itemtype="http://schema.org/CollectionPage"
+                >
+                  <meta itemprop="name" content={tagPage.title} />
+                  <a
+                    itemprop="url"
+                    href={h.url(tagPage.url)}
+                  >
+                    {tag}
+                  </a>
                 </li>
-              ))}
-            </ul>
-          </section>
-        ))}
+              );
+            })}
+          </ul>
+        </section>
+        <section
+          itemprop="mainEntity"
+          itemscope
+          itemtype="http://schema.org/ItemList"
+        >
+          {postsByYear(posts).map(([year, posts]) => (
+            <article>
+              <h2>{year}</h2>
+              <ul class="no-list-style">
+                {postsByMonth(posts).map(([month, posts]) => (
+                  <li>
+                    <h3>{h.date(new Date(year, month), "MMMM")}</h3>
+                    <ul>
+                      {posts.map((post) => (
+                        <li
+                          itemprop="itemListElement"
+                          itemscope
+                          itemtype="http://schema.org/Article"
+                        >
+                          <link itemprop="author" href={authorRef} />
+                          <meta
+                            itemprop="datePublished"
+                            content={post.date.toISOString()}
+                          />
+                          <a itemprop="url" href={h.url(post.url)}>
+                            <span itemprop="headline">{post.title}</span>
+                          </a>
+                        </li>
+                      ))}
+                    </ul>
+                  </li>
+                ))}
+              </ul>
+            </article>
+          ))}
+        </section>
       </main>
     </>
   );

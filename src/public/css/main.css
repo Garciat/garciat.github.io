@@ -507,6 +507,9 @@ iframe {
 /**
  * Generic: standalone styles
  */
+.nowrap {
+  white-space: nowrap;
+}
 .weak {
   color: var(--color-text-weak);
 }

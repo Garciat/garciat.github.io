@@ -12,24 +12,6 @@ export default function* (
       search_query: `type=post '${tag}'`,
       title,
       tag,
-      structuredData: [
-        {
-          "@type": "BreadcrumbList",
-          itemListElement: [
-            {
-              "@type": "ListItem",
-              position: 1,
-              item: "site-url:/archive/",
-              name: "Archive", // TODO: refer to page title
-            },
-            {
-              "@type": "ListItem",
-              position: 2,
-              name: title,
-            },
-          ],
-        } satisfies BreadcrumpListSD,
-      ],
     };
   }
 }
