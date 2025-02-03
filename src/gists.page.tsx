@@ -25,6 +25,7 @@ export default (
       itemtype="http://schema.org/CollectionPage"
       class="page container content"
     >
+      <link itemprop="url" href={h.url("/gists/", true)} />
       <header>
         <h1 itemprop="name">{title}</h1>
       </header>
