@@ -1,7 +1,7 @@
 import Site from "lume/core/site.ts";
 import { getGitDate } from "lume/core/utils/date.ts";
 
-const dateModifiedField = "dateModified";
+export const dateModifiedField = "dateModified";
 
 declare global {
   namespace Lume {

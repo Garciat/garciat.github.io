@@ -24,7 +24,10 @@ import lang_x86asm from "npm:highlight.js/lib/languages/x86asm";
 
 import { beautify } from "./plugins/beautify/mod.ts";
 import { structured_data } from "./plugins/structured_data/mod.ts";
-import { modified_date } from "./plugins/modified_date/mod.ts";
+import {
+  dateModifiedField,
+  modified_date,
+} from "./plugins/modified_date/mod.ts";
 
 import { JSX } from "npm:preact@10.25.4";
 
@@ -67,10 +70,12 @@ const site = lume({
       updated: "=dateModified",
     },
   }))
-  .use(sitemap())
   .use(date())
-  .use(slugifyUrls())
   .use(modified_date())
+  .use(slugifyUrls())
+  .use(sitemap({
+    lastmod: dateModifiedField,
+  }))
   .use(readingInfo({
     wordsPerMinute: 100, // there's usually a lot of code in my posts
   }))

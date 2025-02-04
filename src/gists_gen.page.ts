@@ -27,7 +27,7 @@ declare global {
     title: string;
     description?: string;
     date: Date;
-    dateUpdated: Date;
+    dateModified: Date;
     // specific
     gist_id: string;
     gist_title: string;
@@ -40,6 +40,8 @@ declare global {
     url: string;
     oldUrl: string;
     name: string;
+    date: Date;
+    dateModified: Date;
     gist_id: string;
     is_displayable: boolean;
     content: Uint8Array | string;
@@ -77,6 +79,8 @@ export default async function* (
         url: fileUrl,
         oldUrl: fileUrlOld,
         name: file.name,
+        date: gist.created_at,
+        dateModified: gist.updated_at,
         gist_id: gist.id,
         is_displayable: file.name.endsWith(".html"),
         content: file.content,
@@ -91,7 +95,7 @@ export default async function* (
       title: `${gist.title}${config.titleSeparator}Gists`,
       description: gist.description,
       date: gist.created_at,
-      dateUpdated: gist.updated_at,
+      dateModified: gist.updated_at,
       // specific
       gist_id: gist.id,
       gist_title: gist.title,
