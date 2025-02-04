@@ -1,4 +1,4 @@
-import { maxDate } from "../utils.ts";
+import { pickAll, setDateModified } from "../utils.ts";
 
 export const layout: SiteLayout = "layouts/default.page.tsx";
 
@@ -12,7 +12,7 @@ export default (
 
   const posts = search.pages<Lume.Data>(data.search_query, "date=desc");
 
-  page.data.dateModified = maxDate("dateModified", posts);
+  setDateModified(page, pickAll("dateModified", posts));
 
   return (
     <main

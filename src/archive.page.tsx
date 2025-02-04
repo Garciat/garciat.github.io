@@ -1,4 +1,4 @@
-import { maxDate } from "./_includes/utils.ts";
+import { pickAll, setDateModified } from "./_includes/utils.ts";
 
 export const type = "page";
 
@@ -18,7 +18,7 @@ export default (data: Lume.Data, h: Lume.Helpers) => {
 
   const posts = search.pages<Lume.Data>("type=post", "date=desc");
 
-  page.data.dateModified = maxDate("dateModified", posts);
+  setDateModified(page, pickAll("dateModified", posts));
 
   return (
     <>

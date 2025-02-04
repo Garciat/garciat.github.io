@@ -21,18 +21,40 @@ export function sortedByDate<
   });
 }
 
-export function maxDate<
-  T extends { [P in K]?: Date },
+export function pickAll<
+  T extends { [P in K]?: unknown },
   K extends keyof T,
 >(
   key: K,
   items: T[],
-): Date | undefined {
-  if (items.length === 0) {
+): NonNullable<T[K]>[] {
+  const out = [];
+  for (const item of items) {
+    if (item[key] !== undefined && item[key] !== null) {
+      out.push(item[key]);
+    }
+  }
+  return out;
+}
+
+export function setDateModified(page: Lume.Page, ...components: Date[][]) {
+  const componentsMax = datesMax(components.flat());
+
+  page.data.dateModified = datesMax([
+    componentsMax ?? page.data.date,
+    page.data.dateModified ?? page.data.date,
+  ]);
+}
+
+export function datesMax(dates: Date[]): Date | undefined {
+  if (dates.length === 0) {
     return;
   }
-  return items.reduce((max, item) => {
-    const date = item[key];
-    return date && (!max || date > max) ? date : max;
-  }, items[0][key]);
+  let max = dates[0];
+  for (let i = 1; i < dates.length; i++) {
+    if (dates[i] > max) {
+      max = dates[i];
+    }
+  }
+  return max;
 }

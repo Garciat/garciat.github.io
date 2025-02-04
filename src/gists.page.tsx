@@ -1,5 +1,5 @@
 import { getConfigUserGistsURL } from "./_includes/github.ts";
-import { maxDate } from "./_includes/utils.ts";
+import { pickAll, setDateModified } from "./_includes/utils.ts";
 
 export const type = "page";
 
@@ -22,7 +22,7 @@ export default (
 
   const pages = search.pages<GistPageData>("type=gist", "created_at=desc");
 
-  page.data.dateModified = maxDate("dateModified", pages);
+  setDateModified(page, pickAll("dateModified", pages));
 
   return (
     <main
