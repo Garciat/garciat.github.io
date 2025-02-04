@@ -1,6 +1,6 @@
 {
   "image": "mcr.microsoft.com/devcontainers/universal:2",
   "features": {
-    "ghcr.io/devcontainers-extra/features/deno:1": {}
+    "ghcr.io/devcontainers-community/features/deno": {}
   }
 }
