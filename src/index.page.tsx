@@ -1,3 +1,5 @@
+import { maxDate } from "./_includes/utils.ts";
+
 export const layout: SiteLayout = "layouts/default.page.tsx";
 
 export const title = "Gabriel Garcia Torrico";
@@ -12,8 +14,14 @@ export const structuredData: WebSiteSD = {
   author: "lume-data:config.data.author",
 };
 
-export default ({ search, config }: Lume.Data, h: Lume.Helpers) => {
+export default (data: Lume.Data, h: Lume.Helpers) => {
+  const { search, config, page } = data;
+
   const authorRef = `${h.url("/about/", true)}#Person`;
+
+  const posts = search.pages<Lume.Data>("type=post", "date=desc");
+
+  page.data.dateModified = maxDate("dateModified", posts);
 
   return (
     <>
@@ -75,7 +83,7 @@ export default ({ search, config }: Lume.Data, h: Lume.Helpers) => {
           <h2>Posts</h2>
         </header>
         <ul class="post-index">
-          {search.pages<Lume.Data>("type=post", "date=desc").map((post) => (
+          {posts.map((post) => (
             <li
               itemprop="blogPost"
               itemscope

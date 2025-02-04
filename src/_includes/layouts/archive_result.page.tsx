@@ -1,14 +1,18 @@
+import { maxDate } from "../utils.ts";
+
 export const layout: SiteLayout = "layouts/default.page.tsx";
 
 export default (
-  page: Lume.Data,
+  data: Lume.Data,
   h: Lume.Helpers,
 ) => {
-  const { search, config } = page;
+  const { search, config, page } = data;
 
   const authorRef = `${h.url("/about/", true)}#Person`;
 
-  const posts = search.pages<Lume.Data>(page.search_query, "date=desc");
+  const posts = search.pages<Lume.Data>(data.search_query, "date=desc");
+
+  page.data.dateModified = maxDate("dateModified", posts);
 
   return (
     <main
@@ -16,13 +20,13 @@ export default (
       itemtype="http://schema.org/CollectionPage"
       class="container content"
     >
-      <link itemprop="url" href={h.url(page.url, true)} />
-      <meta itemprop="keywords" content={page.tag} />
+      <link itemprop="url" href={h.url(data.url, true)} />
+      <meta itemprop="keywords" content={data.tag} />
       <header>
         <p>
           <a itemprop="isPartOf" href={h.url("../")}>&#8676; Back</a>
         </p>
-        <h2 itemprop="name">{page.title}</h2>
+        <h2 itemprop="name">{data.title}</h2>
       </header>
       <aside
         itemprop="author"

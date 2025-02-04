@@ -1,4 +1,5 @@
 import { getConfigUserGistsURL } from "./_includes/github.ts";
+import { maxDate } from "./_includes/utils.ts";
 
 export const type = "page";
 
@@ -12,12 +13,16 @@ export const description =
   "A list of all of my GitHub gists that are viewable in the browser.";
 
 export default (
-  { config, search }: Lume.Data,
+  data: Lume.Data,
   h: Lume.Helpers,
 ) => {
+  const { config, search, page } = data;
+
   const authorRef = `${h.url("/about/", true)}#Person`;
 
   const pages = search.pages<GistPageData>("type=gist", "created_at=desc");
+
+  page.data.dateModified = maxDate("dateModified", pages);
 
   return (
     <main

@@ -1,3 +1,5 @@
+import { maxDate } from "./_includes/utils.ts";
+
 export const type = "page";
 
 export const layout: SiteLayout = "layouts/default.page.tsx";
@@ -7,14 +9,16 @@ export const title = "Posts Archive";
 export const description =
   "A full archive of all the posts on this blog, organized by tags and date.";
 
-export default (page: Lume.Data, h: Lume.Helpers) => {
-  const { search, config } = page;
+export default (data: Lume.Data, h: Lume.Helpers) => {
+  const { search, config, page } = data;
 
   const authorRef = `${h.url("/about/", true)}#Person`;
 
   const tags = search.values<string>("tags").toSorted();
 
   const posts = search.pages<Lume.Data>("type=post", "date=desc");
+
+  page.data.dateModified = maxDate("dateModified", posts);
 
   return (
     <>
@@ -30,8 +34,8 @@ export default (page: Lume.Data, h: Lume.Helpers) => {
         class="container content"
       >
         <header>
-          <h1 itemprop="name">{page.title}</h1>
-          <p itemprop="description">{page.description}</p>
+          <h1 itemprop="name">{data.title}</h1>
+          <p itemprop="description">{data.description}</p>
         </header>
         <aside
           itemprop="author"

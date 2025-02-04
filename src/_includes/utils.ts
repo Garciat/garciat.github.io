@@ -20,3 +20,19 @@ export function sortedByDate<
     return ascending ? dateA - dateB : dateB - dateA;
   });
 }
+
+export function maxDate<
+  T extends { [P in K]?: Date },
+  K extends keyof T,
+>(
+  key: K,
+  items: T[],
+): Date | undefined {
+  if (items.length === 0) {
+    return;
+  }
+  return items.reduce((max, item) => {
+    const date = item[key];
+    return date && (!max || date > max) ? date : max;
+  }, items[0][key]);
+}

@@ -3,7 +3,7 @@ import {
   getPaginatedUserRepos,
   GitHubRepository,
 } from "./_includes/github.ts";
-import { consume, sortedByDate } from "./_includes/utils.ts";
+import { consume, maxDate, sortedByDate } from "./_includes/utils.ts";
 
 export const type = "page";
 
@@ -30,13 +30,17 @@ interface ProjectViewProps {
   hideUpdated?: boolean;
 }
 
-export default async ({ comp, config }: Lume.Data, { date }: Lume.Helpers) => {
+export default async (data: Lume.Data, { date }: Lume.Helpers) => {
+  const { comp, config, page } = data;
+
   const allProjects = await consume(getGitHubProjects(config));
 
   const [projects, projectsArchived] = [
     allProjects.filter((project) => !project.is_archived),
     allProjects.filter((project) => project.is_archived),
   ];
+
+  page.data.dateModified = maxDate("updated_at", allProjects);
 
   const ProjectView = (
     { project, hideUpdated = false }: ProjectViewProps,
