@@ -1,4 +1,4 @@
-export const layout: SiteLayout = "layouts/default.page.tsx";
+export const layout: SiteLayout = "layouts/base.page.tsx";
 
 export default (
   page: Lume.Data & GistPageData,
@@ -12,7 +12,7 @@ export default (
 
   return (
     <>
-      <nav class="container content">
+      <nav class="post-navigation container content">
         <a href={h.url("/gists/")}>
           &#8676; Back
         </a>

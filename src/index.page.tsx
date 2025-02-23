@@ -116,12 +116,19 @@ export default (data: Lume.Data, h: Lume.Helpers) => {
                 {h.date(post.date, "MMM dd, yyyy")}
               </time>
 
-              <span class="separator">{" \u2014 "}</span>
+              <span class="separator">{(() => " \u2014 ")()}</span>
 
               {/* TODO(grids): had to wrap this so that the anchor does not span the whole column */}
               <span>
-                <a itemprop="url" class="col2" href={h.url(post.url)}>
-                  <span itemprop="headline">{post.title}</span>
+                <a
+                  itemprop="url"
+                  class="col2 vt-post-title"
+                  id={post.basename}
+                  href={h.url(post.url)}
+                >
+                  <span itemprop="headline">
+                    {post.title}
+                  </span>
                 </a>
               </span>
             </li>

@@ -100,7 +100,7 @@ export default async (data: Lume.Data, { date }: Lume.Helpers) => {
       <section>
         <h2>Archived Projects</h2>
         {sortedByDate("created_at", projectsArchived).map((project) => (
-          <ProjectView project={project} hideUpdated={true} />
+          <ProjectView project={project} hideUpdated />
         ))}
       </section>
     </main>

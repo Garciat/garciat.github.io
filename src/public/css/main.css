@@ -29,6 +29,17 @@ body.dark {
   }
 }
 
+@view-transition {
+  navigation: auto;
+}
+
+@media not (prefers-reduced-motion: reduce) {
+  .vt-post-title {
+    width: fit-content;
+    view-transition-name: attr(id type(<custom-ident>), none);
+  }
+}
+
 /**
  * Body resets
  *

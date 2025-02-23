@@ -2,6 +2,7 @@ export default function FootnotesPage(
   { footnotes }: Lume.Data,
   _helpers: Lume.Helpers,
 ) {
+  const backrefSymbol = "\u21A9\uFE0E"; // ↩︎ (non-emoji version)
   return (
     <>
       {hasFootnotes(footnotes) && (
@@ -15,7 +16,7 @@ export default function FootnotesPage(
                 }}
               >
               </span>
-              <a class="backref" href={`#${note.refId}`}>{"\u21A9\uFE0E"}</a>
+              <a class="backref" href={`#${note.refId}`}>{backrefSymbol}</a>
             </li>
           ))}
         </ol>

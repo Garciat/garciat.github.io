@@ -13,7 +13,7 @@ export default (
       <nav class="post-navigation container content noprint">
         <a href={h.url("/")}>
           &#8676; Back
-        </a>{" "}
+        </a>
         <a
           href={getConfigRepositoryPathURL(config, post.page.sourcePath)}
           class="github-source"
@@ -24,7 +24,9 @@ export default (
 
       <main class="post container content">
         <header>
-          <h1 class="post-title">{post.title}</h1>
+          <h1 class="post-title vt-post-title" id={post.basename}>
+            {post.title}
+          </h1>
 
           <section class="post-meta">
             <div class="post-date">

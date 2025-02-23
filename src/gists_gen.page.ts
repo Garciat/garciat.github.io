@@ -59,7 +59,8 @@ export default async function* (
   const gists = await consume(getDisplayableGists(config));
 
   for (const gist of gists) {
-    const gistUrl = `/gists/${h.slugify(gist.title)}/`;
+    const basename = h.slugify(gist.title);
+    const gistUrl = `/gists/${basename}/`;
     const gistUrlOld = `/gists/${gist.id}/`;
 
     const screenshots: GistScreenshots = {};
@@ -88,6 +89,7 @@ export default async function* (
     }
 
     yield {
+      basename: basename,
       url: gistUrl,
       oldUrl: gistUrlOld,
       type: "gist",

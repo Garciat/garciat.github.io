@@ -24,7 +24,9 @@ export default (
       <meta itemprop="keywords" content={data.tag} />
       <header>
         <p>
-          <a itemprop="isPartOf" href={h.url("../")}>&#8676; Back</a>
+          <a itemprop="isPartOf" href={h.url("../")}>
+            &#8676; Back
+          </a>
         </p>
         <h2 itemprop="name">{data.title}</h2>
       </header>
