@@ -22,7 +22,6 @@ declare global {
   interface GistPageData extends Partial<Lume.Data> {
     type: "gist";
     url: string;
-    oldUrl: string;
     layout: SiteLayout;
     title: string;
     description?: string;
@@ -38,7 +37,6 @@ declare global {
   interface GistFileData {
     type: "gist-file";
     url: string;
-    oldUrl: string;
     name: string;
     date: Date;
     dateModified: Date;
@@ -61,13 +59,11 @@ export default async function* (
   for (const gist of gists) {
     const basename = h.slugify(gist.title);
     const gistUrl = `/gists/${basename}/`;
-    const gistUrlOld = `/gists/${gist.id}/`;
 
     const screenshots: GistScreenshots = {};
 
     for (const file of gist.files) {
       const fileUrl = `${gistUrl}${file.name}`;
-      const fileUrlOld = `${gistUrlOld}${file.name}`;
 
       switch (file.name) {
         case "screenshot-1x1.png":
@@ -78,7 +74,6 @@ export default async function* (
       yield {
         type: "gist-file",
         url: fileUrl,
-        oldUrl: fileUrlOld,
         name: file.name,
         date: gist.created_at,
         dateModified: gist.updated_at,
@@ -91,7 +86,6 @@ export default async function* (
     yield {
       basename: basename,
       url: gistUrl,
-      oldUrl: gistUrlOld,
       type: "gist",
       layout: "layouts/gist.page.tsx",
       title: `${gist.title}${config.titleSeparator}Gists`,
