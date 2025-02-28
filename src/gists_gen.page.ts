@@ -131,6 +131,11 @@ async function* getDisplayableGists(config: SiteConfig): AsyncGenerator<Gist> {
 
       const [title, description] = gist.description?.split(" // ", 2) ?? [];
 
+      if (!title || !description) {
+        // Skip gists that don't follow the title // description pattern
+        continue;
+      }
+
       const files = await consume(loadGistFiles(gist));
 
       yield {
