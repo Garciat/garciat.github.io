@@ -1,12 +1,10 @@
 import lume from "lume/mod.ts";
 import slugifyUrls from "lume/plugins/slugify_urls.ts";
 import readingInfo, { ReadingInfo } from "lume/plugins/reading_info.ts";
-// TODO move to built-in plugin after release of https://github.com/lumeland/lume/pull/725
-import feed from "./plugins/feed_custom/mod.ts";
+import feed from "lume/plugins/feed.ts";
 import sitemap from "lume/plugins/sitemap.ts";
 import date from "lume/plugins/date.ts";
-// TODO move to built-in plugin after release of https://github.com/lumeland/lume/pull/728
-import { redirects } from "./plugins/redirects_custom.ts";
+import redirects from "lume/plugins/redirects.ts";
 import jsx from "lume/plugins/jsx_preact.ts";
 import esbuild from "lume/plugins/esbuild.ts";
 import code_highlight from "lume/plugins/code_highlight.ts";
