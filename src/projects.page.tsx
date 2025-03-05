@@ -1,6 +1,7 @@
 import {
   getConfigPagesURL,
   getPaginatedUserRepos,
+  getRepositoryReadmeTitle,
   GitHubRepository,
 } from "./_includes/github.ts";
 import {
@@ -115,8 +116,10 @@ async function* getGitHubProjects(config: SiteConfig): AsyncGenerator<Project> {
   for await (const response of getPaginatedUserRepos(config.github.username)) {
     for (const repo of response.data) {
       if (isGitHubProject(repo)) {
+        const readmeTitle = await getRepositoryReadmeTitle(repo);
+
         yield {
-          name: repo.name,
+          name: readmeTitle ?? repo.name,
           github_url: repo.html_url,
           homepage: repo.homepage || getConfigPagesURL(config, repo.name),
           description: repo.description ?? undefined,

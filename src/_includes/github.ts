@@ -50,6 +50,25 @@ export function getPaginatedUserRepos(username: string): AsyncIterable<
   );
 }
 
+export async function getRepositoryReadmeTitle(
+  repository: GitHubRepository,
+): Promise<string | null> {
+  const response = await octokit.request("GET /repos/{owner}/{repo}/readme", {
+    owner: repository.owner.login,
+    repo: repository.name,
+  });
+
+  const content = response.data.content;
+  if (content) {
+    const decoded = atob(content);
+    const match = decoded.match(/^# (.+)$/m);
+    if (match) {
+      return match[1];
+    }
+  }
+  return null;
+}
+
 export function getRepositoryURL(
   username: string,
   repositoryName: string,
