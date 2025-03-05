@@ -108,8 +108,7 @@ export default async (data: Lume.Data, { date }: Lume.Helpers) => {
 };
 
 function isGitHubProject(repo: GitHubRepository): boolean {
-  return (repo.has_pages ?? false) &&
-    (repo.topics?.includes("showcase-project") ?? false);
+  return repo.topics?.includes("showcase-project") ?? false;
 }
 
 async function* getGitHubProjects(config: SiteConfig): AsyncGenerator<Project> {
