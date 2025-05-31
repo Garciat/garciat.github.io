@@ -54,6 +54,8 @@ export default (
           title="Posts"
         />
 
+        <comp.Analytics />
+
         <link rel="stylesheet" href={h.url("/public/css/main.css")} />
         <link
           rel="stylesheet"
@@ -88,8 +90,6 @@ export default (
         <script src={h.url("/public/js/theme.js")} />
 
         {children}
-
-        <comp.Analytics />
       </body>
     </html>
   );

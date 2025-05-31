@@ -1,8 +1,10 @@
 const isDev = Deno.env.get("DEV") === "true";
 
+const nonce = crypto.randomUUID();
+
 export const config = {
   titleSeparator: " · ",
-  google_analytics: "UA-19283098-3",
+  google_analytics: "G-YBDSYZM13J",
   sourceDir: "src",
 
   site: {
@@ -42,6 +44,8 @@ export const config = {
     },
   },
 
+  nonce,
+
   // Content Security Policy
   csp: {
     ...(isDev ? {} : { "upgrade-insecure-requests": [] }),
@@ -63,14 +67,18 @@ export const config = {
     "img-src": [
       "'self'",
       "https://img.shields.io",
+      "https://*.google-analytics.com https://*.googletagmanager.com",
     ],
     "script-src-elem": [
       "'self'",
       isDev ? "'unsafe-inline'" : "",
+      `nonce-${nonce}`,
       "https://esm.sh",
+      "https://*.googletagmanager.com",
     ],
     "connect-src": [
       "'self'",
+      "https://*.google-analytics.com https://*.analytics.google.com https://*.googletagmanager.com",
     ],
     "frame-src": [
       "'self'",
