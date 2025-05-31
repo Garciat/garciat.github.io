@@ -4,7 +4,7 @@ import readingInfo, { ReadingInfo } from "lume/plugins/reading_info.ts";
 import feed from "lume/plugins/feed.ts";
 import sitemap from "lume/plugins/sitemap.ts";
 import date from "lume/plugins/date.ts";
-import jsx from "lume/plugins/jsx_preact.ts";
+import jsx from "lume/plugins/jsx.ts";
 import esbuild from "lume/plugins/esbuild.ts";
 import code_highlight from "lume/plugins/code_highlight.ts";
 import toc, {
@@ -32,9 +32,18 @@ import { JSX } from "npm:preact@10.25.4";
 const site = lume({
   src: "./src",
 })
-  .use(jsx({
-    extensions: [".page.tsx"],
-  }))
+  .add([
+    ".wgsl",
+    ".css",
+    ".jpg",
+    ".jpeg",
+    ".png",
+    ".ico",
+    ".html",
+    ".js",
+    ".ts",
+  ])
+  .use(jsx())
   .use(esbuild({
     extensions: [".ts", ".js"],
     options: {
@@ -50,7 +59,6 @@ const site = lume({
       outbase: ".",
     },
   }))
-  .copy([".wgsl", ".css", ".jpg", ".jpeg", ".png", ".ico", ".html", ".js"])
   .use(feed({
     output: ["/posts.rss", "/posts.json"],
     query: "type=post",
@@ -73,7 +81,9 @@ const site = lume({
   .use(slugifyUrls())
   .use(sitemap({
     query: "is_redirect!=true",
-    lastmod: dateModifiedField,
+    items: {
+      lastmod: dateModifiedField,
+    },
   }))
   .use(readingInfo({
     wordsPerMinute: 100, // there's usually a lot of code in my posts
@@ -85,7 +95,6 @@ const site = lume({
   .use(footnotes())
   .use(
     code_highlight({
-      extensions: [".html"],
       languages: {
         javascript: lang_javascript,
         java: lang_java,

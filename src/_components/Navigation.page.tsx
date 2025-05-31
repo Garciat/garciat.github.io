@@ -3,17 +3,13 @@ interface NavItemProps {
   title: string;
   currentUrl?: string;
   normalizedUrl?: string;
-  target?: string;
 }
 
 const NavItem = (
-  { url, title, currentUrl, normalizedUrl, target }: NavItemProps,
+  { url, title, currentUrl, normalizedUrl }: NavItemProps,
 ) => (
   <li class={`sidebar-nav-item ${currentUrl === url ? "active" : ""}`}>
-    <a
-      target={target}
-      href={normalizedUrl ?? url}
-    >
+    <a href={normalizedUrl ?? url}>
       {title}
     </a>
   </li>
