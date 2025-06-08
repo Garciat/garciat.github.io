@@ -1,6 +1,7 @@
 import lume from "lume/mod.ts";
 import slugifyUrls from "lume/plugins/slugify_urls.ts";
 import readingInfo, { ReadingInfo } from "lume/plugins/reading_info.ts";
+import extractDate from "lume/plugins/extract_date.ts";
 import feed from "lume/plugins/feed.ts";
 import sitemap from "lume/plugins/sitemap.ts";
 import date from "lume/plugins/date.ts";
@@ -43,6 +44,7 @@ const site = lume({
     ".js",
     ".ts",
   ])
+  .use(extractDate())
   .use(jsx())
   .use(esbuild({
     extensions: [".ts", ".js"],
