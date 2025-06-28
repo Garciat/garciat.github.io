@@ -1,10 +1,23 @@
 const isDev = Deno.env.get("DEV") === "true";
 
-const nonce = crypto.randomUUID();
+const googleAnalyticsMeasurementId = "G-YBDSYZM13J";
+
+export const inlineScripts = {
+  googleAnalytics: {
+    src: `
+window.dataLayer = window.dataLayer || [];
+function gtag(){dataLayer.push(arguments);}
+gtag('js', new Date());
+
+gtag('config', '${googleAnalyticsMeasurementId}');
+  `.trim(),
+    hash: "sha256-iwcQOKygKUaLqCG8x8iaG9V5wGQ5BqyIpthMl+VGE4g=",
+  },
+} as const;
 
 export const config = {
   titleSeparator: " · ",
-  google_analytics: "G-YBDSYZM13J",
+  google_analytics: googleAnalyticsMeasurementId,
   sourceDir: "src",
 
   site: {
@@ -44,8 +57,6 @@ export const config = {
     },
   },
 
-  nonce,
-
   // Content Security Policy
   csp: {
     ...(isDev ? {} : { "upgrade-insecure-requests": [] }),
@@ -69,10 +80,10 @@ export const config = {
       "https://img.shields.io",
       "https://*.google-analytics.com https://*.googletagmanager.com",
     ],
-    "script-src-elem": [
+    "script-src": [
       "'self'",
       isDev ? "'unsafe-inline'" : "",
-      `nonce-${nonce}`,
+      `'${inlineScripts.googleAnalytics.hash}'`,
       "https://esm.sh",
       "https://*.googletagmanager.com",
     ],
@@ -84,7 +95,9 @@ export const config = {
       "'self'",
     ],
   },
-};
+
+  inlineScripts,
+} as const;
 
 export const i18n = {
   nav: {
