@@ -20,7 +20,7 @@ export type GitHubRepositoriesResponse =
     "200"
   ]["content"]["application/json"];
 
-const GITHUB_TOKEN = Deno.env.get("GITHUB_TOKEN");
+const GITHUB_TOKEN = Deno.env.get("MY_GITHUB_TOKEN");
 
 const MyOctokit = Octokit.plugin(paginateRest);
 
