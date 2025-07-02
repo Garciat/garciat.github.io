@@ -4,8 +4,6 @@ export const layout: SiteLayout = "layouts/default.page.tsx";
 
 export const title = "Gabriel Garcia Torrico";
 
-export const description = "I'm a software developer based in Amsterdam.";
-
 export const structuredData: WebSiteSD = {
   "@type": "WebSite",
   name: "lume-data:config.site.name",
@@ -45,32 +43,19 @@ export default (data: Lume.Data, h: Lume.Helpers) => {
             height="150"
           />
           <p>
-            I'm a software developer based in Amsterdam who's been writing code
-            for nearly 20 years. I am primarily a backend developer, but I have
-            my roots in web development. Most recently, I have worked as a
-            software engineer at <a href="https://www.uber.com/">Uber</a>{" "}
-            for about 6 years. For more details, refer to{" "}
+            I'm a software engineer based in Amsterdam who's been writing code
+            for 20 years. I am primarily a backend engineer, but I have my roots
+            in web development. For more details, refer to{" "}
             <a itemprop="sameAs" href="https://www.linkedin.com/in/ggarciat/">
               my LinkedIn profile
             </a>.
           </p>
           <p>
-            You can find me on{" "}
+            You can find my programming stuff on{" "}
             <a itemprop="sameAs" href="https://github.com/garciat">
               GitHub
-            </a>,{" "}
-            <a
-              itemprop="sameAs"
-              href="https://www.instagram.com/garciat.climbs/"
-            >
-              Instagram
-            </a>{" "}
-            (rock climbing), and{" "}
-            <a itemprop="sameAs" href="https://www.reddit.com/user/garciat/">
-              Reddit
-            </a>{" "}
-            (inactive). If you wish to contact me directly via email, my email
-            address is <code>gabriel</code> at this domain name.
+            </a>. If you wish to contact me directly via email, my email address
+            is <code>gabriel</code> at this domain name.
           </p>
         </section>
       </main>

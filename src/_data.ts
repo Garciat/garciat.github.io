@@ -22,7 +22,7 @@ export const config = {
 
   site: {
     name: "Gabriel Garcia Torrico",
-    description: "I'm a software developer based in Amsterdam.",
+    description: "I'm a software engineer based in Amsterdam.",
   },
 
   me: {
@@ -32,7 +32,7 @@ export const config = {
       return `${this.firstName} ${this.lastName}`;
     },
     alternateName: "garciat",
-    description: "I'm a software developer based in Amsterdam.",
+    description: "I'm a software engineer based in Amsterdam.",
   },
 
   data: {

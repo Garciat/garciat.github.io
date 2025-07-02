@@ -21,8 +21,6 @@ structuredData:
       - "site-url:/public/resources/me-2018-big.jpeg"
     sameAs:
       - "https://github.com/garciat"
-      - "https://www.instagram.com/garciat.climbs/"
-      - "https://www.reddit.com/user/garciat/"
       - "https://www.linkedin.com/in/ggarciat/"
 ---
 
