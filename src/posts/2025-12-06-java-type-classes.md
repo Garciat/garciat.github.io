@@ -7,6 +7,20 @@ tags:
   - Java
 ---
 
+## TL;DR
+
+This post explores how far Java’s type system can be pushed by building a small
+Haskell-style type class instance resolution engine entirely in plain Java.
+
+Using only reflection, generic type metadata, and a tiny first-order unifier, we
+can automatically resolve type class instances (including higher-kinded ones),
+support overlapping instances, and derive witnesses for arbitrarily nested
+generic types.
+
+It’s not intended for production, but as an experiment it reveals just how much
+structure Java actually preserves at runtime — and how surprisingly close it can
+get to type-level programming without language changes.
+
 ## Goal: First-Order Type Classes
 
 Given:
@@ -1445,13 +1459,7 @@ class TypeClasses {
   // New: second parameter
   public static <T> T witness(Ty<T> ty, Ctx<?>... context) {
     return switch (summon(ParsedType.parse(ty.type()), parseContext(context))) {
-      case Either.Left<SummonError, Object>(SummonError error) ->
-          throw new WitnessResolutionException(error);
-      case Either.Right<SummonError, Object>(Object instance) -> {
-        @SuppressWarnings("unchecked")
-        T typedInstance = (T) instance;
-        yield typedInstance;
-      }
+      // ...
     };
   }
 
@@ -1467,21 +1475,13 @@ class TypeClasses {
   // New: second parameter
   private static Either<SummonError, Object> summon(
       ParsedType target, List<ContextInstance> context) {
-    return switch (ZeroOneMore.of(findCandidates(target, context))) {
-      case ZeroOneMore.One<Candidate>(Candidate(var rule, var requirements)) ->
-          summonAll(requirements, context)
-              .map(rule::instantiate)
-              .mapLeft(error -> new SummonError.Nested(target, error));
-      case ZeroOneMore.Zero<Candidate>() -> Either.left(new SummonError.NotFound(target));
-      case ZeroOneMore.More<Candidate>(var candidates) ->
-          Either.left(new SummonError.Ambiguous(target, candidates));
-    };
+    // ...
   }
 
   // New: second parameter
   private static Either<SummonError, List<Object>> summonAll(
       List<ParsedType> targets, List<ContextInstance> context) {
-    return Either.traverse(targets, target -> summon(target, context));
+    // ...
   }
 
   // New: second parameter
@@ -1489,19 +1489,15 @@ class TypeClasses {
       ParsedType target, List<ContextInstance> context) {
     // New: use the context instances along with the discovered witness constructors!
     return Stream.<WitnessRule>concat(
-            context.stream(), findRules(target).stream())
-        .flatMap(
-            rule ->
-                rule
-                    .tryMatch(target)
-                    .map(requirements -> new Candidate(rule, requirements))
-                    .stream())
+            context.stream(),
+            findRules(target).stream())
+        .flatMap(...)
         .toList();
   }
 
   // ...
 
-  // New: a new case of WitnessRule
+  // New: a new case class for WitnessRule
   private record ContextInstance(Object instance, ParsedType type) implements WitnessRule {
     @Override
     public Maybe<List<ParsedType>> tryMatch(ParsedType target) {
@@ -1599,7 +1595,7 @@ sealed interface FwdList<A> extends TApp<FwdList.Tag, A> {
 }
 ```
 
-`FwdLink` (name inspired by
+`FwdList` (name inspired by
 [C++'s std::forward_list](https://en.cppreference.com/w/cpp/container/forward_list.html))
 implements a data structure like Haskell's lists.
 
