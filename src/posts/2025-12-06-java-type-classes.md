@@ -830,12 +830,95 @@ Then:
 Function<String, Function<List<String>, Function<Integer, Void>>> printer =
     PrintAll.of(witness(new Ty<>() {}));
 
-printer.apply("Items:", JavaList.of("apple", "banana", "cherry"), 42);
+printer.apply("Items:").apply(JavaList.of("apple", "banana", "cherry")).apply(42);
 // Prints:
 // "Items:"
 // ["apple", "banana", "cherry"]
 // 42
 ```
+
+### Type Class: Type Equality!
+
+Reified type equality is very neat construct that I'd like to write more about
+soon.
+
+For now, let's appreciate how this neatly encodes
+[Haskell's own type equality](https://hackage.haskell.org/package/base-4.21.0.0/docs/Data-Type-Equality.html)
+in Java.
+
+Given:
+
+```java
+@TypeClass
+sealed interface TyEq<A, B> {
+  A castR(B b);
+
+  B castL(A a);
+
+  static <T> TyEq<T, T> refl() {
+    return new Refl<>();
+  }
+
+  record Refl<T>() implements TyEq<T, T> {
+
+    @Override
+    public T castR(T t) {
+      return t;
+    }
+
+    @Override
+    public T castL(T t) {
+      return t;
+    }
+  }
+
+  @TypeClass.Witness
+  static <T> TyEq<T, T> tyEqRefl() {
+    return refl();
+  }
+}
+```
+
+Of course, we can manually construct `refl()` instances. And these can be really
+useful. (I will write about this soon.)
+
+But we can also request them as witnesses in a witness constructor:
+
+```java
+@TypeClass
+interface SumAllInt<A> {
+  A sum(List<Integer> list);
+
+  static <T> T of(SumAllInt<T> sumAllInt) {
+    return sumAllInt.sum(List.of());
+  }
+
+  @TypeClass.Witness
+  static SumAllInt<Integer> base() {
+    return list -> list.stream().mapToInt(Integer::intValue).sum();
+  }
+
+  @TypeClass.Witness
+  static <A, R> SumAllInt<Function<A, R>> func(TyEq<A, Integer> eq, SumAllInt<R> sumR) {
+    return list -> a -> sumR.sum(Lists.concat(list, List.of(eq.castL(a))));
+  }
+}
+```
+
+Similar to the `PrintAll` example, this lets us summon variadic functions:
+
+```java
+Function<Integer, Function<Integer, Function<Integer, Integer>>> sum =
+    SumAllInt.of(witness(new Ty<>() {}));
+println(sum.apply(1).apply(2).apply(3));
+```
+
+However, notice how in the `func` rule, we requested `TyEq<A, Integer>`. This
+constrains the `A` type argument to just `Integer`.
+
+Funny enough, this is actually only necessary in Haskell due to how integer
+literals are overloaded. So I implemented this here for no gain. But it was cool
+that it just worked!
 
 ## Goal: Higher-Order Type Classes
 
