@@ -1096,7 +1096,7 @@ Let's unpack that:
     - `TApp<Maybe.Tag, A>` means `Maybe<A>`
     - `TApp<Maybe.Tag, B>` means `Maybe<B>`
   - If we squint our eyes a bit, _it does make sense_.
-- We use `unwrap()` to covert from `TApp<Maybe.Tag, A>` to `Maybe<A>`.
+- We use `unwrap()` to convert from `TApp<Maybe.Tag, A>` to `Maybe<A>`.
 - `Maybe<B>` is a subtype of `TApp<Maybe.Tag, B>`, so the return type just
   works.
 
@@ -1528,11 +1528,11 @@ static <A> String example(Show<A> showA, A value) {
 println(example(witness(new Ty<>() {}), 123));
 ```
 
-Here, the type capture by `new Ctx<>(showA) {}` is `Show<A>` where `A` is the
-unique type variable belonging to the `example` method.
+Here, the type captured by `new Ctx<>(showA) {}` is `Show<A>`, where `A` is the
+_unique type variable_ belonging to the `example` method.
 
-The `Show<List<A>>` witness that we are trying to summon needs this `Show<A>`
-whose type could only possibly exist in this static context!
+The `Show<List<A>>` witness that we are trying to summon needs a `Show<A>` whose
+type could only possibly exist in this static context!
 
 ## Annex: Overlapping Instances
 
