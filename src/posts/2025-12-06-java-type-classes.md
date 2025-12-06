@@ -789,7 +789,8 @@ println(Monoid.combineAll(witness(new Ty<>() {}), sums));
 
 ### Type Class: PrintAll
 
-This example is based on: https://wiki.haskell.org/Varargs
+This example is based on:
+[https://wiki.haskell.org/Varargs](https://wiki.haskell.org/Varargs)
 
 It abuses type classes in order to implement variadic functions. Please read the
 link above to understand how this works.
