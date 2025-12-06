@@ -1225,7 +1225,7 @@ where he presents his early ideas on how to bring type clases to Java. His
 proposed syntax is `Show<Integer>.witness`. And, of course, the mechanism is
 supposed to resolve witnesses at compile time.
 
-You can find all of the HKT code in
+You can find the complete implementation in
 [this Gist](https://gist.github.com/Garciat/204226a528018fa7d10abb93fa51c4ca).
 
 The code also:
@@ -1241,3 +1241,5 @@ The code also:
 - The resolution mechanism could use some caching:
   - For witness constructor lookups.
   - For witness instances themselves.
+- It would be ideal to shift witness resolution to compile time.
+  - Perhaps with a javac plugin or something like that?
