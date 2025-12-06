@@ -96,7 +96,7 @@ System.out.println(s.getClass().getGenericInterfaces()[0]);
 
 This leads us to our first workaround:
 
-## First Workaround: capturing generic types
+## Aside: Capturing types
 
 We define:
 
