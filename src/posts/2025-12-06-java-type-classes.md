@@ -1220,6 +1220,417 @@ Notice in this case that `State` has two type parameters:
 - The first application of `State.Tag` must go through `TPar`.
 - The subsequent application must go through `TApp`.
 
+## Examples: Higher-Kinded Type Clases
+
+### Type Class: Functor, Applicative, Monad
+
+As expected:
+
+```java
+@TypeClass
+interface Functor<F extends Kind<KArr<KStar>>> {
+  <A, B> TApp<F, B> map(Function<A, B> f, TApp<F, A> fa);
+}
+
+@TypeClass
+interface Applicative<F extends Kind<KArr<KStar>>> extends Functor<F> {
+  <A> TApp<F, A> pure(A a);
+
+  <A, B> TApp<F, B> ap(TApp<F, Function<A, B>> ff, TApp<F, A> fa);
+
+  @Override
+  default <A, B> TApp<F, B> map(Function<A, B> f, TApp<F, A> fa) {
+    return ap(pure(f), fa);
+  }
+}
+
+@TypeClass
+interface Monad<M extends Kind<KArr<KStar>>> extends Applicative<M> {
+  <A, B> TApp<M, B> flatMap(Function<A, TApp<M, B>> f, TApp<M, A> fa);
+
+  @Override
+  default <A, B> TApp<M, B> map(Function<A, B> f, TApp<M, A> fa) {
+    return flatMap(a -> pure(f.apply(a)), fa);
+  }
+
+  @Override
+  default <A, B> TApp<M, B> ap(TApp<M, Function<A, B>> ff, TApp<M, A> fa) {
+    return flatMap(a -> map(f -> f.apply(a), ff), fa);
+  }
+}
+```
+
+## Type Class: Traversable
+
+Given:
+
+```java
+@TypeClass
+interface Traversable<T extends Kind<KArr<KStar>>> {
+  <F extends Kind<KArr<KStar>>, A, B> TApp<F, ? extends TApp<T, B>> traverse(
+      Applicative<F> applicative, Function<A, TApp<F, B>> f, TApp<T, A> ta);
+
+  static <F extends Kind<KArr<KStar>>, T extends Kind<KArr<KStar>>, A, B>
+      TApp<F, ? extends TApp<T, B>> traverse(
+          Traversable<T> traversable,
+          Applicative<F> applicative,
+          TApp<T, A> tA,
+          Function<A, TApp<F, B>> f) {
+    return traversable.traverse(applicative, f, tA);
+  }
+}
+```
+
+Then:
+
+```java
+// Unfortunately for HKTs, we must wrap regular Java lists
+record JavaList<A>(List<A> toList) implements TApp<JavaList.Tag, A> {
+  // ...
+
+  @TypeClass.Witness
+  public static <A> Show<JavaList<A>> show(Show<A> showA) { ... }
+
+  @TypeClass.Witness
+  public static Functor<JavaList.Tag> functor() { ... }
+
+  @TypeClass.Witness
+  public static Traversable<JavaList.Tag> traversable() { ... }
+
+  // ...
+}
+```
+
+For example:
+
+```java
+println(
+    Traversable.traverse(
+        witness(new Ty<>() {}), // for Traversable<JavaList>
+        witness(new Ty<>() {}), // for Applicative<Maybe>
+        JavaList.of(1, 2, 3)
+        Maybe::just));
+// Prints: Just[value=JavaList[toList=[1, 2, 3]]]
+```
+
+## Aside: Context Instances
+
+Consider this example:
+
+```java
+static <A> String example(Show<A> showA, A value) {
+  return Show.show(witness(new Ty<>() {}), JavaList.of(value));
+}
+```
+
+It is equivalent to following Haskell code:
+
+```haskell
+example :: Show a => a -> String
+example value = show [value]
+```
+
+In the Java code, we try to lookup `Show<List<A>>` but we don't know what `A`
+is!
+
+Sure, at runtime we may know its real type, but we actually would like
+resolution to be static. (Even though we use reflection for witness resolution.)
+
+In the Haskell code, the available instance of `Show a` as capture by the
+function's signature becomes available as a 'context instance' that is used to
+derive `Show [a]`.
+
+How can we achieve this in Java?
+
+First, we define a type that can capture a witness along with its static type:
+
+```java
+abstract class Ctx<T> {
+  private final T instance;
+
+  Ctx(T instance) {
+    this.instance = instance;
+  }
+
+  public T instance() {
+    return instance;
+  }
+
+  public Type type() {
+    return requireNonNull(
+        ((ParameterizedType) getClass().getGenericSuperclass())
+            .getActualTypeArguments()[0]);
+  }
+}
+```
+
+It leverages the same mechanism as `Ty<T>` to capture static types.
+
+Then, we pass it to the `witness()` method:
+
+```java
+static <A> String example(Show<A> showA, A value) {
+  return Show.show(
+      witness(new Ty<>() {}, new Ctx<>(showA) {}),
+      JavaList.of(value));
+}
+```
+
+Finally, we update a bit of our type class resolution code:
+
+```java
+class TypeClasses {
+  // New: second parameter
+  public static <T> T witness(Ty<T> ty, Ctx<?>... context) {
+    return switch (summon(ParsedType.parse(ty.type()), parseContext(context))) {
+      case Either.Left<SummonError, Object>(SummonError error) ->
+          throw new WitnessResolutionException(error);
+      case Either.Right<SummonError, Object>(Object instance) -> {
+        @SuppressWarnings("unchecked")
+        T typedInstance = (T) instance;
+        yield typedInstance;
+      }
+    };
+  }
+
+  // New: parsing Ctx<?> into ContextInstance
+  private static List<ContextInstance> parseContext(Ctx<?>[] context) {
+    return Arrays.stream(context)
+        .map(ctx -> new ContextInstance(ctx.instance(), ParsedType.parse(ctx.type())))
+        .toList();
+  }
+
+  // ...
+
+  // New: second parameter
+  private static Either<SummonError, Object> summon(
+      ParsedType target, List<ContextInstance> context) {
+    return switch (ZeroOneMore.of(findCandidates(target, context))) {
+      case ZeroOneMore.One<Candidate>(Candidate(var rule, var requirements)) ->
+          summonAll(requirements, context)
+              .map(rule::instantiate)
+              .mapLeft(error -> new SummonError.Nested(target, error));
+      case ZeroOneMore.Zero<Candidate>() -> Either.left(new SummonError.NotFound(target));
+      case ZeroOneMore.More<Candidate>(var candidates) ->
+          Either.left(new SummonError.Ambiguous(target, candidates));
+    };
+  }
+
+  // New: second parameter
+  private static Either<SummonError, List<Object>> summonAll(
+      List<ParsedType> targets, List<ContextInstance> context) {
+    return Either.traverse(targets, target -> summon(target, context));
+  }
+
+  // New: second parameter
+  private static List<Candidate> findCandidates(
+      ParsedType target, List<ContextInstance> context) {
+    // New: use the context instances along with the discovered witness constructors!
+    return Stream.<WitnessRule>concat(
+            context.stream(), findRules(target).stream())
+        .flatMap(
+            rule ->
+                rule
+                    .tryMatch(target)
+                    .map(requirements -> new Candidate(rule, requirements))
+                    .stream())
+        .toList();
+  }
+
+  // ...
+
+  // New: a new case of WitnessRule
+  private record ContextInstance(Object instance, ParsedType type) implements WitnessRule {
+    @Override
+    public Maybe<List<ParsedType>> tryMatch(ParsedType target) {
+      // This is a concrete instance, so we only check for type equality
+      return target.equals(type) ? Maybe.just(List.of()) : Maybe.nothing();
+    }
+
+    @Override
+    public Object instantiate(List<Object> dependencies) {
+      // Trivial
+      return instance;
+    }
+  }
+}
+```
+
+That's all. A bit noisy, but rather simple.
+
+Now this works:
+
+```java
+static <A> String example(Show<A> showA, A value) {
+  return Show.show(
+      witness(new Ty<>() {}, new Ctx<>(showA) {}),
+      JavaList.of(value));
+}
+
+println(example(witness(new Ty<>() {}), 123));
+```
+
+## Aside: Overlapping Instances
+
+In Haskell, the `String` type is defined as:
+
+```haskell
+type String = [Char]
+```
+
+That is, a `String` is just a list of `Char`.
+
+Now, notice the difference here:
+
+```haskell
+show [1, 2, 3]
+-- "[1, 2, 3]"
+
+show [('a', 1), ('b', 2)]
+-- "[('a', 1), ('b', 2)]"
+
+show ['a', 'b']
+-- "\"ab\"" what?
+```
+
+The generic `Show` instance for `[a]` simply intercalates `", "` between
+elements.
+
+But the `Show` instance for `[Char]` behaves differently.
+
+Why is that? This is due to a language extension called
+[overlapping instances](https://ghc.gitlab.haskell.org/ghc/doc/users_guide/exts/instances.html#overlapping-instances).
+
+It allows otherwise ambiguous instances to coexist:
+
+```haskell
+instance Show a => Show [a] where ...
+
+instance {-# OVERLAPPING #-} Show [Char] where ...
+```
+
+The `OVERLAPPING` pragma tells the compiler that this instance may override
+another instance iff it is more specific.
+
+The rules for instance specificity are explained in the same link.
+
+Now, consider in Java:
+
+```java
+sealed interface FwdList<A> extends TApp<FwdList.Tag, A> {
+  record Nil<A>() implements FwdList<A> {}
+
+  record Cons<A>(A head, FwdList<A> tail) implements FwdList<A> {}
+
+  @TypeClass.Witness
+  static <A> Show<FwdList<A>> show(Show<A> showA) { ... }
+
+  // Ambiguous!
+  @TypeClass.Witness
+  static Show<FwdList<Character>> show() { ... }
+}
+```
+
+`FwdLink` (name inspired by
+[C++'s std::forward_list](https://en.cppreference.com/w/cpp/container/forward_list.html))
+implements a data structure like Haskell's lists.
+
+As it is, witness resolution will fail with an ambiguous witness error.
+
+In order to support overlapping instance, we must apply some changes.
+
+First, let's model Haskell's `OVERLAPPING` and `OVERLAPPABLE` pragmas:
+
+```java
+@Retention(RetentionPolicy.RUNTIME)
+@interface TypeClass {
+  @Retention(RetentionPolicy.RUNTIME)
+  @interface Witness {
+    Overlap overlap() default Overlap.NONE;
+
+    enum Overlap {
+      NONE,
+      OVERLAPPING,
+      OVERLAPPABLE
+    }
+  }
+}
+```
+
+Then, we make it accessible from `InstanceConstructor`:
+
+```java
+private record InstanceConstructor(FuncType func) implements WitnessRule {
+  public TypeClass.Witness.Overlap overlap() {
+    return func.java().getAnnotation(TypeClass.Witness.class).overlap();
+  }
+
+  // ...
+}
+```
+
+Finally, we implement the overlapping instances deduction algorithm as described
+in
+[Haskell's spec](https://ghc.gitlab.haskell.org/ghc/doc/users_guide/exts/instances.html#overlapping-instances):
+
+```java
+private static List<InstanceConstructor> reduceOverlapping(
+    List<InstanceConstructor> candidates) {
+  return candidates.stream()
+      .filter(
+          iX ->
+              candidates.stream()
+                  .filter(iY -> iX != iY)
+                  .noneMatch(cY -> isOverlappedBy(iX, cY)))
+      .toList();
+}
+
+private static boolean isOverlappedBy(
+    InstanceConstructor iX, InstanceConstructor iY) {
+  return (iX.overlap() == OVERLAPPABLE || iY.overlap() == OVERLAPPING)
+      && isSubstitutionInstance(iX, iY)
+      && !isSubstitutionInstance(iY, iX);
+}
+
+private static boolean isSubstitutionInstance(
+    InstanceConstructor base, InstanceConstructor reference) {
+  return Unification.unify(base.func().returnType(), reference.func().returnType())
+      .fold(() -> false, map -> !map.isEmpty());
+}
+```
+
+And we apply it to our candidate resolution function:
+
+```java
+private static List<Candidate> findCandidates(
+    ParsedType target, List<ContextInstance> context) {
+  return Stream.<WitnessRule>concat(
+          context.stream(),
+          reduceOverlapping(findRules(target)).stream())
+      .flatMap(...)
+      .toList();
+}
+```
+
+And, of course, we annotate our witness constructor:
+
+```java
+sealed interface FwdList<A> extends TApp<FwdList.Tag, A> {
+  record Nil<A>() implements FwdList<A> {}
+
+  record Cons<A>(A head, FwdList<A> tail) implements FwdList<A> {}
+
+  @TypeClass.Witness
+  static <A> Show<FwdList<A>> show(Show<A> showA) { ... }
+
+  // OK now!
+  @TypeClass.Witness(overlap = OVERLAPPING)
+  static Show<FwdList<Character>> show() { ... }
+}
+```
+
+That's it!
+
 ## Conclusion
 
 This was **a lot** of fun to work on. I had never before implemented type
@@ -1238,13 +1649,8 @@ supposed to resolve witnesses at compile time.
 You can find the complete implementation in
 [this Gist](https://gist.github.com/Garciat/204226a528018fa7d10abb93fa51c4ca).
 
-The code also:
-
-- Implements Haskell's notion of
-  [overlapping instances](https://ghc.gitlab.haskell.org/ghc/doc/users_guide/exts/instances.html#overlapping-instances).
-  (But not incoherent instances.)
-- Contains several other type class examples like QuickCheck's
-  [Arbitrary type class](https://hackage-content.haskell.org/package/QuickCheck-2.17.1.0/docs/Test-QuickCheck-Arbitrary.html).
+The code also contains several other type class examples like QuickCheck's
+[Arbitrary type class](https://hackage-content.haskell.org/package/QuickCheck-2.17.1.0/docs/Test-QuickCheck-Arbitrary.html).
 
 ### Future work
 
