@@ -1244,3 +1244,41 @@ The code also:
   - For witness instances themselves.
 - It would be ideal to shift witness resolution to compile time.
   - Perhaps with a javac plugin or something like that?
+
+### Related Work
+
+As of the time of writing, ChatGPT reports the following:
+
+- [HighJ](https://github.com/DanielGronau/highj)
+  - HKT encoding via `Higher<F, A>`.
+  - Provides Functor/Monad/etc.
+  - **No automatic instance resolution** — instances are explicit classes.
+
+- [Cyclops React](https://github.com/aol/cyclops)
+  - Functional programming toolkit for Java.
+  - Typeclass-like interfaces (Functor, Monad, etc.).
+  - **Manual instance lookup**, no reflection or unification.
+
+- [Higher-Kinded-J](https://github.com/higherkindness/higherkinded-j)
+  - Modern HKT encoding using witness types.
+  - Supports Functor, Applicative, Monad, MonadError, etc.
+  - **Instances must be explicitly provided**, not inferred.
+
+- [mduerig/java-functional](https://github.com/mduerig/java-functional)
+  - Experimental HKT + typeclass encodings in Java.
+  - Conceptually related exploration.
+  - **No generic instance search or unification engine**.
+
+- [Type Classes in Java (blog post)](https://zarinfam.github.io/2018/12/01/type-classes-in-java/)
+  - Demonstrates typeclass pattern using interfaces.
+  - **Requires manual wiring of instances**.
+
+- [JavaGI](https://www.infosun.fim.uni-passau.de/cl/staff/sulzmann/javagi/)
+  - Research extension to Java with Haskell-style typeclasses.
+  - Uses **unification-based instance resolution**.
+  - **Requires its own compiler**; not a Java library.
+
+- [Brian Goetz – Witness Types JVMLS Talk](https://www.youtube.com/watch?v=Gz7Or9C0TpM)
+  - Language-level notion of typeclass-like “witness” methods.
+  - Conceptually similar to instance constructors.
+  - **Not implemented** and not reflection-driven.
