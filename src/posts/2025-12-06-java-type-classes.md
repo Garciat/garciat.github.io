@@ -1260,7 +1260,7 @@ interface Monad<M extends Kind<KArr<KStar>>> extends Applicative<M> {
 }
 ```
 
-## Type Class: Traversable
+### Type Class: Traversable
 
 Given:
 
@@ -1313,7 +1313,69 @@ println(
 // Prints: Just[value=JavaList[toList=[1, 2, 3]]]
 ```
 
-## Aside: Context Instances
+## Conclusion
+
+This was **a lot** of fun to work on. I had never before implemented type
+classes in a language, and it turned out to be way simpler than I thought. The
+key insight was figuring out that type unification was all that I needed.
+Stupidly, I did not check Haskell's spec to figure that out. But it did come
+somewhat naturally after a bit of thinking, given my experience in implementing
+type systems.
+
+This project was partially inspired by
+[this recent Brian Goetz JVMLS talk](https://www.youtube.com/watch?v=Gz7Or9C0TpM)
+where he presents his early ideas on how to bring type clases to Java. His
+proposed syntax is `Show<Integer>.witness`. And, of course, the mechanism is
+supposed to resolve witnesses at compile time.
+
+You can find the complete implementation in
+[this Gist](https://gist.github.com/Garciat/204226a528018fa7d10abb93fa51c4ca).
+
+The code also contains several other type class examples like QuickCheck's
+[Arbitrary type class](https://hackage-content.haskell.org/package/QuickCheck-2.17.1.0/docs/Test-QuickCheck-Arbitrary.html).
+
+### Future work
+
+- The resolution mechanism could use some caching:
+  - For witness constructor lookups.
+  - For witness instances themselves.
+- It would be ideal to shift witness resolution to compile time.
+  - Perhaps with a javac plugin or something like that?
+
+### Related Work
+
+As of the time of writing, ChatGPT reports the following:
+
+- [HighJ](https://github.com/DanielGronau/highj)
+  - HKT encoding via `Higher<F, A>`.
+  - Provides Functor/Monad/etc.
+  - **No automatic instance resolution**, instances are explicit classes.
+
+- [Cyclops React](https://github.com/aol/cyclops)
+  - Functional programming toolkit for Java.
+  - Typeclass-like interfaces (Functor, Monad, etc.).
+  - **Manual instance lookup**, no reflection or unification.
+
+- [Higher-Kinded-J](https://github.com/higherkindness/higherkinded-j)
+  - Modern HKT encoding using witness types.
+  - Supports Functor, Applicative, Monad, MonadError, etc.
+  - **Instances must be explicitly provided**, not inferred.
+
+- [mduerig/java-functional](https://github.com/mduerig/java-functional)
+  - Experimental HKT + typeclass encodings in Java.
+  - Conceptually related exploration.
+  - **No generic instance search or unification engine**.
+
+- [Type Classes in Java (blog post)](https://zarinfam.github.io/2018/12/01/type-classes-in-java/)
+  - Demonstrates typeclass pattern using interfaces.
+  - **Requires manual wiring of instances**.
+
+- [JavaGI](https://www.infosun.fim.uni-passau.de/cl/staff/sulzmann/javagi/)
+  - Research extension to Java with Haskell-style typeclasses.
+  - Uses **unification-based instance resolution**.
+  - **Requires its own compiler**, not a Java library.
+
+## Annex: Context Instances
 
 Consider this example:
 
@@ -1323,22 +1385,22 @@ static <A> String example(Show<A> showA, A value) {
 }
 ```
 
-It is equivalent to following Haskell code:
+It is equivalent to the following Haskell code:
 
 ```haskell
 example :: Show a => a -> String
 example value = show [value]
 ```
 
-In the Java code, we try to lookup `Show<List<A>>` but we don't know what `A`
+In the Java code, we try to lookup `Show<List<A>>`, but we don't know what `A`
 is!
 
 Sure, at runtime we may know its real type, but we actually would like
 resolution to be static. (Even though we use reflection for witness resolution.)
 
-In the Haskell code, the available instance of `Show a` as capture by the
+In the Haskell code, the available instance of `Show a` as captured by the
 function's signature becomes available as a 'context instance' that is used to
-derive `Show [a]`.
+derive `Show [a]` for the call of `show`.
 
 How can we achieve this in Java?
 
@@ -1470,7 +1532,13 @@ static <A> String example(Show<A> showA, A value) {
 println(example(witness(new Ty<>() {}), 123));
 ```
 
-## Aside: Overlapping Instances
+Here, the type capture by `new Ctx<>(showA) {}` is `Show<A>` where `A` is the
+unique type variable belonging to the `example` method.
+
+The `Show<List<A>>` witness that we are trying to summon needs this `Show<A>`
+whose type could only possibly exist in this static context!
+
+## Annex: Overlapping Instances
 
 In Haskell, the `String` type is defined as:
 
@@ -1629,66 +1697,5 @@ sealed interface FwdList<A> extends TApp<FwdList.Tag, A> {
 }
 ```
 
-That's it!
-
-## Conclusion
-
-This was **a lot** of fun to work on. I had never before implemented type
-classes in a language, and it turned out to be way simpler than I thought. The
-key insight was figuring out that type unification was all that I needed.
-Stupidly, I did not check Haskell's spec to figure that out. But it did come
-somewhat naturally after a bit of thinking, given my experience in implementing
-type systems.
-
-This project was partially inspired by
-[this recent Brian Goetz JVMLS talk](https://www.youtube.com/watch?v=Gz7Or9C0TpM)
-where he presents his early ideas on how to bring type clases to Java. His
-proposed syntax is `Show<Integer>.witness`. And, of course, the mechanism is
-supposed to resolve witnesses at compile time.
-
-You can find the complete implementation in
-[this Gist](https://gist.github.com/Garciat/204226a528018fa7d10abb93fa51c4ca).
-
-The code also contains several other type class examples like QuickCheck's
-[Arbitrary type class](https://hackage-content.haskell.org/package/QuickCheck-2.17.1.0/docs/Test-QuickCheck-Arbitrary.html).
-
-### Future work
-
-- The resolution mechanism could use some caching:
-  - For witness constructor lookups.
-  - For witness instances themselves.
-- It would be ideal to shift witness resolution to compile time.
-  - Perhaps with a javac plugin or something like that?
-
-### Related Work
-
-As of the time of writing, ChatGPT reports the following:
-
-- [HighJ](https://github.com/DanielGronau/highj)
-  - HKT encoding via `Higher<F, A>`.
-  - Provides Functor/Monad/etc.
-  - **No automatic instance resolution**, instances are explicit classes.
-
-- [Cyclops React](https://github.com/aol/cyclops)
-  - Functional programming toolkit for Java.
-  - Typeclass-like interfaces (Functor, Monad, etc.).
-  - **Manual instance lookup**, no reflection or unification.
-
-- [Higher-Kinded-J](https://github.com/higherkindness/higherkinded-j)
-  - Modern HKT encoding using witness types.
-  - Supports Functor, Applicative, Monad, MonadError, etc.
-  - **Instances must be explicitly provided**, not inferred.
-
-- [mduerig/java-functional](https://github.com/mduerig/java-functional)
-  - Experimental HKT + typeclass encodings in Java.
-  - Conceptually related exploration.
-  - **No generic instance search or unification engine**.
-
-- [Type Classes in Java (blog post)](https://zarinfam.github.io/2018/12/01/type-classes-in-java/)
-  - Demonstrates typeclass pattern using interfaces.
-  - **Requires manual wiring of instances**.
-
-- [JavaGI](https://www.infosun.fim.uni-passau.de/cl/staff/sulzmann/javagi/)
-  - Research extension to Java with Haskell-style typeclasses.
-  - Uses **unification-based instance resolution**.
-  - **Requires its own compiler**, not a Java library.
+Now, our witness resolution code will pick `Show<FwdList<Character>>` because it
+is more specific AND it declares that it may overlap other instances.
