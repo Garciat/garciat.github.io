@@ -205,7 +205,7 @@ instances, even if their names are also `A`.
 
 We want to do this for a few reasons:
 
-- The `java.lang.reflect.Type` is not convenient for programming.
+- `java.lang.reflect.Type` is not convenient for programming:
   - It is not a sealed hierarchy, so pattern-matching on it is error-prone.
   - Both `Class<?>` and `GenericArrayType` may be array types.
   - `Class<?>` may represent a primitive type, like `int` or `float`, which does
@@ -264,7 +264,16 @@ sealed interface ParsedType {
 > Note: the rule for `ParameterizedType` will take a type like `T<A, B>` and
 > turn it into `App(App(Const(T), A), B)`.
 >
-> This means that the generic type `T` is applied first to `A` and then to `B`.
+> This means that the generic type `T` is first applied to `A` and then to `B`.
+
+For example, `Map<Integer, List<String>>` becomes:
+
+```
+App(
+  App(Const(Map.class), Const(Integer.class)),
+  App(Const(List.class), Const(String.class))
+)
+```
 
 That's it! Really, it's not much, but the added uniformity will help our code
 down the line.
