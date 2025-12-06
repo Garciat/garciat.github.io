@@ -1252,7 +1252,7 @@ As of the time of writing, ChatGPT reports the following:
 - [HighJ](https://github.com/DanielGronau/highj)
   - HKT encoding via `Higher<F, A>`.
   - Provides Functor/Monad/etc.
-  - **No automatic instance resolution** — instances are explicit classes.
+  - **No automatic instance resolution**, instances are explicit classes.
 
 - [Cyclops React](https://github.com/aol/cyclops)
   - Functional programming toolkit for Java.
@@ -1276,9 +1276,4 @@ As of the time of writing, ChatGPT reports the following:
 - [JavaGI](https://www.infosun.fim.uni-passau.de/cl/staff/sulzmann/javagi/)
   - Research extension to Java with Haskell-style typeclasses.
   - Uses **unification-based instance resolution**.
-  - **Requires its own compiler**; not a Java library.
-
-- [Brian Goetz – Witness Types JVMLS Talk](https://www.youtube.com/watch?v=Gz7Or9C0TpM)
-  - Language-level notion of typeclass-like “witness” methods.
-  - Conceptually similar to instance constructors.
-  - **Not implemented** and not reflection-driven.
+  - **Requires its own compiler**, not a Java library.
