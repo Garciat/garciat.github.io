@@ -1103,6 +1103,9 @@ printer.apply("Items:").apply(JavaList.of("apple", "banana", "cherry")).apply(42
 
 ### Type Class: Type Equality!
 
+This examples shows how we can encode propositions about types themselves and
+have the resolver construct evidence for them.
+
 Reified type equality is very neat construct that I'd like to write more about
 soon.
 
@@ -1110,7 +1113,7 @@ For now, let's appreciate how this neatly encodes
 [Haskell's own type equality](https://hackage.haskell.org/package/base-4.21.0.0/docs/Data-Type-Equality.html)
 in Java.
 
-Given:
+Consider:
 
 ```java
 @TypeClass
@@ -1119,6 +1122,7 @@ sealed interface TyEq<A, B> {
 
   B castL(A a);
 
+  @TypeClass.Witness
   static <T> TyEq<T, T> refl() {
     return new Refl<>();
   }
@@ -1135,18 +1139,49 @@ sealed interface TyEq<A, B> {
       return t;
     }
   }
-
-  @TypeClass.Witness
-  static <T> TyEq<T, T> tyEqRefl() {
-    return refl();
-  }
 }
 ```
 
-Of course, we can manually construct `refl()` instances. And these can be really
-useful. (I will write about this soon.)
+`TyEq<A, B>` represents the proposition that `A = B`.
 
-But we can also request them as witnesses in a witness constructor:
+And the only possible constructor for it is `refl()`, which can only prove that
+`TyEq<T, T>` for any `T`.
+
+How is that useful?
+
+`TyEq<T, T>` may be trivial in the static context where it is constructed. But
+it certainly is not in the context where it may be needed.
+
+Take a look:
+
+```java
+class List<T> {
+  // ...
+
+  int sum(TyEq<T, Integer> ty) {
+    int s = 0;
+    for (T item : this) {
+      s += ty.castL(item); // casts T to Integer !
+    }
+    return s;
+  }
+
+  // ...
+}
+
+// then
+
+var xs = List.of(1, 2, 3);
+
+xs.sum(refl());
+// Returns: 6
+```
+
+Within `List<T>`, we have no idea what `T`. Code can make no assumptions about
+it. However, if we have a proof that `T = Integer`, then we _can_ sum the
+elements up into an `int`.
+
+Now, we can also request them as witnesses in a witness constructor:
 
 ```java
 @TypeClass
@@ -1256,7 +1291,15 @@ That is, it is a type-level function that accepts a type and returns a type.
 
 ## Aside: Higher-Kinded Types in Java
 
-I am not sure where this workaround originated, but it is rather elegant.
+Here we introduce an _encoding_ of higher-kinded types for Java.
+
+Recall that interface `Functor<F>` failed because Java insists `F` is a concrete
+type, not a type constructor. This encoding gives us a way to pretend `F` is
+higher-kinded.
+
+> Note: I did not invent this encoding. I have seen several projects using it
+> (see the Related Work section). I am not sure where it originated, but it is
+> rather elegant.
 
 Consider:
 
@@ -1598,7 +1641,7 @@ The code also contains several other type class examples like QuickCheck's
 
 ### Related Work
 
-As of the time of writing, ChatGPT reports the following:
+Here are some related projects and posts:
 
 - [HighJ](https://github.com/DanielGronau/highj)
   - HKT encoding via `Higher<F, A>`.
@@ -1607,7 +1650,7 @@ As of the time of writing, ChatGPT reports the following:
 
 - [Cyclops React](https://github.com/aol/cyclops)
   - Functional programming toolkit for Java.
-  - Typeclass-like interfaces (Functor, Monad, etc.).
+  - Type class-like interfaces (Functor, Monad, etc.).
   - **Manual instance lookup**, no reflection or unification.
 
 - [Higher-Kinded-J](https://github.com/higherkindness/higherkinded-j)
@@ -1616,16 +1659,16 @@ As of the time of writing, ChatGPT reports the following:
   - **Instances must be explicitly provided**, not inferred.
 
 - [mduerig/java-functional](https://github.com/mduerig/java-functional)
-  - Experimental HKT + typeclass encodings in Java.
+  - Experimental HKT + type class encodings in Java.
   - Conceptually related exploration.
   - **No generic instance search or unification engine**.
 
 - [Type Classes in Java (blog post)](https://zarinfam.github.io/2018/12/01/type-classes-in-java/)
-  - Demonstrates typeclass pattern using interfaces.
+  - Demonstrates type class pattern using interfaces.
   - **Requires manual wiring of instances**.
 
 - [JavaGI](https://www.infosun.fim.uni-passau.de/cl/staff/sulzmann/javagi/)
-  - Research extension to Java with Haskell-style typeclasses.
+  - Research extension to Java with Haskell-style type classes.
   - Uses **unification-based instance resolution**.
   - **Requires its own compiler**, not a Java library.
 
