@@ -21,6 +21,10 @@ It’s not intended for production, but as an experiment it reveals just how muc
 structure Java actually preserves at runtime — and how surprisingly close it can
 get to type-level programming without language changes.
 
+You can also jump straight to the full implemention here:
+
+[https://gist.github.com/Garciat/204226a528018fa7d10abb93fa51c4ca](https://gist.github.com/Garciat/204226a528018fa7d10abb93fa51c4ca)
+
 ## Intro: What are Type Classes?
 
 Consider:
