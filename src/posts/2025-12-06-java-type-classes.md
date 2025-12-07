@@ -1523,6 +1523,112 @@ Notice in this case that `State` has two type parameters:
 
 ## Examples: Higher-Kinded Type Clases
 
+### Type Class: Traversable
+
+According to Haskell's
+[documentation on Traversable](https://hackage.haskell.org/package/base-4.21.0.0/docs/Data-Traversable.html):
+
+> Traversable is the class of data structures that can be traversed from left to
+> right, performing an action on each element.
+
+The Haskell type class looks like this:
+
+```haskell
+class (Functor t, Foldable t) => Traversable t where
+  traverse :: Applicative f => (a -> f b) -> t a -> f (t b)
+```
+
+Notice the use of the following features:
+
+- `Traversable` is higher-kinded.
+  - Its parameter `t` has kind `* -> *`.
+- `Traversable` has two superclasses: `Functor` and `Foldable`.
+- Its method `traverse` is quantified on three type variables:
+  - `a` and `b` are plain types, of kind `*`.
+  - `f` is of kind `* -> *`, as it seen applied as `f b` and `f (t b)`.
+- The type variable `f` has the constraint `Applicative f`.
+
+`Traversable` is a rather advanced type class.
+
+Let's translate it into Java.
+
+For now, let's ignore its superclasses:
+
+```java
+@TypeClass
+interface Traversable<T extends Kind<KArr<KStar>>> {
+
+  <F extends Kind<KArr<KStar>>, A, B>
+      TApp<F, ? extends TApp<T, B>> traverse(
+          Applicative<F> applicative,
+          Function<A, ? extends TApp<F, B>> f,
+          TApp<T, A> t);
+
+  // And a static helper, for convenience:
+  // (I omitted some types and arguments for brevity)
+  static <F, A, B> ... traverse(
+      Traversable<T> traversable,
+      Applicative<F> applicative,
+      ...) {
+    return traversable.traverse(applicative, f, t);
+  }
+}
+```
+
+We see that:
+
+- `T` has kind `KArr<KStar>` which means `* -> *`.
+- The method `traverse`:
+  - Is generic on three type variables: `F`, `A`, `B`.
+    - `F` is also declared as having kind `* -> *`.
+  - Depends on a witness of `Applicative<F>`.
+  - Declares covariance `TApp<T, B>` on a couple of places:
+    - Because we know that we won't return values of static type `TApp<T, B>`
+      itself, but rather values of type `T<B>`, which in our HKT convention will
+      extend `TApp<T, B>`.
+
+Then:
+
+```java
+// Unfortunately for HKTs, we must wrap regular Java lists
+record JavaList<A>(List<A> toList) implements TApp<JavaList.Tag, A> {
+  // ...
+
+  @TypeClass.Witness
+  public static <A> Show<JavaList<A>> show(Show<A> showA) { ... }
+
+  @TypeClass.Witness
+  public static Functor<JavaList.Tag> functor() { ... }
+
+  @TypeClass.Witness
+  public static Traversable<JavaList.Tag> traversable() { ... }
+
+  // ...
+}
+
+// and:
+
+sealed interface Maybe<A> {
+  // ...
+
+  @TypeClass.Witness
+  static Applicative<Maybe.Tag> applicative() { ... }
+
+  // ...
+}
+```
+
+For example:
+
+```java
+Traversable.traverse(
+    witness(new Ty<>() {}), // for Traversable<JavaList>
+    witness(new Ty<>() {}), // for Applicative<Maybe>
+    JavaList.of(1, 2, 3),
+    Maybe::just);
+// Returns: Just[value=JavaList[toList=[1, 2, 3]]]
+```
+
 ### Type Class: Functor, Applicative, Monad
 
 As expected:
@@ -1561,58 +1667,8 @@ interface Monad<M extends Kind<KArr<KStar>>> extends Applicative<M> {
 }
 ```
 
-### Type Class: Traversable
-
-Given:
-
-```java
-@TypeClass
-interface Traversable<T extends Kind<KArr<KStar>>> {
-  <F extends Kind<KArr<KStar>>, A, B> TApp<F, ? extends TApp<T, B>> traverse(
-      Applicative<F> applicative, Function<A, TApp<F, B>> f, TApp<T, A> ta);
-
-  static <F extends Kind<KArr<KStar>>, T extends Kind<KArr<KStar>>, A, B>
-      TApp<F, ? extends TApp<T, B>> traverse(
-          Traversable<T> traversable,
-          Applicative<F> applicative,
-          TApp<T, A> tA,
-          Function<A, TApp<F, B>> f) {
-    return traversable.traverse(applicative, f, tA);
-  }
-}
-```
-
-Then:
-
-```java
-// Unfortunately for HKTs, we must wrap regular Java lists
-record JavaList<A>(List<A> toList) implements TApp<JavaList.Tag, A> {
-  // ...
-
-  @TypeClass.Witness
-  public static <A> Show<JavaList<A>> show(Show<A> showA) { ... }
-
-  @TypeClass.Witness
-  public static Functor<JavaList.Tag> functor() { ... }
-
-  @TypeClass.Witness
-  public static Traversable<JavaList.Tag> traversable() { ... }
-
-  // ...
-}
-```
-
-For example:
-
-```java
-println(
-    Traversable.traverse(
-        witness(new Ty<>() {}), // for Traversable<JavaList>
-        witness(new Ty<>() {}), // for Applicative<Maybe>
-        JavaList.of(1, 2, 3)
-        Maybe::just));
-// Prints: Just[value=JavaList[toList=[1, 2, 3]]]
-```
+I currently don't have any interesting `Monad` examples. I may add one or two
+soon.
 
 ## Conclusion
 
