@@ -416,7 +416,19 @@ unify(
 // Done!
 ```
 
-If any unification step fails, then the entire unification fails.
+If any unification step fails, then the entire unification fails:
+
+```java
+unify(Pair<[T], Integer>, Pair<String, String>)
+
+=   unify([T], String)
+  ∪ unify(Integer, String)
+
+=   {T -> String}
+  ∪ err
+
+= err
+```
 
 Following is a code listing for the concrete type unification algorithm
 `unify()` for our `ParsedType` definition, along with a `subsitute()` method
@@ -424,7 +436,11 @@ that applies a substitution to a type.
 
 ### Listing: Type Unification algorithm for `ParsedType`
 
-Here we use the `Maybe` type, which is analogous to Java's `Optional`.
+Here we use the `Maybe` type, which is analogous to Java's `Optional`. It is
+used to indicate that the `unify()` function may fail with a `nothing()` (empty)
+case. This is different from it returning `just(Map.of())` (an empty map), which
+signals success but without any substitutions. In short, based on the examples
+above, `err` is `nothing()` and `{}` is `just(Map.of())`.
 
 A key step here is the unification of `App`. This is the main driver for the
 algorithm's recursion.
