@@ -1928,7 +1928,7 @@ private static List<InstanceConstructor> reduceOverlapping(
           iX ->
               candidates.stream()
                   .filter(iY -> iX != iY)
-                  .noneMatch(cY -> isOverlappedBy(iX, cY)))
+                  .noneMatch(iY -> isOverlappedBy(iX, iY)))
       .toList();
 }
 
