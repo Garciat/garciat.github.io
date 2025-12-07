@@ -1670,6 +1670,33 @@ interface Monad<M extends Kind<KArr<KStar>>> extends Applicative<M> {
 I currently don't have any interesting `Monad` examples. I may add one or two
 soon.
 
+## Recap
+
+We have built:
+
+- A simple mechanism to capture static types for runtime access.
+- An AST and a parser for Java types.
+  - Including support for higher-kinded types encoded via 'tag types'.
+- Type unification on said AST of types.
+- A witness resolution algorithm that:
+  - For a witness type `C<T>`, finds witness constructors in `C` and `T`.
+    - A witness constructor is a public static method annotated with
+      `@TypeClass.Witness`.
+  - Uses type unification to:
+    - Filter relevant witness constructors.
+    - Guide the recursive search for witness dependencies.
+
+And altogether:
+
+- We are able to resolve arbitrarily nested witnesses for first-order type
+  clases like `Eq`, `Ord`, and `Monoid` and also for higher-kinded type classes
+  like `Functor`, `Monad`, and `Traversable`.
+- The witness summoning syntax looks like:
+  - `C<T> w = witness(new Ty<>() {});`
+- Witness resolution is currently done at runtime. Ideally, we should be able to
+  do this work at compile time, as that's where the power of type classes lies
+  in languages like Haskell.
+
 ## Conclusion
 
 This was **a lot** of fun to work on. I had never before implemented type
