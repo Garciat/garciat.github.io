@@ -296,8 +296,8 @@ down the line.
 
 Until this point we have:
 
-- `new Ty<T>() {}`: a way to capture an arbitrary type `T` and access it at
-  runtime.
+- `new Ty<T>() {}`: a way to capture a type `T` from a static context and access
+  it at runtime.
 - `ParsedType`: a uniform representation for Java's `java.lang.reflect.Type`s.
 
 Now, let's move on to the problem of type class instance resolution.
@@ -352,12 +352,14 @@ For example, when looking for `Show<Integer>`, then we scan the methods of
 `Show` and `Integer`.
 
 Generally, we will prefer to define witness constructors within concrete types
-and not within type classes. However, for built-in type like `Integer`, we have
-no choice and we must define its witness constructors within the relevant type
-classes, as we have done with `static Show<Integer> showInteger()`.
+and not within type classes. However, for a built-in type like `Integer`, we
+have no choice and we must define its witness constructors within the relevant
+type classes, as we have done with `static Show<Integer> showInteger()`.
 
-Now that we are able to find the relevant witness constructors, how do we know
-_which of them we must invoke_ and in _which order_?
+Now that we are able to find the relevant witness constructors, how do we:
+
+- know which of them we must invoke,
+- and in _which order_?
 
 First, we must understand type unification:
 
@@ -379,7 +381,66 @@ exists that would make them identical.
 Conversely, when two types are already identical, unification succeeds with an
 empty substitution `{}`.
 
+Because types are recursive, the unification algorithm must also be recursive
+(in nature).
+
+Consider:
+
+```java
+unify(
+  Map<Pair<String, [T]>, List<[U]>>,
+  Map<Pair<String, Integer>, List<Optional<Boolean>>>
+)
+
+// we are unifying two types of shape:
+// - Map<K1, V1>
+// - Map<K2, V2>
+// the type constructors match on either side (Map)
+// so we recurse to their type arguments:
+// unify(K1, K2) ∪ unify(V1, V2)
+// and so on!
+
+=   unify(Pair<String, [T]>, Pair<String, Integer>)
+  ∪ unify(List<[U]>, List<Optional<Boolean>>)
+
+=   unify(String, String) // first arguments of Pair
+  ∪ unify([T], Integer)   // second arguments of Pair
+  ∪ unify([U], <Optional<Boolean>) // arguments of List
+
+=   {}
+  ∪ {T -> Integer}
+  ∪ {U -> Optional<Boolean>}
+
+= {T -> Integer, U -> Optional<Boolean>}
+
+// Done!
+```
+
+If any unification step fails, then the entire unification fails.
+
+Following is a code listing for the concrete type unification algorithm
+`unify()` for our `ParsedType` definition, along with a `subsitute()` method
+that applies a substitution to a type.
+
 ### Listing: Type Unification algorithm for `ParsedType`
+
+Here we use the `Maybe` type, which is analogous to Java's `Optional`.
+
+A key step here is the unification of `App`. This is the main driver for the
+algorithm's recursion.
+
+The following helper methods are relevant to this step:
+
+```java
+// applies function `f` if both `ma` and `mb` are present
+<A, B, C> Maybe<C> apply(BiFunction<A, B, C> f, Maybe<A> ma, Maybe<B> mb);
+
+// merges two maps
+// it fails at runtime if duplicate keys /with different values/ exist
+<K, V> Map<K, V> merge(Map<K, V> m1, Map<K, V> m2);
+```
+
+Here's the full code:
 
 ```java
 class Unification {
@@ -491,8 +552,8 @@ That outlines the witness resolution algorithm.
 
 Until this point we have:
 
-- `new Ty<T>() {}`: a way to capture an arbitrary type `T` and access it at
-  runtime.
+- `new Ty<T>() {}`: a way to capture a type `T` from a static context and access
+  it at runtime.
 - `ParsedType`: a uniform representation for Java's `java.lang.reflect.Type`s.
 - `Unification`: an algorithm for type unification of `ParsedType`s.
 - And a rough sketch for the overall recursive witness resolution algorithm.
