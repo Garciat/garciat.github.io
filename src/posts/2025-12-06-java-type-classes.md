@@ -1241,9 +1241,15 @@ This means that `f` is a _type constructor_.
 > A type constructor is a sort of type-level _function_ that builds new types
 > from existing types.
 >
-> Here, we mean _function_ in a mathematical sense. A mathematical _relation_ is
-> a _function_ if it is both injective (one-to-one) and surjective
-> (non-partial).
+> Here, we mean _function_ in the sense that it has the mathematical property of
+> being _injective_. That is, no two inputs map to the same output.
+>
+> In practice, this means that if we know that the output is the same, then the
+> input must be the same:
+>
+> `F<X> = F<Y>  ⇒  X = Y`
+>
+> This property is what allows us to unify under type constructors.
 
 In Java, `class List<T>` can be seen as a type constructor. Though we don't use
 type application syntax as in Haskell, we do use type parameterization syntax:
