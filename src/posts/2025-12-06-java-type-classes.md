@@ -21,7 +21,172 @@ It’s not intended for production, but as an experiment it reveals just how muc
 structure Java actually preserves at runtime — and how surprisingly close it can
 get to type-level programming without language changes.
 
-## Goal: First-Order Type Classes
+## Intro: What are Type Classes?
+
+Consider:
+
+```java
+interface Equatable<T> {
+  boolean eq(T other);
+}
+
+record Point(int x, int y) implements Equatable<Point> {
+  @Override
+  public boolean eq(Point other) {
+    return x == other.x() && y == other.y();
+  }
+}
+```
+
+That's a pretty simple OOP-style generic interface.
+
+However:
+
+```java
+record Dup<A>(A fst, A snd) implements Equatable<Dup<A>> {
+  @Override
+  public boolean eq(Dup<A> other) {
+    return fst.eq(other.fst()) && snd.eq(other.snd());
+    // Error: no method eq() in type A!
+  }
+}
+```
+
+We can't implement `eq()` for `Dup` without knowing the fact that
+`A extends Equatable<A>`.
+
+So let's try that:
+
+```java
+record Dup<A extends Equatable<A>>(A fst, A snd) implements Equatable<Dup<A>> {
+  @Override
+  public boolean eq(Dup<A> other) {
+    return fst.eq(other.fst()) && snd.eq(other.snd());
+    // OK
+  }
+}
+```
+
+Now the code compiles.
+
+However, `Dup` is now only compatible with types that extend `Equatable`. `Dup`
+is now less capable.
+
+We could have checked at runtime if each object is `instanceof Equatable`, but
+that doesn't work very well with generics. And it may fail at runtime.
+
+Ideally, there would be a way to say:
+
+`Dup` implements `Equatable<Dup<A>>` **if and only if** `A` implements
+`Equatable<A>`.
+
+> Also, if you think about it, it is a bit strange that the definition of
+> equality for a type `A` depends on the object instance. As in, `eq()` is an
+> instance method.
+>
+> It would make more sense if equality depended only on the type `A` itself.
+> Right?
+
+That's where type clases come in:
+
+```java
+interface Eq<A> {
+  boolean eq(A x, A y);
+}
+
+record Point(int x, int y) {
+  public static Eq<Point> eq() {
+    return (p1, p2) ->
+        p1.x() == p2.x()
+        && p1.y() == p2.y();
+  }
+}
+
+record Dup<A>(A fst, A snd) {
+  public static <A> Eq<Dup<A>> eq(Eq<A> eqA) {
+    return (d1, d2) ->
+        eqA.eq(d1.fst(), d2.fst())
+        && eqA.eq(d1.snd(), d2.snd());
+  }
+}
+```
+
+Let's unpack this:
+
+- `Eq<A>` now compares two values of type `A`.
+  - This indicates that we are no longer expecting the implicit `this` parameter
+    to be relevant in equality.
+- `Point` no longer implements the interface.
+  - Now it provides a static constructor (factory) for `Eq<Point>`.
+  - We call this a _witness_ that `Point` conforms to `Eq`.
+- `Dup` also does not implement the interface.
+  - Its static constructor for `Eq<Dup<A>>` has a parameter of type `Eq<A>`.
+    - This indicates the dependency that we were looking for:
+    - In order to prove `Eq<Dup<A>>`, we must first prove `Eq<A>`.
+  - It uses the witness `Eq<A> eqA`, which contains `boolean eq(A, A)`, to
+    implement its own intended behavior.
+
+The code is rather simple, but it marks a dramatic change of perspective:
+
+Equality now belongs to the type definition and not to an object instance.
+
+So, what are type classes?
+
+Type classes can be seen as a pattern that allows us to model shared behavior in
+a way that puts types first AND is entirely compositional.
+
+Now, in the above example, how do we actually use `Dup`'s `eq()`?
+
+```java
+Eq<Dup<Point>> pointDupEq = Dup.eq(Point.eq());
+
+pointDupEq.eq(new Point(1, 1), new Point(1, 1));
+// Returns: true
+```
+
+We must first construct the witness `Eq<Dup<Point>>` by chaining calls to the
+respective `Eq` witness constructors of `Dup` and `Point`.
+
+Then, we use this witness to access/invoke the actual logic that we're after.
+
+Notice how this pattern composes very nicely:
+
+```java
+static <K, V> Eq<Map<K, V>> mapEq(Eq<K> eqK, Eq<V> eqV) { ... }
+
+static <E> Eq<List<E>> listEq(Eq<E> eqE);
+
+static Eq<Integer> integerEq();
+
+static Eq<String> stringEq();
+
+// then:
+
+Eq<Map<String, List<Integer>>> eq =
+  mapEq(stringEq(), listEq(integerEq()));
+
+Map<String, List<Integer>> m1 = ...;
+Map<String, List<Integer>> m2 = ...;
+
+eq.eq(m1, m2);
+```
+
+With witness constructors as our building blocks, we can recursively construct
+infinitely many witnesses, as needed.
+
+> A note on nomenclature:
+>
+> In Haskell, type class 'implementations' are called _instances_.
+>
+> Here, I am calling them _witnesses_ because that's how Java's Architect, Brian
+> Goetz, decided to refer to them in
+> [a recent talk](https://www.youtube.com/watch?v=Gz7Or9C0TpM) he gave about
+> bringing type classes to Java sometime in the future.
+
+Now, wouldn't it be great if we didn't have to manually construct these
+witnesses?
+
+## Goal: Programmatically instantiating witnesses
 
 Given:
 
@@ -49,25 +214,23 @@ Instead of:
 Show<List<List<Integer>>> w =
     Show.showList(Show.showList(Show.showInteger()));
 
-println(Show.show(w, List.of(List.of(1, 2), List.of(3, 4))));
-// Prints: [[1, 2], [3, 4]]
+Show.show(w, List.of(List.of(1, 2), List.of(3, 4)));
+// Returns: "[[1, 2], [3, 4]]"
 ```
 
 We want:
 
 ```java
-println(Show.show(witness(), List.of(List.of(1, 2), List.of(3, 4))));
-// Prints: [[1, 2], [3, 4]]
+Show.show(witness(), List.of(List.of(1, 2), List.of(3, 4)));
+// Returns: "[[1, 2], [3, 4]]"
 ```
 
-Which means that the `witness()` method was able to automatically produce the
-value of type `Show<List<List<Integer>>>` for us!
+Which means that the `witness()` method is able to automatically construct the
+required witness for `Show<List<List<Integer>>>`.
 
 How do we get there?
 
 First, we must understand some aspects of how Java generics work at runtime.
-
-> Note: I use the words 'witness' and 'type class instance' interchangeably.
 
 ## Aside: Java Generics and Type Erasure
 
@@ -89,11 +252,11 @@ interface IntStream extends Stream<Integer> { ... }
 Then:
 
 ```java
-System.out.println(IntStream.class.getInterfaces()[0]);
-// Prints: Stream
+IntStream.class.getInterfaces()[0];
+// Returns: Stream
 
-System.out.println(IntStream.class.getGenericInterfaces()[0]);
-// Prints: Stream<Integer>
+IntStream.class.getGenericInterfaces()[0];
+// Returns: Stream<Integer>
 ```
 
 This means that Java _did_ preserve the generic type arguments for the supertype
@@ -104,13 +267,13 @@ Note that this also occurs with anonymous classes:
 ```java
 var s = new Stream<String>() { ... };
 
-System.out.println(s.getClass().getGenericInterfaces()[0]);
-// Prints: Stream<String>
+s.getClass().getGenericInterfaces()[0];
+// Returns: Stream<String>
 ```
 
 This leads us to our first workaround:
 
-## Aside: Capturing types
+## Aside: Capturing static types
 
 We define:
 
@@ -129,7 +292,7 @@ Which lets us write:
 ```java
 Type type = new Ty<Map<String, List<Integer>>>() {}.type();
 
-System.out.println(type);
+println(type);
 // Prints: Map<String, List<Integer>>
 ```
 
