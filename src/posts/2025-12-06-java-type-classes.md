@@ -25,6 +25,9 @@ You can also jump straight to the full implemention here:
 
 [https://gist.github.com/Garciat/204226a528018fa7d10abb93fa51c4ca](https://gist.github.com/Garciat/204226a528018fa7d10abb93fa51c4ca)
 
+Update: I published a GitHub repo for the project at
+[github.com/Garciat/java-type-classes](https://github.com/Garciat/java-type-classes).
+
 ## Intro: What are Type Classes?
 
 Consider:
