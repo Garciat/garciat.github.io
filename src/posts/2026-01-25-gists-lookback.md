@@ -22,9 +22,9 @@ Let's begin.
 ## 2007
 
 I started programming around 2005-2006, exclusively for the web. I first got
-started when [HTML and CSS](http://www.tizag.com/) and eventually moved on to
-learn PHP and just enough SQL to build useful sites. Unfortunately, all of that
-code is lost.
+started with [HTML and CSS](http://www.tizag.com/) and eventually moved on to
+learn PHP and SQL. I built my own website, my own blog, and a few other webapps.
+Unfortunately, all of that code is lost.
 
 So 2017 is our starting point.
 
@@ -58,15 +58,15 @@ The actual code for these extensions is no longer available, unfortunately.
 ### Blog Themes
 
 I got a bit into web design around this time. I find it funny that I kept trying
-to get into blogging by installing WordPress, writing my own blog software, and
-even design blog themes. All of this to no avail; I never actually wrote
-anything worthwhile until many years later.
+to get into blogging by writing my own blog software and even designing my own
+blog themes. All of this to no avail; I never actually wrote anything worthwhile
+until many years later.
 
-Some the times are: [Black on White](https://gbrlgrct.com/design/bonw/),
+Some the themes are: [Black on White](https://gbrlgrct.com/design/bonw/),
 [Horizontal](https://gbrlgrct.com/design/horizontal/),
 [Red](https://gbrlgrct.com/design/red/),
 [Blue](https://gbrlgrct.com/design/blue-alt/),
-[Blue Alt](https://gbrlgrct.com/design/blue-alt/),
+[Blue Alt](https://gbrlgrct.com/design/blue-alt/), and
 [Simple](https://gbrlgrct.com/design/simple/).
 
 ## 2010
