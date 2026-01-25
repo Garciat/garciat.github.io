@@ -341,7 +341,7 @@ Different ways of computing Fibonacci numbers in Haskell.
 
 Yet another lambda calculus in Haskell. This time, with a syntax and parser.
 
-### [gene.hs, gene.py](https://gist.github.com/Garciat/1a4f4744eaae23f29843)
+### [gene.{hs,py}](https://gist.github.com/Garciat/1a4f4744eaae23f29843)
 
 A transcription of a genetic algorithm from a thesis print I found in my
 university's library. Unfortunately, I could not get it to work.
@@ -364,7 +364,7 @@ A basic demo of using the C FFI in Idris.
 
 Apparently around this time I started playing around with Idris.
 
-### [paks.d, paks.hs](https://gist.github.com/Garciat/69a84718f6765dc8ff7a)
+### [paks.{d,hs}](https://gist.github.com/Garciat/69a84718f6765dc8ff7a)
 
 I used to be an avid Arch Linux user. These scripts seem to print installed
 packages sorted by installation date?
@@ -476,7 +476,7 @@ My first attempt at writing very functional Java, inspired by Haskell.
 My first experiment with initial encodings and the interpretation problem in
 Haskell.
 
-### [Vect.hs, Vect.java](https://gist.github.com/Garciat/4daca968e29529373c66d3c27bedc863)
+### [Vect.{hs,java}](https://gist.github.com/Garciat/4daca968e29529373c66d3c27bedc863)
 
 Length-indexed vectors in Haskell and Java.
 
