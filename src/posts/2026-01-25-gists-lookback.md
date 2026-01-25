@@ -8,7 +8,25 @@ tags:
   - Thoughts
 ---
 
+## About
+
+In this post, I look back at several years of recreational programming that I
+have saved as [GitHub Gists]((https://gist.github.com/)).
+
+I am also doing this to bring some visibility to the different experiments I
+have written over the years and to have useful links to share with people when I
+say, "Oh, I remember doing something like this at some point!"
+
+Let's begin.
+
 ## 2007
+
+I started programming around 2005-2006, exclusively for the web. I first got
+started when [HTML and CSS](http://www.tizag.com/) and eventually moved on to
+learn PHP and just enough SQL to build useful sites. Unfortunately, all of that
+code is lost.
+
+So 2017 is our starting point.
 
 ### [San Andreas Multiplayer Scripts](https://sampforum.blast.hk/showthread.php?tid=20596)
 
@@ -17,9 +35,39 @@ enabled multiplayer. And you could use
 [the Pawn scripting language](https://www.compuphase.com/pawn/pawn.htm) to write
 server scripts for the game.
 
-I am pretty sure this was the first non-web programming I ever did. At the time,
-I had started programming only a couple of years earlier, exclusively for the
-web with PHP and _some_ JavaScript.
+I am pretty sure this was the first non-web programming I ever did.
+
+## 2008
+
+### [PunBB extensions](https://punbb.informer.com/forums/search/topics/user/12481/)
+
+I used to be an avid member of the PunBB community. PunBB was a PHP forum
+software that was lightweight and fast, compared to alternatives like phpBB.
+
+I wrote several extensions for it:
+[Sitemap Generator](https://punbb.informer.com/forums/topic/20381/release-sitemap-generator/),
+[XML Backup](https://punbb.informer.com/forums/topic/20521/release-xml-backup/),
+[Improved Smilies System](https://punbb.informer.com/forums/topic/20696/release-improved-smilies-system/),
+[Gravatar support](https://punbb.informer.com/forums/topic/20587/release-gravatar/),
+[Genders](https://punbb.informer.com/forums/topic/20646/release-genders/),
+[Akismet Spam Protection](https://punbb.informer.com/forums/topic/20364/release-akismet-spam-protection/),
+and some others.
+
+The actual code for these extensions is no longer available, unfortunately.
+
+### Blog Themes
+
+I got a bit into web design around this time. I find it funny that I kept trying
+to get into blogging by installing WordPress, writing my own blog software, and
+even design blog themes. All of this to no avail; I never actually wrote
+anything worthwhile until many years later.
+
+Some the times are: [Black on White](https://gbrlgrct.com/design/bonw/),
+[Horizontal](https://gbrlgrct.com/design/horizontal/),
+[Red](https://gbrlgrct.com/design/red/),
+[Blue](https://gbrlgrct.com/design/blue-alt/),
+[Blue Alt](https://gbrlgrct.com/design/blue-alt/),
+[Simple](https://gbrlgrct.com/design/simple/).
 
 ## 2010
 
@@ -36,10 +84,22 @@ I think this library was intended for use on
 collaboration with another person ([Buffer](https://buffer.com/)'s Joel
 Gascoigne).
 
+### CSS3 Experiments
+
+CSS3 changed everything when it finally came about, and I was very excited about
+it.
+
+I used it to replicate some desktop UIs:
+[Windows 7 window chrome](https://gbrlgrct.com/experiments/css3/explorer/),
+[iTunes for Windows](https://gbrlgrct.com/experiments/css3/itunes/),
+[Pidgin for Linux](https://gbrlgrct.com/experiments/css3/new-wave/),
+[Windows 7 taskbar](https://gbrlgrct.com/experiments/css3/taskbar/),
+[Windows Live Mail desktop client](https://gbrlgrct.com/experiments/css3/wlmail/).
+
 ### [imgur_upload.py](https://gist.github.com/Garciat/757429)
 
-A short Python 2 script that uploads image files to Imgur. Apparently, I put
-some effort to make it cross-platform.
+A Python 2 script that uploads image files to Imgur. Apparently, I put some
+effort to make it cross-platform.
 
 The gist also contains a `.desktop` file for easy drag-and-drop invocation from
 a desktop UI on Linux.
