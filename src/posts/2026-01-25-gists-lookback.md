@@ -2,6 +2,7 @@
 title: "16+ years of gists"
 date: 2026-01-25
 description: "Looking back at 16 years of GitHub gists."
+no_toc: true
 tags:
   - Gist
   - Thoughts
