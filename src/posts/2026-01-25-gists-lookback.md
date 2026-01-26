@@ -166,7 +166,7 @@ cross-platform.
 
 I remember URL minification being a big deal around this time, I'm not sure why.
 I think Twitter back then wouldn't do that automatically? I also remember
-Google's URL minifier coming in as a new player in ths URL minification space,
+Google's URL minifier coming in as a new player in this URL minification space,
 so I think I was just eager to implement a tool with it.
 
 The code looks somewhat neat overall. It's very imperative, too.
@@ -198,7 +198,7 @@ at RTTI and vtable internals, and so on.
 
 This Python 2 script scraped the movie listings of my local cinema at the time.
 
-I can see the usualy combination of `urllib2` and `BeautifulSoup` (version 4,
+I can see the usual combination of `urllib2` and `BeautifulSoup` (version 4,
 this time). I also see that I structured the code in a class this time. Maybe I
 was getting into OOP. Though this is a very poor use of classes.
 
@@ -374,13 +374,13 @@ programming itches to itch! I wrote a second version here:
 
 ### [meow.cpp](https://gist.github.com/Garciat/b4ffb71c2f4561a8fdd7)
 
-This is a C++ type that records how many times it has be constructed, copied,
+This is a C++ type that records how many times it has been constructed, copied,
 moved, etc. I remember I used this to explain move semantics to someone.
 
 ### [translate_im.py](https://gist.github.com/Garciat/f438d436e6f29b304726), [translate_im.d](https://gist.github.com/Garciat/68cf1a9f0cfe3846fd9e)
 
 A toy script that translates a word from Spanish to Portuguese using Bing's API
-and then downloads an random image from Google using that word as a search term.
+and then downloads a random image from Google using that word as a search term.
 
 I remember writing this to help my then-girlfriend learn Portuguese.
 
@@ -400,7 +400,7 @@ them in his desktop wallpaper randomizer.
 ### [pixelated-hs](https://github.com/Garciat/pixelated-hs), [pixelated.d](https://gist.github.com/Garciat/557299821af6d314b497), [pixelated.cpp](https://gist.github.com/Garciat/c8317f565975e4774864)
 
 This was an attempt at writing a solver for the game Pixelated. Despite my best
-attempt at the time, I think the algorithm had an expontential running time.
+attempt at the time, I think the algorithm had an exponential running time.
 
 ### [copiarlog.c](https://gist.github.com/Garciat/a6cb02cf143e32ae92c1)
 
@@ -523,7 +523,7 @@ that hard.
 > 300 seconds of 440Hz sine signal in raw 32bit IEEE Float format, xz-ipped, in
 > base64
 
-What the hell was I doing thinking with this? So weird.
+I have no idea what that was for. So cryptic!
 
 ### [async.js](https://gist.github.com/Garciat/9f6559d5146c0be660b9)
 
