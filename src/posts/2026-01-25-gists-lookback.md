@@ -26,7 +26,7 @@ started with [HTML and CSS](http://www.tizag.com/) and eventually moved on to
 learn PHP and SQL. I built my own website, my own blog, and a few other webapps.
 Unfortunately, all of that code is lost.
 
-So 2017 is our starting point.
+So 2007 is our starting point.
 
 ### San Andreas Multiplayer Scripts
 
