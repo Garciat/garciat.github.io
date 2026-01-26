@@ -28,28 +28,35 @@ Unfortunately, all of that code is lost.
 
 So 2017 is our starting point.
 
-### [San Andreas Multiplayer Scripts](https://sampforum.blast.hk/showthread.php?tid=20596)
+### San Andreas Multiplayer Scripts
 
 I almost forgot about this! I used to play a mod for GTA: San Andreas that
-enabled multiplayer. And you could use
-[the Pawn scripting language](https://www.compuphase.com/pawn/pawn.htm) to write
-server scripts for the game.
+enabled multiplayer gameplay. The mod used
+[Pawn](https://www.compuphase.com/pawn/pawn.htm) for server scripts.
+
+For example, I wrote a `/givemygunto`
+[command](https://sampforum.blast.hk/showthread.php?tid=20596) that gives your
+current weapon to another player. I remember barely having a grasp of what was
+going on in terms of the language and programming in general; I just copied and
+pasted my way to my goals.
 
 I am pretty sure this was the first non-web programming I ever did.
 
 ## 2008
 
-### [PunBB extensions](https://punbb.informer.com/forums/search/topics/user/12481/)
+### PunBB extensions
 
-I used to be an avid member of the PunBB community. PunBB was a PHP forum
-software that was lightweight and fast, compared to alternatives like phpBB.
+I used to be an active member of the PunBB community.
+[PunBB](https://punbb.informer.com/) was a PHP forum software that was
+lightweight and fast, compared to alternatives like
+[phpBB](https://www.phpbb.com/).
 
 I wrote several extensions for it:
 [Sitemap Generator](https://punbb.informer.com/forums/topic/20381/release-sitemap-generator/),
 [XML Backup](https://punbb.informer.com/forums/topic/20521/release-xml-backup/),
 [Improved Smilies System](https://punbb.informer.com/forums/topic/20696/release-improved-smilies-system/),
 [Gravatar support](https://punbb.informer.com/forums/topic/20587/release-gravatar/),
-[Genders](https://punbb.informer.com/forums/topic/20646/release-genders/),
+[Genders support](https://punbb.informer.com/forums/topic/20646/release-genders/),
 [Akismet Spam Protection](https://punbb.informer.com/forums/topic/20364/release-akismet-spam-protection/),
 and some others.
 
@@ -62,7 +69,8 @@ to get into blogging by writing my own blog software and even designing my own
 blog themes. All of this to no avail; I never actually wrote anything worthwhile
 until many years later.
 
-Some the themes are: [Black on White](https://gbrlgrct.com/design/bonw/),
+Some of the themes I designed during that period:
+[Black on White](https://gbrlgrct.com/design/bonw/),
 [Horizontal](https://gbrlgrct.com/design/horizontal/),
 [Red](https://gbrlgrct.com/design/red/),
 [Blue](https://gbrlgrct.com/design/blue-alt/),
@@ -73,9 +81,8 @@ Some the themes are: [Black on White](https://gbrlgrct.com/design/bonw/),
 
 ### [codeigniter-mongodb](https://github.com/Garciat/codeigniter-mongodb)
 
-This is not actually a gist, but I'm including it because it exemplifies my
-early commitment to PHP. This is a library that I wrote for an early version of
-CodeIgniter, an application framework for PHP.
+This is a library that I wrote for an early version of CodeIgniter, an
+application framework for PHP.
 
 Based on
 [this line](https://github.com/Garciat/codeigniter-mongodb/blob/master/config/mongo_db.php#L8),
@@ -104,9 +111,11 @@ effort to make it cross-platform.
 The gist also contains a `.desktop` file for easy drag-and-drop invocation from
 a desktop UI on Linux.
 
-At this point in time, I had been programming for about 4-5 years, most of which
-were spent building web apps with PHP. So I am a bit surprised that I used
-Python for this. I thought that I had learned Python a bit later.
+I think that I started learning Python in 2009. And I remember that in 2010, the
+[Tornado](https://pypi.org/project/tornado/) web server/framework had become
+popular. I had tried to do something with it, but it was too advanced for me at
+the time. I was more comfortable with PHP's stateless execution mode. In this
+sense, simple Python scripts did fit my mental model of programming at the time.
 
 ## 2011
 
@@ -202,12 +211,14 @@ the game.
 
 ## 2013
 
+My second year of university.
+
 ### [static_iterator.cpp](https://gist.github.com/Garciat/5017857)
 
-More C++ template metaprogramming shenanigans. This time, it seems that I was
-trying to emulate statically-defined loops. For example, the 32-bit constant
-`0xDEADBEEF` would need 32 iterations to be turned into a
-`std::array<bool, 32>`.
+One of my first C++ template metaprogramming experiments. It seems that I was
+trying to emulate statically-defined loops through an iterators-like API. For
+example, the 32-bit constant `0xDEADBEEF` would need 32 iterations to be turned
+into a `std::array<bool, 32>` and those were defined at compiled time.
 
 ### [screenshot.py](https://gist.github.com/Garciat/5023987)
 
@@ -282,6 +293,8 @@ understand it?
 
 ## 2014
 
+My third year of university.
+
 ### [count_digits.d](https://gist.github.com/Garciat/9611566)
 
 A D experiment that counts the number of decimal digits of a runtime integer by
@@ -346,6 +359,8 @@ class.
 
 ## 2015
 
+My fourth year of university.
+
 ### [Lambda.hs](https://gist.github.com/Garciat/a594cc6a3bd7f8e24dbb)
 
 Possibly my first lambda calculus evaluator in Haskell. I'm actually surprised
@@ -356,6 +371,11 @@ that it happened this late.
 Implements function currying in C++14. I guess I still had some template
 programming itches to itch! I wrote a second version here:
 [curry2.cpp](https://gist.github.com/Garciat/5007c7a735840a234f2a).
+
+### [meow.cpp](https://gist.github.com/Garciat/b4ffb71c2f4561a8fdd7)
+
+This is a C++ type that records how many times it has be constructed, copied,
+moved, etc. I remember I used this to explain move semantics to someone.
 
 ### [translate_im.py](https://gist.github.com/Garciat/f438d436e6f29b304726), [translate_im.d](https://gist.github.com/Garciat/68cf1a9f0cfe3846fd9e)
 
@@ -382,16 +402,65 @@ them in his desktop wallpaper randomizer.
 This was an attempt at writing a solver for the game Pixelated. Despite my best
 attempt at the time, I think the algorithm had an expontential running time.
 
+### [copiarlog.c](https://gist.github.com/Garciat/a6cb02cf143e32ae92c1)
+
+It's not entirely clear what the purpose of this C program is. But I do remember
+having read [The Linux Programming Interface](https://man7.org/tlpi/) and
+wanting to use some of the concepts I had learned.
+
+### [encoderWAV.js](https://gist.github.com/Garciat/6d7e153fbfb722a156ef)
+
+Not the first time I write a WAV file encoder in JavaScript! I did that the
+first time with my `js-flash-audio-input` project in 2011. This time, though, I
+had access to
+[typed arrays](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Typed_arrays).
+
+### [rx.speech.js](https://gist.github.com/Garciat/56ce79f9f533f59b79ff)
+
+This seems to be an RxJS wrapper for the
+[Web Speech API](https://developer.mozilla.org/en-US/docs/Web/API/Web_Speech_API).
+I can't remember what I used this for.
+
 ### [Program.dnx.il](https://gist.github.com/Garciat/b8b364234d89d8079a4a)
 
 I was early adopter of .NET's new compiler toolchain back then. Before Roslyn
 was production-ready, they still relied on Mono for Linux builds. I found some
 issue and [reported it](https://github.com/aspnet/dnx/issues/1591).
 
+### [cliente_sockets.c](https://gist.github.com/Garciat/891ac0d228831b8b4378)
+
+A toy HTTP client written in C. I remember I wrote this for an operating systems
+course. The HTTP server counterpart was
+[written in Haskell](https://github.com/Garciat/SocketsToy/blob/master/src/Main.hs),
+also using raw sockets.
+
 ### [json.hs](https://gist.github.com/Garciat/87bc71709d1537bed7cc)
 
 I suppose this was my first attempt at using parser combinators to parse JSON in
 Haskell?
+
+### [Temporizado.cs](https://gist.github.com/Garciat/d27cf645bbfa3749993f)
+
+Some concurrency experiment in C#. I think I was trying to grasp C#'s memory
+model, based on references to 'relaxed atomic load' and such.
+
+I remember being heavily influenced by
+[Herb Sutter's atomic Weapons talks](https://herbsutter.com/2013/02/11/atomic-weapons-the-c-memory-model-and-modern-hardware/)
+and also by
+[CLR via C#](https://books.google.nl/books/about/CLR_VIA_C_3RD_EDITION.html?id=S9P9ygAACAAJ).
+
+### [pib.hs](https://gist.github.com/Garciat/f8a58bd4767e4b033605)
+
+A Haskell script that appears to plot some linear regression model,
+[mean-squared error](https://en.wikipedia.org/wiki/Mean_squared_error), and a
+[Savitzky–Golay filter](https://en.wikipedia.org/wiki/Savitzky%E2%80%93Golay_filter).
+Probably did this for some simulations course.
+
+I also remember having learned and used
+[aivika](https://hackage.haskell.org/package/aivika), a simulation library for
+Haskell. Reading through its
+[manual](https://hackage-content.haskell.org/package/aivika-1.2/candidate/src/doc/aivika.pdf)
+was very enlightening in terms of its use of monads and arrows.
 
 ### [fibs.ipynb](https://gist.github.com/Garciat/dcb6c874f6f36a33440c)
 
@@ -431,6 +500,11 @@ packages sorted by installation date?
 
 ## 2016
 
+My fifth and last year of university.
+
+This year I moved to Lausanne, Switzerland to work for a small algorithmic
+trading startup called Nafora. We used a lot of Python and Java there.
+
 ### [emscripten.php](https://gist.github.com/Garciat/0a6c70a6ccf2d5df4e57)
 
 A PHP script that compiles C++ using [emscripten](https://emscripten.org/) and
@@ -466,7 +540,7 @@ wrote a JS script that draws the same pattern programmatically.
 
 I decided to write it in a very functional style.
 
-### [lambda_delegate](https://gist.github.com/Garciat/06fec39ffb589783f889e234747fd33d)
+### [lambda_delegate.cpp](https://gist.github.com/Garciat/06fec39ffb589783f889e234747fd33d)
 
 Implements some
 [C++/CLI](https://learn.microsoft.com/en-us/cpp/dotnet/dotnet-programming-with-cpp-cli-visual-cpp?view=msvc-170)
@@ -502,6 +576,12 @@ Uses C's `memchr` on a Java byte array. I guess I was experimenting with the JNI
 for the first time.
 
 ## 2017
+
+This year I moved to Mendoza, Argentina to work for Eventbrite.
+
+I wrote more Haskell code this and the next years because I started a Haskell
+study group at work. This is something that I have since done at every company I
+have worked for.
 
 ### [Circle.hs](https://gist.github.com/Garciat/90c40974386462f1c88bba673ccd513b)
 
@@ -541,6 +621,8 @@ Haskell.
 Length-indexed vectors in Haskell and Java.
 
 ## 2019
+
+This year I moved to Amsterdam to work for Uber.
 
 ### [free_monad.py](https://gist.github.com/Garciat/06cd0091ef59d9670aa106e4103c563f)
 
@@ -625,6 +707,8 @@ A SQL sort of DSL written in Go, which can be 'compiled' to actual SQL or can be
 executed into actual values.
 
 ## 2025
+
+This year I started working for Picnic.
 
 ### [vscode-tunnel.php](https://gist.github.com/Garciat/48ca4c3394e26642b746f5861faca2d1)
 
