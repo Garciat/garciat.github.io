@@ -41,7 +41,14 @@ export const BaseLayout: React.FC<BaseLayoutProps> = (
       <link rel="stylesheet" href={helpers.url(paths.asset("/main.css"))} />
       <link
         rel="stylesheet"
+        href="https://unpkg.com/@highlightjs/cdn-assets@11.12.0/styles/github.min.css"
+        media="screen"
+      />
+
+      <link
+        rel="stylesheet"
         href="https://unpkg.com/@highlightjs/cdn-assets@11.12.0/styles/github-dark.min.css"
+        media="screen and (prefers-color-scheme: dark)"
       />
     </head>
     <body>
