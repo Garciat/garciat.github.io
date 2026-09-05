@@ -65,38 +65,6 @@ p {
   margin-top: 0;
 }
 
-blockquote {
-  padding: 0.5rem 1rem;
-  margin: 0.8rem 0;
-  color: var(--color-text-weak);
-  border-left: 0.25rem solid var(--color-background-off2);
-
-  @media (min-width: 30em) {
-    padding-right: 5rem;
-    padding-left: 1.25rem;
-  }
-
-  p:last-child {
-    margin-bottom: 0;
-  }
-}
-
-ul,
-ol {
-  padding-left: 2rem;
-
-  ul,
-  ol {
-    padding-left: 1rem;
-  }
-}
-
-ol {
-  ol {
-    list-style-type: circle;
-  }
-}
-
 a {
   color: var(--color-accent);
   text-decoration: none;
@@ -194,6 +162,47 @@ main {
   h6,
   p {
     margin-bottom: 1rem;
+  }
+
+  blockquote {
+    padding: 0.5rem 1rem;
+    margin: 0.8rem 0;
+    color: var(--color-text-weak);
+    border-left: 0.25rem solid var(--color-background-off2);
+
+    @media (min-width: 30em) {
+      padding-right: 5rem;
+      padding-left: 1.25rem;
+    }
+
+    p:last-child {
+      margin-bottom: 0;
+    }
+  }
+
+  ul,
+  ol {
+    padding-left: 2rem;
+
+    ul,
+    ol {
+      margin-top: .5rem;
+      padding-left: 1rem;
+    }
+  }
+
+  ol {
+    ol {
+      list-style-type: circle;
+    }
+  }
+
+  li {
+    margin-bottom: .5rem;
+
+    p {
+      margin: 0;
+    }
   }
 }
 
