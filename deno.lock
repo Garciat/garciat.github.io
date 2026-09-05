@@ -100,11 +100,14 @@
     "npm:date-fns@4.1.0": "4.1.0",
     "npm:estree-walker@3.0.3": "3.0.3",
     "npm:feed@6.0.0": "6.0.0",
-    "npm:highlight.js@*": "11.11.1",
+    "npm:highlight.js@*": "11.12.0",
     "npm:highlight.js@11.11.1": "11.11.1",
+    "npm:highlight.js@11.12.0": "11.12.0",
     "npm:js-beautify@1.15.1": "1.15.1",
     "npm:lightningcss-wasm@1.30.1": "1.30.1",
     "npm:lightningcss-wasm@1.30.2": "1.30.2",
+    "npm:lowlight@*": "3.3.0",
+    "npm:lowlight@3.3.0": "3.3.0",
     "npm:markdown-it-attrs@4.3.1": "4.3.1_markdown-it@14.1.0",
     "npm:markdown-it-deflist@3.0.0": "3.0.0",
     "npm:markdown-it@14.1.0": "14.1.0",
@@ -121,6 +124,7 @@
     "npm:react-syntax-highlighter@16.1.1": "16.1.1_react@19.2.8",
     "npm:react@19": "19.2.8",
     "npm:rehype-autolink-headings@7": "7.1.0",
+    "npm:rehype-highlight@7": "7.0.2",
     "npm:rehype-slug@*": "6.0.0",
     "npm:rehype-slug@6": "6.0.0",
     "npm:remark-gfm@4.0.1": "4.0.1",
@@ -910,6 +914,15 @@
         "@types/hast"
       ]
     },
+    "hast-util-to-text@4.0.2": {
+      "integrity": "sha512-KK6y/BN8lbaq654j7JgBydev7wuNMcID54lkRav1P0CaE1e47P72AWWPiGKXTJU271ooYzcvTAn/Zt0REnvc7A==",
+      "dependencies": [
+        "@types/hast",
+        "@types/unist@3.0.3",
+        "hast-util-is-element",
+        "unist-util-find-after"
+      ]
+    },
     "hast-util-whitespace@3.0.0": {
       "integrity": "sha512-88JUN06ipLwsnv+dVn+OIYOvAuvBMy/Qoi6O7mQHxdPXpjy+Cd6xRkWwux7DKO+4sYILtLBRIKgsdpS2gQc7qw==",
       "dependencies": [
@@ -931,6 +944,9 @@
     },
     "highlight.js@11.11.1": {
       "integrity": "sha512-Xwwo44whKBVCYoliBQwaPvtd/2tYFkRQtXDWj1nackaV2JPXx3L0+Jvd8/qCJ2p+ML0/XVkJ2q+Mr+UVdpJK5w=="
+    },
+    "highlight.js@11.12.0": {
+      "integrity": "sha512-nbfWpyRMcMrPMmDwJB+dhX/eiaPKtc2RB+0QZskqJ3WjRA/FDS0e9hZrx8EC/lbEv8gXy98FcDbNa/dspAaJMg=="
     },
     "highlightjs-vue@1.0.0": {
       "integrity": "sha512-PDEfEF102G23vHmPhLyPboFCD+BkMGu+GuJe2d9/eH4FsCwvgBpnc9n0pGE+ffKdph38s6foEZiEjdgHdzp+IA=="
@@ -1018,6 +1034,14 @@
       "dependencies": [
         "fault",
         "highlight.js@10.7.3"
+      ]
+    },
+    "lowlight@3.3.0": {
+      "integrity": "sha512-0JNhgFoPvP6U6lE/UdVsSq99tn6DhjjpAj5MxG49ewd2mOBVtwWYIT8ClyABhq198aXXODMU6Ox8DrGy/CpTZQ==",
+      "dependencies": [
+        "@types/hast",
+        "devlop",
+        "highlight.js@11.11.1"
       ]
     },
     "lru-cache@10.4.3": {
@@ -1579,7 +1603,7 @@
         "@babel/runtime",
         "highlight.js@10.7.3",
         "highlightjs-vue",
-        "lowlight",
+        "lowlight@1.20.0",
         "prismjs",
         "react",
         "refractor"
@@ -1606,6 +1630,16 @@
         "hast-util-is-element",
         "unified",
         "unist-util-visit"
+      ]
+    },
+    "rehype-highlight@7.0.2": {
+      "integrity": "sha512-k158pK7wdC2qL3M5NcZROZ2tR/l7zOzjxXd5VGdcfIyoijjQqpHd3JKtYSBDpDZ38UI2WJWuFAtkMDxmx5kstA==",
+      "dependencies": [
+        "@types/hast",
+        "hast-util-to-text",
+        "lowlight@3.3.0",
+        "unist-util-visit",
+        "vfile"
       ]
     },
     "rehype-slug@6.0.0": {
@@ -1800,6 +1834,13 @@
         "is-plain-obj",
         "trough",
         "vfile"
+      ]
+    },
+    "unist-util-find-after@5.0.0": {
+      "integrity": "sha512-amQa0Ep2m6hE2g72AugUItjbuM8X8cGQnFoHk0pGfrFeT9GZhzN5SW8nRsiGKK7Aif4CrACPENkA6P/Lw6fHGQ==",
+      "dependencies": [
+        "@types/unist@3.0.3",
+        "unist-util-is"
       ]
     },
     "unist-util-is@6.0.1": {
@@ -2007,6 +2048,9 @@
     "https://cdn.jsdelivr.net/gh/garciat/deno-static@0.1.6/articles.ts": "95c38a4b79f73ce9908a06f90953fe426719f935f89e1d717678bdc9ce33bdd9",
     "https://cdn.jsdelivr.net/gh/garciat/deno-static@0.1.6/markdown.tsx": "3e1f2b0d5fe8a4da3e46209b0e7e481d381ec01a5dbe89f0c848476c9b7c6724",
     "https://cdn.jsdelivr.net/gh/garciat/deno-static@0.1.6/mod.ts": "954290a103b591c76789bbe29fc19e94e9c8d2ab916a4cec6680b0984a30754a",
+    "https://cdn.jsdelivr.net/gh/garciat/deno-static@0.1.7/articles.ts": "95c38a4b79f73ce9908a06f90953fe426719f935f89e1d717678bdc9ce33bdd9",
+    "https://cdn.jsdelivr.net/gh/garciat/deno-static@0.1.7/markdown.tsx": "cb893f8d51031c90cbde4bd279c451c433ea69071b593150f946be776ae9f99d",
+    "https://cdn.jsdelivr.net/gh/garciat/deno-static@0.1.7/mod.ts": "954290a103b591c76789bbe29fc19e94e9c8d2ab916a4cec6680b0984a30754a",
     "https://cdn.jsdelivr.net/gh/lumeland/bar@0.1.13/types.ts": "38f3714e1432c174009495333972f85fb306eb6313112ac8830fda9f1f47e87f",
     "https://cdn.jsdelivr.net/gh/lumeland/bar@0.1.4/types.ts": "89d131290feb5c6781bf752525bc35d21a49612f9b3cd6b5e3a44dca15a996d6",
     "https://cdn.jsdelivr.net/gh/lumeland/importmap@0.1.0/_util.ts": "ada9a9618b537e6c0316c048a898352396c882b9f2de38aba18fd3f2950ede89",

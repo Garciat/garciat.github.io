@@ -40,7 +40,7 @@ class Generic a where
   to :: Rep a -> a
 ```
 
-`type Rep a :: Type` there is a case of
+In the snippet above, `type Rep a :: Type` is a case of
 [associated type synonyms](https://wiki.haskell.org/GHC/Type_families#An_associated_type_synonym_example).
 
 ```haskell

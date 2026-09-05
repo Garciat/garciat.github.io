@@ -186,3 +186,45 @@ main {
 .text-weak {
   color: var(--color-text-weak);
 }
+
+/* Code */
+
+code,
+pre {
+  font-family: Menlo, Monaco, "Courier New", monospace;
+}
+code {
+  white-space: nowrap;
+  padding: 0.25em 0.5em;
+  font-size: 85%;
+  color: var(--color-text-code);
+  background-color: var(--color-background-off1);
+  border: 1px solid var(--color-background-off2);
+  border-radius: var(--rounding);
+}
+pre {
+  display: block;
+  overflow: auto;
+  margin-top: 1.5rem;
+  margin-bottom: 1.5rem;
+  padding: 1rem;
+  font-size: 0.8rem;
+  line-height: 1.4;
+  background-color: var(--color-background-off1);
+  border: 1px solid var(--color-background-off2);
+  border-radius: var(--rounding);
+
+  &:has(> code.hljs) {
+    padding: 0;
+    background-color: transparent;
+  }
+
+  code {
+    white-space: pre;
+    padding: 0;
+    font-size: 100%;
+    color: inherit;
+    background-color: transparent;
+    border: 0;
+  }
+}
