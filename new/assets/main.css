@@ -244,3 +244,45 @@ pre {
     border: 0;
   }
 }
+
+/* Footnotes */
+
+.footnotes {
+  margin-top: 2rem;
+  padding-top: 1rem;
+  border-top: 1px solid var(--color-background-off2);
+  color: var(--color-text-weak);
+  font-size: 0.8rem;
+}
+.footnote {
+  width: fit-content;
+  padding: 0 0.25rem;
+  border-radius: var(--rounding);
+  border: 1px solid transparent;
+}
+.footnote::marker {
+  content: attr(title) ".";
+}
+.footnote:has(a:target) {
+  background-color: var(--color-background-notice);
+  border: 1px solid var(--color-background-off3);
+}
+.footnote-ref {
+  padding: 0.1rem;
+  border-radius: var(--rounding);
+  border: 1px solid transparent;
+}
+.footnote-ref:target {
+  background-color: var(--color-background-notice);
+  border: 1px solid var(--color-background-off3);
+}
+.footnote-ref::before {
+  content: "[";
+}
+.footnote-ref::after {
+  content: "]";
+}
+.data-footnote-backref {
+  margin-left: 0.5rem;
+  font-variant-emoji: text;
+}
