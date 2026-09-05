@@ -1,12 +1,10 @@
 {
   "imports": {
-    "deno-static/": "https://cdn.jsdelivr.net/gh/garciat/deno-static@0.1.8/",
-    "lume/": "https://deno.land/x/lume@v3.1.2/",
-    "lume/jsx-runtime": "https://deno.land/x/ssx@v0.1.10/jsx-runtime.ts"
+    "deno-static/": "https://cdn.jsdelivr.net/gh/garciat/deno-static@0.1.8/"
   },
   "tasks": {
-    "build": "deno run --allow-all new/main.tsx",
-    "serve": "deno run --allow-all --watch=./new/ new/main.tsx --dev"
+    "build": "deno run --allow-all src/main.tsx",
+    "serve": "deno run --allow-all --watch=./src/ src/main.tsx --dev"
   },
   "compilerOptions": {
     "jsx": "react-jsx",
