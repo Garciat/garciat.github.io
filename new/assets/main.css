@@ -95,14 +95,8 @@ main {
   }
 
   > header {
-    margin-top: 1em;
-
-    h1 {
-      font-weight: normal;
-      a {
-        color: inherit;
-      }
-    }
+    margin-top: 1rem;
+    margin-bottom: 1rem;
   }
 
   > footer {
@@ -112,9 +106,29 @@ main {
   }
 }
 
+.site-navigation {
+  margin-bottom: 1rem;
+
+  ul {
+    display: flex;
+    margin: 0;
+    padding: 0;
+
+    li {
+      flex-grow: 1;
+      text-align: center;
+      list-style-type: none;
+
+      &.active a {
+        color: var(--color-text-main);
+      }
+    }
+  }
+}
+
 .post-index {
   > article {
-    margin-top: 2rem;
+    margin-bottom: 2rem;
   }
 }
 

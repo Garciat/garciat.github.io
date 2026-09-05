@@ -1,3 +1,4 @@
+import { helpers } from "deno-static/mod.ts";
 import { syntaxHighlighting } from "deno-static/markdown.tsx";
 
 import Markdown from "npm:react-markdown@10";
@@ -9,7 +10,6 @@ import { paths } from "../paths.ts";
 
 import { GlobalFooter, PostDetails } from "./_components.tsx";
 import { BaseLayout } from "./_layouts.tsx";
-import { helpers } from "deno-static/mod.ts";
 
 type PostPageProps = {
   post: Post;

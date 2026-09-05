@@ -4,5 +4,12 @@ export const SiteConfig = {
     "The personal website of Gabriel Garcia, a software engineer based in Amsterdam.",
   language: "en",
 
+  nav: [
+    ["/", "Blog"],
+    ["/about/", "About"],
+    ["/gists/", "Gists"],
+    ["/projects/", "Projects"],
+  ],
+
   readingWPM: 100,
 } as const;

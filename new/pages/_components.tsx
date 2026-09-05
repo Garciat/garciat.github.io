@@ -1,3 +1,5 @@
+import { helpers } from "deno-static/mod.ts";
+import { SiteConfig } from "../config.ts";
 import { Post } from "../data.ts";
 
 export const PostDetails = ({ post }: { post: Post }) => (
@@ -23,3 +25,19 @@ export const GlobalFooter = () => (
     </div>
   </footer>
 );
+
+export const SiteNavigation = ({ currentPath }: { currentPath: string }) => {
+  return (
+    <nav className="site-navigation">
+      <ul>
+        {SiteConfig.nav.map(([path, label]) => (
+          <li className={path === currentPath ? "active" : ""}>
+            <a href={helpers.url(path)}>
+              {label}
+            </a>
+          </li>
+        ))}
+      </ul>
+    </nav>
+  );
+};
