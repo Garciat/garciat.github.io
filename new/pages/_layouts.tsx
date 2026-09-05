@@ -17,16 +17,25 @@ export const BaseLayout: React.FC<BaseLayoutProps> = (
     <head>
       <meta charSet="utf-8" />
       <meta name="viewport" content="width=device-width,initial-scale=1" />
+      <meta name="referrer" content="same-origin" />
 
       <title>{title}</title>
 
       <link rel="canonical" href={helpers.url(url, true)} />
+
       <link
         rel="alternate"
-        href={helpers.url(paths.rss())}
+        href={helpers.url(paths.rssFeed())}
         type="application/rss+xml"
         title={SiteConfig.title}
       />
+      <link
+        rel="alternate"
+        href={helpers.url(paths.jsonFeed())}
+        type="application/json"
+        title={SiteConfig.title}
+      />
+
       <link rel="stylesheet" href={helpers.url(paths.asset("/main.css"))} />
 
       {description && <meta name="description" content={description} />}

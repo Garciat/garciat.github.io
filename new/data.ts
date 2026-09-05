@@ -33,6 +33,7 @@ export async function computeSiteData() {
     posts: posts,
     feeds: {
       rss: feed.rss2(),
+      json: feed.json1(),
     },
   };
 }
@@ -74,7 +75,7 @@ function buildFeed(posts: Post[]): Feed {
     language: SiteConfig.language,
     link: helpers.url(paths.home(), true),
     feedLinks: {
-      rss: helpers.url(paths.rss(), true),
+      rss: helpers.url(paths.rssFeed(), true),
     },
   });
 

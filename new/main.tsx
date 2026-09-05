@@ -14,11 +14,15 @@ const data = await withTimeTag(
 
 await site(() => ({
   [index]: jsx(<IndexPage posts={data.posts} />),
+
   [paths.slugs.posts]: treeMap(
     data.posts,
     (post) => paths.slugs.post(post),
     (post) => ({ [index]: jsx(<PostPage post={post} />) }),
   ),
-  [paths.slugs.rss]: file(data.feeds.rss),
+
+  [paths.slugs.rssFeed]: file(data.feeds.rss),
+  [paths.slugs.jsonFeed]: file(data.feeds.json),
+
   [paths.slugs.assets]: directory(import.meta.resolve("./assets")),
 }));

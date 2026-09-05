@@ -25,11 +25,11 @@ export const IndexPage: React.FC<IndexPageProps> = ({ posts }) => (
       </header>
       <div className="content">
         <p>
-          Hello. I enjoy writing <a href="https://github.com/Garciat">code</a>
+          Hello. I enjoy writing <a href="https://github.com/garciat">code</a>
           {" "}
           and <a href="#blog">about code</a>.
         </p>
-        <h2 id="blog">Blog</h2>
+        <h2 id="blog">Posts</h2>
         <ul className="post-index">
           {posts.toSorted(
             (a, b) => Temporal.Instant.compare(b.meta.date, a.meta.date),

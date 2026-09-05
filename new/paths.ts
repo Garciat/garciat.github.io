@@ -10,13 +10,17 @@ export const paths = {
     post(post: Post) {
       return parse(post.path).name.replace(/^\d{4}-\d{2}-\d{2}-/, "");
     },
-    rss: "rss.xml",
+    rssFeed: "feed.xml",
+    jsonFeed: "feed.json",
   },
   home() {
     return this.base;
   },
-  rss() {
-    return `${this.base}${this.slugs.rss}` as const;
+  rssFeed() {
+    return `${this.base}${this.slugs.rssFeed}` as const;
+  },
+  jsonFeed() {
+    return `${this.base}${this.slugs.jsonFeed}` as const;
   },
   post(post: Post) {
     return `${this.base}${this.slugs.posts}/${this.slugs.post(post)}/` as const;

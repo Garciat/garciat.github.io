@@ -8,7 +8,6 @@ import rehypeAutolinkHeadings, {
   Options as AutolinkOptions,
 } from "npm:rehype-autolink-headings@7";
 
-import { SiteConfig } from "../config.ts";
 import { Post } from "../data.ts";
 import { paths } from "../paths.ts";
 
@@ -22,7 +21,8 @@ type PostPageProps = {
 export const PostPage: React.FC<PostPageProps> = ({ post }) => (
   <BaseLayout
     url={paths.post(post)}
-    title={`${post.meta.title} - ${SiteConfig.title}`}
+    title={post.meta.title}
+    description={post.meta.description}
   >
     <main>
       <header>
