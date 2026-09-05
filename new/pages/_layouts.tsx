@@ -6,11 +6,12 @@ import { paths } from "../paths.ts";
 export type BaseLayoutProps = {
   url: `/${string}`;
   title: string;
+  description?: string;
   children: React.ReactNode;
 };
 
 export const BaseLayout: React.FC<BaseLayoutProps> = (
-  { url, title, children },
+  { url, title, description, children },
 ) => (
   <html lang={SiteConfig.language}>
     <head>
@@ -28,7 +29,7 @@ export const BaseLayout: React.FC<BaseLayoutProps> = (
       />
       <link rel="stylesheet" href={helpers.url(paths.asset("/main.css"))} />
 
-      <meta name="description" content={SiteConfig.description} />
+      {description && <meta name="description" content={description} />}
     </head>
     <body>
       {children}

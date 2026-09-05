@@ -16,6 +16,8 @@
   --color-text-code: #bf616a;
 }
 
+/* Viewport */
+
 html {
   font-family:
     system-ui,
@@ -37,6 +39,8 @@ html,
 body {
   margin: 0;
 }
+
+/* General */
 
 body {
   color: var(--color-text-main);
@@ -81,6 +85,8 @@ a {
   color: var(--color-accent);
   text-decoration: none;
 }
+
+/* Components */
 
 main {
   > header > .container,
@@ -127,11 +133,26 @@ main {
 }
 
 .post-index {
-  > article {
-    margin-bottom: 2rem;
+  list-style: none; /** reset ul */
+  padding: 0; /** reset ul */
+  display: grid;
+  grid-template-columns: min-content auto;
+  align-items: center;
+  column-gap: 1rem;
+  row-gap: 0.5rem;
+
+  > li {
+    margin: 0; /** reset li */
+    display: contents;
+
+    > :first-child {
+      min-width: fit-content;
+      white-space: nowrap;
+      text-align: right;
+      font-size: 80%;
+    }
   }
 }
-
 .post-details {
   display: flex;
   align-content: center;
@@ -158,4 +179,10 @@ main {
   p {
     margin-bottom: 1rem;
   }
+}
+
+/* Reusable */
+
+.text-weak {
+  color: var(--color-text-weak);
 }

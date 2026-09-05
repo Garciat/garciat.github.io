@@ -5,7 +5,7 @@ export const SiteConfig = {
   language: "en",
 
   nav: [
-    ["/", "Blog"],
+    ["/", "Home"],
     ["/about/", "About"],
     ["/gists/", "Gists"],
     ["/projects/", "Projects"],
