@@ -1,27 +1,21 @@
 {
   "imports": {
+    "deno-static/": "https://cdn.jsdelivr.net/gh/garciat/deno-static@0.1.6/",
     "lume/": "https://deno.land/x/lume@v3.1.2/",
     "lume/jsx-runtime": "https://deno.land/x/ssx@v0.1.10/jsx-runtime.ts"
   },
   "tasks": {
-    "lume": "echo \"import 'lume/cli.ts'\" | deno run -A -",
-    "build": "deno task lume",
-    "serve": "deno task lume -s"
+    "build": "deno run --allow-all new/main.tsx",
+    "serve": "deno run --allow-all --watch=./new/ new/main.tsx --dev"
   },
   "compilerOptions": {
-    "types": [
-      "lume/types.ts"
-    ],
     "jsx": "react-jsx",
-    "jsxImportSource": "lume",
+    "jsxImportSource": "npm:react@^19",
     "strict": true
   },
-  "unstable": [
-    "temporal"
-  ],
   "lint": {
-    "plugins": [
-      "https://deno.land/x/lume@v3.1.2/lint.ts"
-    ]
+    "rules": {
+      "exclude": ["no-import-prefix"]
+    }
   }
 }

@@ -1,0 +1,147 @@
+:root {
+  color-scheme: light dark;
+
+  --width: 34.5;
+  --rounding: 4px;
+  --color-accent: #268bd2;
+  --color-background: light-dark(#ffffff, #0e0e0e);
+  --color-background-off1: light-dark(#f9f9f9, #202020);
+  --color-background-off2: light-dark(#e5e5e5, #333333);
+  --color-background-off3: light-dark(#9a9a9a, #aaaaaa);
+  --color-background-notice: light-dark(#fffbb4, #2e2e01);
+  --color-text-title: light-dark(#000000, #ffffff);
+  --color-text-main: light-dark(#111111, #eeeeee);
+  --color-text-strong: light-dark(#000000, #ffffff);
+  --color-text-weak: light-dark(#555555, #aaaaaa);
+  --color-text-code: #bf616a;
+}
+
+html {
+  font-family:
+    system-ui,
+    -apple-system,
+    Segoe UI,
+    Roboto,
+    Helvetica,
+    Arial,
+    sans-serif,
+    Apple Color Emoji,
+    Segoe UI Emoji;
+  font-size: 1.3rem;
+  font-weight: 350;
+  font-size: clamp(18px, 100vw / var(--width), 20px);
+  line-height: 1.5;
+}
+
+html,
+body {
+  margin: 0;
+}
+
+body {
+  color: var(--color-text-main);
+  background-color: var(--color-background);
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  margin: 0;
+  font-weight: normal;
+
+  a {
+    text-decoration: none;
+  }
+}
+
+p {
+  margin-top: 0;
+}
+
+blockquote {
+  padding: 0.5rem 1rem;
+  margin: 0.8rem 0;
+  color: var(--color-text-weak);
+  border-left: 0.25rem solid var(--color-background-off2);
+
+  @media (min-width: 30em) {
+    padding-right: 5rem;
+    padding-left: 1.25rem;
+  }
+
+  p:last-child {
+    margin-bottom: 0;
+  }
+}
+
+a {
+  color: var(--color-accent);
+  text-decoration: none;
+}
+
+main {
+  > header > .container,
+   > footer > .container,
+   > .content {
+    max-width: 800px;
+    margin: 0 auto;
+
+    @media only screen and (max-width: 820px) {
+      margin: 0 10px;
+    }
+  }
+
+  > header {
+    margin-top: 1em;
+
+    h1 {
+      font-weight: normal;
+      a {
+        color: inherit;
+      }
+    }
+  }
+
+  > footer {
+    margin-top: 5em;
+    text-align: center;
+    color: var(--color-text-weak);
+  }
+}
+
+.post-index {
+  > article {
+    margin-top: 2rem;
+  }
+}
+
+.post-details {
+  display: flex;
+  align-content: center;
+  column-gap: .5em;
+  color: var(--color-text-weak);
+  font-size: 80%;
+
+  > p {
+    margin: 0;
+
+    &:not(:first-child)::before {
+      content: "•";
+      padding-right: .5em;
+    }
+  }
+}
+
+.post-contents {
+  h2,
+  h3,
+  h4,
+  h5,
+  h6,
+  p {
+    margin-bottom: 1rem;
+  }
+}
