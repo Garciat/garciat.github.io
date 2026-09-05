@@ -3,6 +3,10 @@ import { syntaxHighlighting } from "deno-static/markdown.tsx";
 
 import Markdown from "npm:react-markdown@10";
 import remarkGfm from "npm:remark-gfm@4.0.1";
+import rehypeSlug from "npm:rehype-slug@6";
+import rehypeAutolinkHeadings, {
+  Options as AutolinkOptions,
+} from "npm:rehype-autolink-headings@7";
 
 import { SiteConfig } from "../config.ts";
 import { Post } from "../data.ts";
@@ -33,6 +37,16 @@ export const PostPage: React.FC<PostPageProps> = ({ post }) => (
         <PostDetails post={post} />
         <Markdown
           remarkPlugins={[remarkGfm]}
+          rehypePlugins={[
+            rehypeSlug,
+            [
+              rehypeAutolinkHeadings,
+              {
+                behavior: "append",
+                content: { type: "text", value: "#" },
+              } satisfies AutolinkOptions,
+            ],
+          ]}
           components={{ ...syntaxHighlighting() }}
         >
           {post.body}

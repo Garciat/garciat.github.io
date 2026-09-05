@@ -56,8 +56,8 @@ h6 {
   margin: 0;
   font-weight: normal;
 
-  a {
-    text-decoration: none;
+  a[href^="#"] {
+    padding: 0 0.25em;
   }
 }
 
