@@ -1,6 +1,6 @@
 {
   "imports": {
-    "deno-static/": "https://cdn.jsdelivr.net/gh/garciat/deno-static@0.1.7/",
+    "deno-static/": "https://cdn.jsdelivr.net/gh/garciat/deno-static@0.1.8/",
     "lume/": "https://deno.land/x/lume@v3.1.2/",
     "lume/jsx-runtime": "https://deno.land/x/ssx@v0.1.10/jsx-runtime.ts"
   },

@@ -34,7 +34,7 @@ export const IndexPage: React.FC<IndexPageProps> = ({ posts }) => (
           {posts.toSorted(
             (a, b) => Temporal.Instant.compare(b.meta.date, a.meta.date),
           ).map((post) => (
-            <li>
+            <li key={post.path}>
               <time className="text-weak">
                 {post.meta.date.toLocaleString("en", { dateStyle: "medium" })}
               </time>

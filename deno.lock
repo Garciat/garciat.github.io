@@ -2051,6 +2051,8 @@
     "https://cdn.jsdelivr.net/gh/garciat/deno-static@0.1.7/articles.ts": "95c38a4b79f73ce9908a06f90953fe426719f935f89e1d717678bdc9ce33bdd9",
     "https://cdn.jsdelivr.net/gh/garciat/deno-static@0.1.7/markdown.tsx": "cb893f8d51031c90cbde4bd279c451c433ea69071b593150f946be776ae9f99d",
     "https://cdn.jsdelivr.net/gh/garciat/deno-static@0.1.7/mod.ts": "954290a103b591c76789bbe29fc19e94e9c8d2ab916a4cec6680b0984a30754a",
+    "https://cdn.jsdelivr.net/gh/garciat/deno-static@0.1.8/articles.ts": "95c38a4b79f73ce9908a06f90953fe426719f935f89e1d717678bdc9ce33bdd9",
+    "https://cdn.jsdelivr.net/gh/garciat/deno-static@0.1.8/mod.ts": "ee705a32ed79cc0c10479176e5cb4aec10ad76cdddae223e9bc0496c9c04d209",
     "https://cdn.jsdelivr.net/gh/lumeland/bar@0.1.13/types.ts": "38f3714e1432c174009495333972f85fb306eb6313112ac8830fda9f1f47e87f",
     "https://cdn.jsdelivr.net/gh/lumeland/bar@0.1.4/types.ts": "89d131290feb5c6781bf752525bc35d21a49612f9b3cd6b5e3a44dca15a996d6",
     "https://cdn.jsdelivr.net/gh/lumeland/importmap@0.1.0/_util.ts": "ada9a9618b537e6c0316c048a898352396c882b9f2de38aba18fd3f2950ede89",
