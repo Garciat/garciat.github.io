@@ -32,7 +32,7 @@ export const PostPage: React.FC<PostPageProps> = ({ post }) => (
   >
     <main>
       <header>
-        <div className="container">
+        <div className="container print-hide">
           <p>
             <a href={helpers.url(paths.home())}>⇤ Back</a>
           </p>
