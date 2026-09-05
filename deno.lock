@@ -128,6 +128,7 @@
     "npm:rehype-slug@*": "6.0.0",
     "npm:rehype-slug@6": "6.0.0",
     "npm:remark-gfm@4.0.1": "4.0.1",
+    "npm:remark-toc@9": "9.0.0",
     "npm:remove-markdown@0.6.0": "0.6.0",
     "npm:remove-markdown@0.6.2": "0.6.2",
     "npm:schema-dts@*": "2.0.0_typescript@7.0.2",
@@ -574,6 +575,9 @@
       "dependencies": [
         "csstype"
       ]
+    },
+    "@types/ungap__structured-clone@1.2.0": {
+      "integrity": "sha512-ZoaihZNLeZSxESbk9PUAPZOlSpcKx81I1+4emtULDVmBLkYutTcMlCj2K9VNlf9EWODxdO6gkAqEaLorXwZQVA=="
     },
     "@types/unist@2.0.11": {
       "integrity": "sha512-CmBKiL6NNo/OqgmMn95Fk9Whlp2mtvIv+KNpQKN2F4SjvrEesubTRWGYSg+BnWZOnlCaSTU1sMpsBOzgbYhnsA=="
@@ -1236,6 +1240,18 @@
         "@types/mdast"
       ]
     },
+    "mdast-util-toc@7.1.0": {
+      "integrity": "sha512-2TVKotOQzqdY7THOdn2gGzS9d1Sdd66bvxUyw3aNpWfcPXCLYSJCCgfPy30sEtuzkDraJgqF35dzgmz6xlvH/w==",
+      "dependencies": [
+        "@types/mdast",
+        "@types/ungap__structured-clone",
+        "@ungap/structured-clone",
+        "github-slugger",
+        "mdast-util-to-string",
+        "unist-util-is",
+        "unist-util-visit"
+      ]
+    },
     "mdurl@2.0.0": {
       "integrity": "sha512-Lf+9+2r+Tdp5wXDXC4PcIBjTDtq4UKjCPMQhKIuzpJNW0b96kVqSwW0bT7FhRSfmAiFYgP+SCRvdrDozfh0U5w=="
     },
@@ -1688,6 +1704,13 @@
         "@types/mdast",
         "mdast-util-to-markdown",
         "unified"
+      ]
+    },
+    "remark-toc@9.0.0": {
+      "integrity": "sha512-KJ9txbo33GjDAV1baHFze7ij4G8c7SGYoY8Kzsm2gzFpbhL/bSoVpMMzGa3vrNDSWASNd/3ppAqL7cP2zD6JIA==",
+      "dependencies": [
+        "@types/mdast",
+        "mdast-util-toc"
       ]
     },
     "remove-markdown@0.6.0": {

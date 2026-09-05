@@ -2,6 +2,7 @@ import { helpers } from "deno-static/mod.ts";
 
 import Markdown from "npm:react-markdown@10";
 import remarkGfm from "npm:remark-gfm@4.0.1";
+import remarkToc, { Options as TocOptions } from "npm:remark-toc@9";
 import rehypeSlug from "npm:rehype-slug@6";
 import rehypeHighlight, {
   Options as HighlightOptions,
@@ -41,7 +42,13 @@ export const PostPage: React.FC<PostPageProps> = ({ post }) => (
         <h1>{post.meta.title}</h1>
         <PostDetails post={post} />
         <Markdown
-          remarkPlugins={[remarkGfm]}
+          remarkPlugins={[
+            remarkGfm,
+            [
+              remarkToc,
+              { ordered: true, maxDepth: 3 } satisfies TocOptions,
+            ],
+          ]}
           rehypePlugins={[
             rehypeSlug,
             [

@@ -81,6 +81,22 @@ blockquote {
   }
 }
 
+ul,
+ol {
+  padding-left: 2rem;
+
+  ul,
+  ol {
+    padding-left: 1rem;
+  }
+}
+
+ol {
+  ol {
+    list-style-type: circle;
+  }
+}
+
 a {
   color: var(--color-accent);
   text-decoration: none;
