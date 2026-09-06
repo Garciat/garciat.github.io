@@ -1,5 +1,5 @@
 export const SiteConfig = {
-  title: "Gabriel Garcia Torrico",
+  title: "Gabriel Garcia",
   description:
     "The personal website of Gabriel Garcia, a software engineer based in Amsterdam.",
   language: "en",
