@@ -12,8 +12,8 @@ import { computeSiteData } from "./data.ts";
 import { paths } from "./paths.ts";
 import { withTimeTag } from "./utils.ts";
 
-import { IndexPage } from "./pages/index.tsx";
-import { PostPage } from "./pages/post.tsx";
+import { IndexPage } from "./_jsx/index.tsx";
+import { PostPage } from "./_jsx/post.tsx";
 
 const data = await withTimeTag(
   computeSiteData(),
