@@ -1,0 +1,37 @@
+import {
+  directory,
+  file,
+  index,
+  jsx,
+  response,
+  site,
+} from "deno-static/mod.ts";
+
+import { computeSiteData } from "./data.ts";
+import { paths } from "./paths.ts";
+import { treeMap, withTimeTag } from "./utils.ts";
+
+import { IndexPage } from "./pages/index.tsx";
+import { PostPage } from "./pages/post.tsx";
+
+const data = await withTimeTag(
+  computeSiteData(),
+  (tag) => console.log(`[data]`, "done", `(${tag})`),
+);
+
+await site(() => ({
+  "favicon.ico": file(import.meta.resolve("./assets/favicon.ico")),
+
+  [index]: jsx(<IndexPage posts={data.posts} />),
+
+  [paths.slugs.posts]: treeMap(
+    data.posts,
+    (post) => paths.slugs.post(post),
+    (post) => ({ [index]: jsx(<PostPage post={post} />) }),
+  ),
+
+  [paths.slugs.rssFeed]: response(data.feeds.rss),
+  [paths.slugs.jsonFeed]: response(data.feeds.json),
+
+  [paths.slugs.assets]: directory(import.meta.resolve("./assets")),
+}));

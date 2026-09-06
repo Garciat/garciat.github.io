@@ -1,43 +1,57 @@
-name: Build site
+name: Deploy site to Pages
 
 on:
-  workflow_dispatch:
   push:
-    branches: [main]
-  schedule:
-    # Once a day, at 04:30 UTC
-    - cron: "30 4 * * *"
+    branches: ["main"]
+  workflow_dispatch:
+  pull_request:
 
 permissions:
   contents: read
-  pages: write
-  id-token: write
 
 jobs:
   build:
     runs-on: ubuntu-latest
-    environment:
-      name: github-pages
-
+    timeout-minutes: 20
     steps:
-      - name: Clone repository
-        uses: actions/checkout@v4
-        with:
-          # Fetch all history for all tags and branches
-          # Why: needed to get git-based modification times for some Lume pages (like posts)
-          fetch-depth: 0
+      - name: Checkout
+        uses: actions/checkout@v7
 
-      - name: Setup Deno environment
+      - name: Setup Deno
         uses: denoland/setup-deno@v2
         with:
-          deno-version: v2.x
+          deno-version: lts
+          cache: true
 
-      - name: Build GitHub Pages with Lume
-        uses: lumeland/build/gh-pages@main
-        with:
-          deno-version: v2.x
+      - name: Type check
+        run: deno check
 
-      - name: Publish to WebSubHub
+      - name: Setup Pages
+        id: setup-pages
+        if: github.event_name != 'pull_request'
+        uses: actions/configure-pages@v6
+
+      - name: Build site
+        env:
+          BASE_URL: ${{ steps.setup-pages.outputs.base_url }}
         run: |
-          curl -X POST -d "hub.mode=publish&hub.url=https://garciat.com/posts.rss" https://websubhub.com/hub
-          curl -X POST -d "hub.mode=publish&hub.url=https://garciat.com/posts.json" https://websubhub.com/hub
+          BASE_URL="$BASE_URL" deno task build
+
+      - name: Upload artifact
+        if: github.event_name != 'pull_request'
+        uses: actions/upload-pages-artifact@v5
+
+  deploy:
+    if: github.event_name != 'pull_request'
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    runs-on: ubuntu-latest
+    needs: build
+    permissions:
+      pages: write
+      id-token: write
+    steps:
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v5
