@@ -13,6 +13,7 @@ import { paths } from "./paths.ts";
 import { withTimeTag } from "./utils.ts";
 
 import { IndexPage } from "./_jsx/index.tsx";
+import { PagePage } from "./_jsx/page.tsx";
 import { PostPage } from "./_jsx/post.tsx";
 
 const data = await withTimeTag(
@@ -20,10 +21,16 @@ const data = await withTimeTag(
   (tag) => console.log(`[data]`, "done", `(${tag})`),
 );
 
-await site(() => ({
+await site(async () => ({
   "favicon.ico": file(import.meta.resolve("./assets/favicon.ico")),
 
-  [index]: jsx(<IndexPage posts={data.posts} />),
+  [index]: jsx(<IndexPage pages={data.pages} posts={data.posts} />),
+
+  ...await treeMap(
+    data.pages,
+    (page) => paths.slugs.page(page),
+    (page) => ({ [index]: jsx(<PagePage page={page} />) }),
+  ),
 
   [paths.slugs.posts]: treeMap(
     data.posts,

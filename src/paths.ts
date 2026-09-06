@@ -1,12 +1,14 @@
 import { parse } from "jsr:@std/path@1.1.6/parse";
 
-import { Post } from "./data.ts";
+import { Page, Post } from "./data.ts";
 
 export const paths = {
   base: "/",
 
   slugs: {
-    assets: "assets",
+    page(page: Page) {
+      return parse(page.path).name;
+    },
 
     posts: "posts",
     post(post: Post) {
@@ -15,10 +17,19 @@ export const paths = {
 
     rssFeed: "feed.xml",
     jsonFeed: "feed.json",
+
+    assets: "assets",
   },
 
   home() {
     return this.base;
+  },
+
+  page(page: Page) {
+    return `${this.base}${this.slugs.page(page)}/` as const;
+  },
+  pageBySlug(slug: string) {
+    return `${this.base}${slug}/` as const;
   },
 
   post(post: Post) {

@@ -65,6 +65,13 @@ p {
   margin-top: 0;
 }
 
+hr {
+  margin: 2rem 0;
+  color: var(--color-background-off2);
+  border-style: solid;
+  border-width: 1px 0 0 0;
+}
+
 a {
   color: var(--color-accent);
   text-decoration: underline;
@@ -103,6 +110,25 @@ main {
     margin-top: 5em;
     text-align: center;
     color: var(--color-text-weak);
+  }
+}
+
+.post,
+.page {
+  > header {
+    margin-bottom: 2rem;
+  }
+
+  .post-contents {
+    h2,
+    h3,
+    h4,
+    h5,
+    h6 {
+      a[href^="#"] {
+        display: none;
+      }
+    }
   }
 }
 
@@ -153,6 +179,10 @@ main {
         display: none;
       }
     }
+  }
+
+  h2 {
+    margin-top: 2rem;
   }
 
   /* table of contents */
@@ -209,7 +239,6 @@ main {
   flex-flow: row wrap;
   align-content: center;
   column-gap: .5em;
-  margin-bottom: 1rem;
   color: var(--color-text-weak);
   font-size: 80%;
 

@@ -1,13 +1,14 @@
 import { helpers } from "deno-static/mod.ts";
 
 import { SiteConfig } from "../config.ts";
-import { Post } from "../data.ts";
+import { Page, Post } from "../data.ts";
 import { paths } from "../paths.ts";
 
 import { GlobalFooter } from "./_components.tsx";
 import { BaseLayout } from "./_layouts.tsx";
 
 type IndexPageProps = {
+  pages: Page[];
   posts: Post[];
 };
 
@@ -29,6 +30,7 @@ export const IndexPage: React.FC<IndexPageProps> = ({ posts }) => (
           {" "}
           and <a href="#posts">about code</a>.
         </p>
+
         <h2 id="posts">Posts</h2>
         <ul className="post-index">
           {posts.toSorted(

@@ -7,6 +7,11 @@ import z from "npm:zod@4.5.4";
 import { SiteConfig } from "./config.ts";
 import { paths } from "./paths.ts";
 
+const PageMetaSchema = z.object({
+  title: z.string(),
+  description: z.optional(z.string().trim()),
+});
+
 const PostMetaSchema = z.object({
   title: z.string(),
   date: z.date().transform((date) => date.toTemporalInstant()),
@@ -14,28 +19,58 @@ const PostMetaSchema = z.object({
   description: z.optional(z.string().trim()),
 });
 
-export type PostMeta = z.output<typeof PostMetaSchema>;
+type PageMeta = z.output<typeof PageMetaSchema>;
+type PostMeta = z.output<typeof PostMetaSchema>;
 
+export type Page = Awaited<ReturnType<typeof preparePage>>;
 export type Post = Awaited<ReturnType<typeof preparePost>>;
 
 export async function computeSiteData() {
+  const pages = await loadPages();
+
+  const posts = await loadPosts();
+
+  const feed = buildFeed(posts);
+
+  return {
+    pages,
+    posts,
+    feeds: {
+      rss: feed.rss2(),
+      json: feed.json1(),
+    },
+  };
+}
+
+async function loadPages() {
+  const articles = await loadArticles(
+    import.meta.resolve("./pages"),
+    PageMetaSchema,
+    { extensions: [".md"] },
+  );
+
+  return await Promise.all(articles.map(preparePage));
+}
+
+function preparePage({ path, meta, body }: Article<PageMeta>) {
+  return {
+    path,
+    meta,
+    body,
+    info: {
+      readingInfo: readingInfo(body),
+    },
+  };
+}
+
+async function loadPosts() {
   const articles = await loadArticles(
     import.meta.resolve("./posts"),
     PostMetaSchema,
     { extensions: [".md"] },
   );
 
-  const posts = await Promise.all(articles.map(preparePost));
-
-  const feed = buildFeed(posts);
-
-  return {
-    posts: posts,
-    feeds: {
-      rss: feed.rss2(),
-      json: feed.json1(),
-    },
-  };
+  return await Promise.all(articles.map(preparePost));
 }
 
 function preparePost({ path, meta, body }: Article<PostMeta>) {
