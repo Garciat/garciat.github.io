@@ -5,11 +5,12 @@ import {
   jsx,
   response,
   site,
+  treeMap,
 } from "deno-static/mod.ts";
 
 import { computeSiteData } from "./data.ts";
 import { paths } from "./paths.ts";
-import { treeMap, withTimeTag } from "./utils.ts";
+import { withTimeTag } from "./utils.ts";
 
 import { IndexPage } from "./pages/index.tsx";
 import { PostPage } from "./pages/post.tsx";

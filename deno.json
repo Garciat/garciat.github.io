@@ -1,6 +1,6 @@
 {
   "imports": {
-    "deno-static/": "https://cdn.jsdelivr.net/gh/garciat/deno-static@0.1.8/"
+    "deno-static/": "https://cdn.jsdelivr.net/gh/garciat/deno-static@0.1.9/"
   },
   "tasks": {
     "build": "deno run --allow-all src/main.tsx",

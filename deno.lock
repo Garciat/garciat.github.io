@@ -928,7 +928,9 @@
   },
   "remote": {
     "https://cdn.jsdelivr.net/gh/garciat/deno-static@0.1.8/articles.ts": "95c38a4b79f73ce9908a06f90953fe426719f935f89e1d717678bdc9ce33bdd9",
-    "https://cdn.jsdelivr.net/gh/garciat/deno-static@0.1.8/mod.ts": "ee705a32ed79cc0c10479176e5cb4aec10ad76cdddae223e9bc0496c9c04d209"
+    "https://cdn.jsdelivr.net/gh/garciat/deno-static@0.1.8/mod.ts": "ee705a32ed79cc0c10479176e5cb4aec10ad76cdddae223e9bc0496c9c04d209",
+    "https://cdn.jsdelivr.net/gh/garciat/deno-static@0.1.9/articles.ts": "95c38a4b79f73ce9908a06f90953fe426719f935f89e1d717678bdc9ce33bdd9",
+    "https://cdn.jsdelivr.net/gh/garciat/deno-static@0.1.9/mod.ts": "fb9f7468555ae6c22969111911ec06f851ddb5f53ef393898aee090b009e7fae"
   },
   "workspace": {
     "dependencies": [

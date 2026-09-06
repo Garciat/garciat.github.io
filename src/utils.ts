@@ -1,5 +1,3 @@
-import { Tree, tree, TreeNode } from "deno-static/mod.ts";
-
 export async function timed<T>(
   task: Promise<T> | (() => T | Promise<T>),
 ): Promise<{ value: T; duration: Temporal.Duration }> {
@@ -23,19 +21,4 @@ export async function withTimeTag<T>(
   cb(`${result.duration.total("milliseconds").toFixed(3)} ms`);
 
   return result.value;
-}
-
-// TODO move to deno-static?
-export function treeMap<T>(
-  items: Iterable<T>,
-  slugFn: (item: T) => string,
-  nodeFn: (item: T) => TreeNode,
-): Promise<Tree> {
-  return tree(
-    function* () {
-      for (const item of items) {
-        yield [slugFn(item), nodeFn(item)];
-      }
-    },
-  );
 }
